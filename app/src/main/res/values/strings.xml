@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Hearme</string>
+    <string name="content_onboard">Listen to the best music everyday with Hearme now!</string>
+    <string name="started_button_text">Get Started</string>
 </resources>

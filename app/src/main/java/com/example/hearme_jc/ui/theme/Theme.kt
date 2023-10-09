@@ -16,15 +16,27 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
+    primary = Primary500,
     secondary = PurpleGrey80,
-    tertiary = Pink80
+    tertiary = Pink80,
+    background = Dark1,
+    outlineVariant = Dark3,
+    onBackground = White,
+    onSurface = Greyscale700,
+    onSecondary = Greyscale300,
+    onSurfaceVariant = Greyscale600,
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
+    primary = Primary500,
     secondary = PurpleGrey40,
-    tertiary = Pink40
+    tertiary = Pink40,
+    background = White,
+    outlineVariant = Greyscale200,
+    onBackground = Greyscale900,
+    onSurface = Greyscale500,
+    onSecondary = Greyscale700,
+    onSurfaceVariant = Greyscale400,
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -42,7 +54,7 @@ fun Hearme_JCTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
