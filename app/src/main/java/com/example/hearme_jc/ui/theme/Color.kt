@@ -23,6 +23,7 @@ val Jazz = Color(0xFF617D88)
 val Romance = Color(0xFF09BCD0)
 
 val Greyscale50 = Color(0xFFFAFAFA)
+val Greyscale80 = Color(0xFFF2F2F2)
 val Greyscale100 = Color(0xFFF5F5F5)
 val Greyscale200 = Color(0xFFEEEEEE)
 val Greyscale300 = Color(0xFFE0E0E0)

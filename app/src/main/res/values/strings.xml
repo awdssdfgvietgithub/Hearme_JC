@@ -2,4 +2,7 @@
     <string name="app_name">Hearme</string>
     <string name="content_onboard">Listen to the best music everyday with Hearme now!</string>
     <string name="started_button_text">Get Started</string>
+    <string name="facebook_method">Continue with Facebook</string>
+    <string name="method_sign_in_password">Sign in with password</string>
+    <string name="title_sign_in">Login to Your Account</string>
 </resources>

@@ -8,8 +8,8 @@ class CardPaymentData {
     companion object {
         fun data() = arrayListOf<CardPayment>().apply {
             add(CardPayment(R.drawable.ic_paypal, "Paypal", true))
-            add(CardPayment(R.drawable.ic_google, "Google Pay", false))
-            add(CardPayment(R.drawable.ic_apple, "Apple Pay", false))
+            add(CardPayment(R.drawable.vector_google, "Google Pay", false))
+            add(CardPayment(R.drawable.vector_apple, "Apple Pay", false))
         }
     }
 }

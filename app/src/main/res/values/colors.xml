@@ -20,7 +20,6 @@
     <color name="red">#FF4D67</color>
 
 
-
     <color name="color_txt_button_skip">#06C149</color>
     <color name="color_txt_button_continue">#FFFFFF</color>
 
@@ -42,4 +41,7 @@
     <color name="greyscale_800">#424242</color>
     <color name="greyscale_900">#212121</color>
 
+    <color name="circle_background_vector">#F2F2F2</color>
+    <color name="window_vector">#CCCCCC</color>
+    <color name="leave_and_cloud_vector">#E6E6E6</color>
 </resources>

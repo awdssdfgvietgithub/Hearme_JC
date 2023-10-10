@@ -27,11 +27,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.hearme_jc.R
 import com.example.hearme_jc.ui.Screen
-import com.example.hearme_jc.ui.activities.TopBar
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavController) {
+fun SplashScreen(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+) {
     val scale = remember {
         Animatable(0f)
     }
@@ -45,11 +47,11 @@ fun SplashScreen(navController: NavController) {
                 }
             )
         )
-        delay(3000L)
+        delay(2000L)
         navController.navigate(Screen.Walkthrough.route)
     }
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Row {
             Image(painter = painterResource(id = R.drawable.logo), contentDescription = null)
             Spacer(modifier = Modifier.width(16.dp))

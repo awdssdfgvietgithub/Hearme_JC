@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
@@ -24,10 +25,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
@@ -66,13 +65,18 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
-    val isVisible by remember {
-        mutableStateOf(true)
+    val isShowToolbar = remember {
+        mutableStateOf(false)
     }
 
-    Scaffold(topBar = { TopBar(isVisible = isVisible) }) { values ->
+    Scaffold(topBar = {
+        TopBar(
+            isVisible = isShowToolbar.value,
+            navController = navController
+        )
+    }) { values ->
         Column(modifier = Modifier.padding(values)) {
-            NavGraph(navController = navController)
+            NavGraph(navController = navController, isShowToolbar = isShowToolbar)
         }
     }
 }
@@ -91,7 +95,8 @@ fun MainNavigationButton(
             .shadow(
                 elevation = 24.dp,
                 spotColor = Color(0x4006C149),
-                ambientColor = Color(0x4006C149)
+                ambientColor = Color(0x4006C149),
+                shape = RoundedCornerShape(size = 100.dp),
             )
             .width(380.dp)
             .height(58.dp),
@@ -115,13 +120,13 @@ fun MainNavigationButton(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(modifier: Modifier = Modifier, isVisible: Boolean) {
+fun TopBar(modifier: Modifier = Modifier, isVisible: Boolean, navController: NavController) {
     AnimatedVisibility(visible = isVisible) {
         TopAppBar(title = {
             Text(text = "")
         },
             navigationIcon = {
-                IconButton(onClick = {}) {
+                IconButton(onClick = { navController.popBackStack() }) {
                     Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
                 }
             })

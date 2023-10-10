@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,7 +33,10 @@ import com.example.hearme_jc.ui.Screen
 import com.example.hearme_jc.ui.activities.MainNavigationButton
 
 @Composable
-fun WalkThroughScreen(modifier: Modifier = Modifier, navController: NavController) {
+fun WalkThroughScreen(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+) {
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -74,7 +78,7 @@ fun BottomSheet(modifier: Modifier = Modifier, navController: NavController) {
                     lineHeight = 48.sp,
                     fontFamily = FontFamily(Font(R.font.urbanist_extrabold)),
                     fontWeight = FontWeight(700),
-                    color = Color(0xFF212121),
+                    color = MaterialTheme.colorScheme.onBackground,
                     textAlign = TextAlign.Center,
                 )
             )
