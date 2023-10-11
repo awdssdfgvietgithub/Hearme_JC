@@ -10,6 +10,7 @@ sealed class Screen(val route: String, val title: String? = null, val navIcon: I
 
     //Account setup
     object FillYourProfile : Screen(route = "fill_your_profile")
+    object CreateNewPin : Screen(route = "create_new_pin")
 
     //Home & Action menu
     object Home : Screen(route = "home")

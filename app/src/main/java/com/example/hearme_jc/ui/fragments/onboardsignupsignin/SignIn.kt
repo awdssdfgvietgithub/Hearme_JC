@@ -47,7 +47,7 @@ import com.example.hearme_jc.data.model.SignInMethod
 import com.example.hearme_jc.data.model.SignInMethodData
 import com.example.hearme_jc.ui.Screen
 import com.example.hearme_jc.ui.activities.MainNavigationButton
-import com.example.hearme_jc.ui.activities.MainTextField
+import com.example.hearme_jc.ui.activities.MainTextFieldLeadingIcon
 import com.example.hearme_jc.ui.theme.Hearme_JCTheme
 
 @Composable
@@ -148,11 +148,11 @@ fun ContainerForSignInOrSignUp(
     }
 
     Column(modifier = modifier, verticalArrangement = Arrangement.Center) {
-        MainTextField(placeholderText = "Email", leftIcon = R.drawable.ic_email)
+        MainTextFieldLeadingIcon(placeholderText = "Email", leftIcon = R.drawable.ic_email)
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        MainTextField(
+        MainTextFieldLeadingIcon(
             placeholderText = "Password",
             leftIcon = R.drawable.ic_lock,
             isPasswordType = true

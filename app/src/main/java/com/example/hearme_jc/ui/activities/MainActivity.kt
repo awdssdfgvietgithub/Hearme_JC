@@ -6,7 +6,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -49,6 +51,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -59,6 +62,8 @@ import com.example.hearme_jc.ui.NavGraph
 import com.example.hearme_jc.ui.Screen
 import com.example.hearme_jc.ui.theme.Hearme_JCTheme
 import com.example.hearme_jc.ui.theme.Primary500
+import com.example.hearme_jc.ui.theme.White
+import com.example.lib.MyClass
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -128,6 +133,11 @@ fun MainScreen() {
             onTitleChange.value = "Fill Your Profile"
         }
 
+        Screen.CreateNewPin.route -> {
+            isShowToolbar.value = true
+            onTitleChange.value = "Create New PIN"
+        }
+
         Screen.Home.route -> {
             isShowToolbar.value = true
             onTitleChange.value = ""
@@ -150,9 +160,43 @@ fun MainScreen() {
     }
 }
 
+@Composable
+fun PairButton(
+    modifier: Modifier = Modifier,
+    text1: String,
+    text2: String,
+    route1: String,
+    route2: String,
+    textColor1: Color,
+    textColor2: Color,
+    bgColor1: Color,
+    bgColor2: Color,
+    navController: NavController,
+) {
+    Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        MainNavigationButton(
+            modifier = Modifier.weight(1f),
+            text = text1,
+            navController = navController,
+            route = route1,
+            textColor = textColor1,
+            bgColor = bgColor1
+        )
+
+        MainNavigationButton(
+            modifier = Modifier.weight(1f),
+            text = text2,
+            navController = navController,
+            route = route2,
+            textColor = textColor2,
+            bgColor = bgColor2
+        )
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainTextField(
+fun MainTextFieldLeadingIcon(
     modifier: Modifier = Modifier,
     placeholderText: String,
     leftIcon: Int,
@@ -175,12 +219,28 @@ fun MainTextField(
             .height(60.dp)
             .fillMaxWidth()
             .onFocusChanged { isTextFocused = it.isFocused },
+        textStyle = TextStyle(
+            fontSize = 14.sp,
+            lineHeight = 19.6.sp,
+            fontFamily = FontFamily(Font(R.font.urbanist_semibold)),
+            fontWeight = FontWeight(600),
+            color = MaterialTheme.colorScheme.onBackground,
+            letterSpacing = 0.2.sp,
+        ),
         value = text,
+        maxLines = 1,
         onValueChange = { text = it },
         placeholder = {
             Text(
                 text = placeholderText,
-                color = Color(0xFF9E9E9E)
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    lineHeight = 19.6.sp,
+                    fontFamily = FontFamily(Font(R.font.urbanist_regular)),
+                    fontWeight = FontWeight(400),
+                    color = Color(0xFF9E9E9E),
+                    letterSpacing = 0.2.sp,
+                )
             )
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -188,16 +248,6 @@ fun MainTextField(
             unfocusedBorderColor = Color(0x00000000),
         ),
         shape = RoundedCornerShape(size = 16.dp),
-        leadingIcon = {
-            Icon(
-                painter = painterResource(id = leftIcon),
-                contentDescription = null,
-                tint = if (isTextFocused || text.isNotEmpty()) MaterialTheme.colorScheme.onBackground else Color(
-                    0xFF9E9E9E
-                ),
-            )
-        },
-
         visualTransformation =
         if (passwordVisible && isPasswordType == true) VisualTransformation.None
         else if (isPasswordType == true) PasswordVisualTransformation()
@@ -225,6 +275,68 @@ fun MainTextField(
                 }
             }
         },
+        leadingIcon = {
+            Icon(
+                painter = painterResource(id = leftIcon),
+                contentDescription = null,
+                tint = if (isTextFocused || text.isNotEmpty()) MaterialTheme.colorScheme.onBackground else Color(
+                    0xFF9E9E9E
+                )
+            )
+        },
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MainTextField(
+    modifier: Modifier = Modifier,
+    placeholderText: String,
+) {
+    var text by rememberSaveable { mutableStateOf("") }
+
+    var isTextFocused by rememberSaveable {
+        mutableStateOf(false)
+    }
+
+    OutlinedTextField(
+        modifier = modifier
+            .background(
+                color = Color(0xFFF5F5F5),
+                shape = RoundedCornerShape(size = 16.dp),
+            )
+            .height(56.dp)
+            .fillMaxWidth()
+            .onFocusChanged { isTextFocused = it.isFocused },
+        value = text,
+        onValueChange = { text = it },
+        maxLines = 1,
+        placeholder = {
+            Text(
+                text = placeholderText,
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    lineHeight = 19.6.sp,
+                    fontFamily = FontFamily(Font(R.font.urbanist_regular)),
+                    fontWeight = FontWeight(400),
+                    color = Color(0xFF9E9E9E),
+                    letterSpacing = 0.2.sp,
+                )
+            )
+        },
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = Color(0xFF06C149),
+            unfocusedBorderColor = Color(0x00000000),
+        ),
+        shape = RoundedCornerShape(size = 16.dp),
+        textStyle = TextStyle(
+            fontSize = 14.sp,
+            lineHeight = 19.6.sp,
+            fontFamily = FontFamily(Font(R.font.urbanist_semibold)),
+            fontWeight = FontWeight(600),
+            color = MaterialTheme.colorScheme.onBackground,
+            letterSpacing = 0.2.sp,
+        )
     )
 }
 
@@ -234,6 +346,8 @@ fun MainNavigationButton(
     text: String,
     navController: NavController,
     route: String,
+    textColor: Color = Color(0xFFFFFFFF),
+    bgColor: Color = Primary500,
 ) {
     Button(
         onClick = { navController.navigate(route) },
@@ -247,7 +361,7 @@ fun MainNavigationButton(
             )
             .width(380.dp)
             .height(58.dp),
-        colors = ButtonDefaults.buttonColors(Primary500)
+        colors = ButtonDefaults.buttonColors(bgColor)
     ) {
         Text(
             text = text,
@@ -257,7 +371,7 @@ fun MainNavigationButton(
                 lineHeight = 22.4.sp,
                 fontFamily = FontFamily(Font(R.font.urbanist_bold)),
                 fontWeight = FontWeight(700),
-                color = Color(0xFFFFFFFF),
+                color = textColor,
                 textAlign = TextAlign.Center,
                 letterSpacing = 0.2.sp,
             )
@@ -275,12 +389,49 @@ fun TopBar(
 ) {
     AnimatedVisibility(visible = isVisible.value) {
         TopAppBar(title = {
-            Text(text = onTitleChange.value)
+            Text(
+                text = onTitleChange.value, style = TextStyle(
+                    fontSize = 24.sp,
+                    lineHeight = 28.8.sp,
+                    fontFamily = FontFamily(Font(R.font.urbanist_bold)),
+                    fontWeight = FontWeight(700),
+                    color = MaterialTheme.colorScheme.onBackground,
+                )
+            )
         }, modifier = modifier,
             navigationIcon = {
                 IconButton(onClick = { navController.popBackStack() }) {
-                    Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onBackground
+                    )
                 }
             })
+    }
+}
+
+@Preview(showBackground = true, widthDp = 412)
+@Composable
+fun MainTextFieldPreview() {
+    Hearme_JCTheme {
+        Surface(
+            modifier = Modifier.padding(24.dp),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            val navController = rememberNavController()
+
+            PairButton(
+                text1 = "Skip",
+                text2 = "Continue",
+                route1 = Screen.CreateNewPin.route,
+                route2 = Screen.CreateNewPin.route,
+                textColor1 = MaterialTheme.colorScheme.onTertiary,
+                textColor2 = White,
+                bgColor1 = MaterialTheme.colorScheme.onSecondaryContainer,
+                bgColor2 = Primary500,
+                navController = navController,
+            )
+        }
     }
 }

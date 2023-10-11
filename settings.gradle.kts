@@ -15,4 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Hearme_JC"
 include(":app")
- 
+include(":mylibrary")
+include(":lib")

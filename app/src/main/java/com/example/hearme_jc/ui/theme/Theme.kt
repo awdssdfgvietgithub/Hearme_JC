@@ -27,7 +27,9 @@ private val DarkColorScheme = darkColorScheme(
     onSurfaceVariant = Greyscale600,
     surface = Dark2,
     onPrimary = White,
-    onPrimaryContainer = White
+    onPrimaryContainer = White,
+    onTertiary = White,
+    onSecondaryContainer = Dark3
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -42,7 +44,9 @@ private val LightColorScheme = lightColorScheme(
     onSurfaceVariant = Greyscale400,
     surface = White,
     onPrimary = Greyscale700,
-    onPrimaryContainer = Greyscale500
+    onPrimaryContainer = Greyscale500,
+    onTertiary = Primary500,
+    onSecondaryContainer = Primary100
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -63,10 +67,10 @@ fun Hearme_JCTheme(
     content: @Composable () -> Unit,
 ) {
     val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
+//        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+//            val context = LocalContext.current
+//            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+//        }
 
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
