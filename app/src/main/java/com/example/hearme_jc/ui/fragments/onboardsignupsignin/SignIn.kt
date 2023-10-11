@@ -15,22 +15,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,7 +28,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -47,9 +36,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -61,6 +47,7 @@ import com.example.hearme_jc.data.model.SignInMethod
 import com.example.hearme_jc.data.model.SignInMethodData
 import com.example.hearme_jc.ui.Screen
 import com.example.hearme_jc.ui.activities.MainNavigationButton
+import com.example.hearme_jc.ui.activities.MainTextField
 import com.example.hearme_jc.ui.theme.Hearme_JCTheme
 
 @Composable
@@ -93,7 +80,7 @@ fun SignInScreen(modifier: Modifier = Modifier, navController: NavController) {
             ),
         )
 
-        ContainerForSignIn(navController = navController)
+        ContainerForSignInOrSignUp(navController = navController)
 
         ContainerForChooseOptions()
 
@@ -151,7 +138,11 @@ fun ContainerForChooseOptions(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ContainerForSignIn(modifier: Modifier = Modifier, navController: NavController) {
+fun ContainerForSignInOrSignUp(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    isSignIn: Boolean = true,
+) {
     var isChecked by rememberSaveable {
         mutableStateOf(false)
     }
@@ -193,102 +184,31 @@ fun ContainerForSignIn(modifier: Modifier = Modifier, navController: NavControll
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        val text = if (isSignIn) "Sign in" else "Sign up"
+        val route = if (isSignIn) Screen.Home.route else Screen.FillYourProfile.route
         MainNavigationButton(
-            text = "Sign in",
+            text = text,
             navController = navController,
-            route = Screen.Home.route
+            route = route
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Text(
-            text = "Forgot the password?",
-            style = TextStyle(
-                fontSize = 16.sp,
-                lineHeight = 22.4.sp,
-                fontFamily = FontFamily(Font(R.font.urbanist_semibold)),
-                fontWeight = FontWeight(600),
-                color = Color(0xFF06C149),
-                textAlign = TextAlign.Center,
-                letterSpacing = 0.2.sp,
-            ),
-            modifier = Modifier.fillMaxWidth()
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MainTextField(
-    modifier: Modifier = Modifier,
-    placeholderText: String,
-    leftIcon: Int,
-    isPasswordType: Boolean? = null,
-) {
-    var text by rememberSaveable { mutableStateOf("") }
-
-    var isTextFocused by rememberSaveable {
-        mutableStateOf(false)
-    }
-
-    var passwordVisible by rememberSaveable { mutableStateOf(false) }
-
-    OutlinedTextField(
-        modifier = modifier
-            .background(
-                color = Color(0xFFF5F5F5),
-                shape = RoundedCornerShape(size = 16.dp),
-            )
-            .height(60.dp)
-            .fillMaxWidth()
-            .onFocusChanged { isTextFocused = it.isFocused },
-        value = text,
-        onValueChange = { text = it },
-        placeholder = {
+        if (isSignIn)
             Text(
-                text = placeholderText,
-                color = Color(0xFF9E9E9E)
-            )
-        },
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = Color(0xFF06C149),
-            unfocusedBorderColor = Color(0x00000000),
-        ),
-        shape = RoundedCornerShape(size = 16.dp),
-        leadingIcon = {
-            Icon(
-                painter = painterResource(id = leftIcon),
-                contentDescription = null,
-                tint = if (isTextFocused || text.isNotEmpty()) MaterialTheme.colorScheme.onBackground else Color(
-                    0xFF9E9E9E
+                text = "Forgot the password?",
+                style = TextStyle(
+                    fontSize = 16.sp,
+                    lineHeight = 22.4.sp,
+                    fontFamily = FontFamily(Font(R.font.urbanist_semibold)),
+                    fontWeight = FontWeight(600),
+                    color = Color(0xFF06C149),
+                    textAlign = TextAlign.Center,
+                    letterSpacing = 0.2.sp,
                 ),
+                modifier = Modifier.fillMaxWidth()
             )
-        },
-
-        visualTransformation = if (passwordVisible && isPasswordType == true) VisualTransformation.None else if (isPasswordType == true) PasswordVisualTransformation() else VisualTransformation.None,
-        keyboardOptions = if (isPasswordType == true) KeyboardOptions(keyboardType = KeyboardType.Password) else KeyboardOptions(
-            keyboardType = KeyboardType.Text
-        ),
-        trailingIcon = {
-            if (isPasswordType == true) {
-                val image = if (passwordVisible)
-                    Icons.Filled.Visibility
-                else Icons.Filled.VisibilityOff
-
-                val tint =
-                    if (isTextFocused || text.isNotEmpty()) MaterialTheme.colorScheme.onBackground else Color(
-                        0xFF9E9E9E
-                    )
-
-                // Please provide localized description for accessibility services
-                val description = if (passwordVisible) "Hide password" else "Show password"
-
-                IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                    Icon(imageVector = image, description, tint = tint)
-                }
-            }
-        },
-    )
+    }
 }
 
 @Preview(showBackground = true, widthDp = 412, heightDp = 915)

@@ -5,6 +5,7 @@ import androidx.compose.runtime.MutableState
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.hearme_jc.ui.fragments.accountsetup.FillYourProfileScreen
 import com.example.hearme_jc.ui.fragments.homeactionmenu.HomeScreen
 import com.example.hearme_jc.ui.fragments.onboardsignupsignin.LetsYouInScreen
 import com.example.hearme_jc.ui.fragments.onboardsignupsignin.SignInScreen
@@ -35,6 +36,12 @@ fun NavGraph(navController: NavHostController, isShowToolbar: MutableState<Boole
         composable(Screen.SignUp.route) {
             isShowToolbar.value = true
             SignUpScreen(navController = navController)
+        }
+
+        //Account Setup
+        composable(Screen.FillYourProfile.route) {
+            isShowToolbar.value = true
+            FillYourProfileScreen(navController = navController)
         }
 
         //Home & Action menu

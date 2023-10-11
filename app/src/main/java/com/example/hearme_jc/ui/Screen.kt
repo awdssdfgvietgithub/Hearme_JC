@@ -9,9 +9,8 @@ sealed class Screen(val route: String, val title: String? = null, val navIcon: I
     object SignIn : Screen(route = "sign_in")
 
     //Account setup
+    object FillYourProfile : Screen(route = "fill_your_profile")
 
     //Home & Action menu
     object Home : Screen(route = "home")
-
-
 }

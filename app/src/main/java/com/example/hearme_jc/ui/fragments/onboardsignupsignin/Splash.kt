@@ -48,7 +48,11 @@ fun SplashScreen(
             )
         )
         delay(2000L)
-        navController.navigate(Screen.Walkthrough.route)
+        navController.navigate(Screen.Walkthrough.route) {
+            popUpTo(Screen.Splash.route) {
+                inclusive = true
+            }
+        }
     }
 
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {

@@ -5,4 +5,5 @@
     <string name="facebook_method">Continue with Facebook</string>
     <string name="method_sign_in_password">Sign in with password</string>
     <string name="title_sign_in">Login to Your Account</string>
+    <string name="title_sign_up">Create Your Account</string>
 </resources>

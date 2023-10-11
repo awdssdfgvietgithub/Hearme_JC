@@ -42,6 +42,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.hearme_jc.R
 import com.example.hearme_jc.data.model.SignInMethod
 import com.example.hearme_jc.data.model.SignInMethodData
@@ -52,7 +53,7 @@ import com.example.hearme_jc.ui.theme.Hearme_JCTheme
 @Composable
 fun LetsYouInScreen(
     modifier: Modifier = Modifier,
-    navController: NavController?,
+    navController: NavController,
 ) {
     Column(
         modifier = modifier
@@ -99,7 +100,7 @@ fun LetsYouInScreen(
         ContainsBottomText(
             navController = navController,
             modifier = Modifier.weight(1f),
-            question = "Don't have an account?",
+            question = "Don’t have an account?",
             action = "Sign up",
             route = Screen.SignUp.route
         )
@@ -109,7 +110,7 @@ fun LetsYouInScreen(
 @Composable
 fun ContainsBottomText(
     modifier: Modifier = Modifier,
-    navController: NavController?,
+    navController: NavController,
     question: String,
     action: String,
     route: String,
@@ -144,7 +145,18 @@ fun ContainsBottomText(
                 color = Color(0xFF06C149),
                 letterSpacing = 0.2.sp,
             ),
-            modifier = Modifier.clickable { navController?.navigate(route) }
+            modifier = Modifier.clickable {
+                navController.navigate(route) {
+                    if (route == Screen.SignUp.route)
+                        popUpTo(Screen.SignIn.route) {
+                            inclusive = true
+                        }
+                    else if (route == Screen.SignIn.route)
+                        popUpTo(Screen.SignUp.route) {
+                            inclusive = true
+                        }
+                }
+            }
         )
     }
 
@@ -257,7 +269,9 @@ fun LetsYouInScreenPreview() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            LetsYouInScreen(navController = null)
+            val navController = rememberNavController()
+
+            LetsYouInScreen(navController = navController)
         }
     }
 }
