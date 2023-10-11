@@ -31,9 +31,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -52,9 +52,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.hearme_jc.R
 import com.example.hearme_jc.ui.NavGraph
+import com.example.hearme_jc.ui.Screen
 import com.example.hearme_jc.ui.theme.Hearme_JCTheme
 import com.example.hearme_jc.ui.theme.Primary500
 
@@ -79,18 +81,71 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
-    val isShowToolbar = remember {
+
+    //State of topBar, false is its invisible
+    val isShowToolbar = rememberSaveable {
         mutableStateOf(false)
+    }
+
+    //State of topBar, title of its
+    val onTitleChange = rememberSaveable {
+        mutableStateOf("")
+    }
+
+    //Get current screen/fragment
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+
+    //Check to recompose topBar when navigating to a screen/fragment
+    when (navBackStackEntry?.destination?.route) {
+        Screen.Splash.route -> {
+            isShowToolbar.value = false
+        }
+
+        Screen.Walkthrough.route -> {
+            isShowToolbar.value = false
+            onTitleChange.value = ""
+        }
+
+        Screen.LetYouIn.route -> {
+            isShowToolbar.value = true
+            onTitleChange.value = ""
+        }
+
+        Screen.SignUp.route -> {
+            isShowToolbar.value = true
+            onTitleChange.value = ""
+
+        }
+
+        Screen.SignIn.route -> {
+            isShowToolbar.value = true
+            onTitleChange.value = ""
+
+        }
+
+        Screen.FillYourProfile.route -> {
+            isShowToolbar.value = true
+            onTitleChange.value = "Fill Your Profile"
+        }
+
+        Screen.Home.route -> {
+            isShowToolbar.value = true
+            onTitleChange.value = ""
+
+        }
     }
 
     Scaffold(topBar = {
         TopBar(
-            isVisible = isShowToolbar.value,
-            navController = navController
+            isVisible = isShowToolbar,
+            navController = navController,
+            onTitleChange = onTitleChange
         )
     }) { values ->
         Column(modifier = Modifier.padding(values)) {
-            NavGraph(navController = navController, isShowToolbar = isShowToolbar)
+            NavGraph(
+                navController = navController
+            )
         }
     }
 }
@@ -212,11 +267,16 @@ fun MainNavigationButton(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(modifier: Modifier = Modifier, isVisible: Boolean, navController: NavController) {
-    AnimatedVisibility(visible = isVisible) {
+fun TopBar(
+    modifier: Modifier = Modifier,
+    isVisible: MutableState<Boolean>,
+    navController: NavController,
+    onTitleChange: MutableState<String> = mutableStateOf(""),
+) {
+    AnimatedVisibility(visible = isVisible.value) {
         TopAppBar(title = {
-            Text(text = "")
-        },
+            Text(text = onTitleChange.value)
+        }, modifier = modifier,
             navigationIcon = {
                 IconButton(onClick = { navController.popBackStack() }) {
                     Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)

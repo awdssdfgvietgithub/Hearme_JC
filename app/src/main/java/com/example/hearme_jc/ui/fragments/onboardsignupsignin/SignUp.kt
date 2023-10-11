@@ -1,5 +1,6 @@
 package com.example.hearme_jc.ui.fragments.onboardsignupsignin
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -30,7 +31,7 @@ import com.example.hearme_jc.ui.Screen
 import com.example.hearme_jc.ui.theme.Hearme_JCTheme
 
 @Composable
-fun SignUpScreen(modifier: Modifier = Modifier, navController: NavController) {
+fun SignUpScreen(modifier: Modifier = Modifier, navController: NavController, ) {
     Column(
         modifier = modifier
             .fillMaxSize()
