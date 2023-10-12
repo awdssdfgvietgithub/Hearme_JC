@@ -1,9 +1,13 @@
 package com.example.hearme_jc.ui.fragments.onboardsignupsignin
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,9 +19,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -46,9 +54,11 @@ import com.example.hearme_jc.R
 import com.example.hearme_jc.data.model.SignInMethod
 import com.example.hearme_jc.data.model.SignInMethodData
 import com.example.hearme_jc.ui.Screen
-import com.example.hearme_jc.ui.activities.MainNavigationButton
-import com.example.hearme_jc.ui.activities.MainTextFieldLeadingIcon
 import com.example.hearme_jc.ui.theme.Hearme_JCTheme
+import com.example.hearme_jc.ui.theme.Primary500
+import com.example.hearme_jc.ui.theme.White
+import com.example.mylibrary.AppNavigationButton
+import com.example.mylibrary.AppTextFieldLeadingIcon
 
 @Composable
 fun SignInScreen(modifier: Modifier = Modifier, navController: NavController) {
@@ -138,6 +148,55 @@ fun ContainerForChooseOptions(modifier: Modifier = Modifier) {
 }
 
 @Composable
+fun ContainerRememberMe(modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        var isCheck by rememberSaveable {
+            mutableStateOf(false)
+        }
+
+        Box(
+            modifier = Modifier
+                .size(24.dp)
+                .background(
+                    color = if (isCheck) Primary500 else White,
+                    shape = RoundedCornerShape(8.dp)
+                )
+                .border(width = 3.dp, shape = RoundedCornerShape(8.dp), color = Primary500)
+                .clickable { isCheck = !isCheck }
+        )
+        {
+            IconButton(onClick = { isCheck = !isCheck }) {
+                this@Row.AnimatedVisibility(visible = isCheck) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_check),
+                        contentDescription = null,
+                        tint = White
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.width(12.dp))
+
+        Text(
+            text = "Remember me",
+            style = TextStyle(
+                fontSize = 14.sp,
+                lineHeight = 19.6.sp,
+                fontFamily = FontFamily(Font(R.font.urbanist_semibold)),
+                fontWeight = FontWeight(600),
+                color = MaterialTheme.colorScheme.onBackground,
+                letterSpacing = 0.2.sp,
+            ),
+        )
+    }
+}
+
+@Composable
 fun ContainerForSignInOrSignUp(
     modifier: Modifier = Modifier,
     navController: NavController,
@@ -148,48 +207,41 @@ fun ContainerForSignInOrSignUp(
     }
 
     Column(modifier = modifier, verticalArrangement = Arrangement.Center) {
-        MainTextFieldLeadingIcon(placeholderText = "Email", leftIcon = R.drawable.ic_email)
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        MainTextFieldLeadingIcon(
-            placeholderText = "Password",
-            leftIcon = R.drawable.ic_lock,
-            isPasswordType = true
+        AppTextFieldLeadingIcon(
+            placeholderText = "Email",
+            leftIcon = R.drawable.ic_email,
+            placeholderFont = FontFamily(Font(R.font.urbanist_regular)),
+            inputFont = FontFamily(Font(R.font.urbanist_semibold)),
+            mainColor = MaterialTheme.colorScheme.onBackground,
+            bgColor = MaterialTheme.colorScheme.primary
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Checkbox(checked = isChecked, onCheckedChange = { isChecked = it })
+        AppTextFieldLeadingIcon(
+            placeholderText = "Password",
+            leftIcon = R.drawable.ic_lock,
+            placeholderFont = FontFamily(Font(R.font.urbanist_regular)),
+            inputFont = FontFamily(Font(R.font.urbanist_semibold)),
+            mainColor = MaterialTheme.colorScheme.onBackground,
+            isPasswordType = true,
+            bgColor = MaterialTheme.colorScheme.primary
+        )
 
-            Spacer(modifier = Modifier.width(12.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
-            Text(
-                text = "Remember me",
-                style = TextStyle(
-                    fontSize = 14.sp,
-                    lineHeight = 19.6.sp,
-                    fontFamily = FontFamily(Font(R.font.urbanist_semibold)),
-                    fontWeight = FontWeight(600),
-                    color = Color(0xFF212121),
-                    letterSpacing = 0.2.sp,
-                ),
-            )
-        }
+        ContainerRememberMe()
 
         Spacer(modifier = Modifier.height(24.dp))
 
         val text = if (isSignIn) "Sign in" else "Sign up"
         val route = if (isSignIn) Screen.Home.route else Screen.FillYourProfile.route
-        MainNavigationButton(
+        AppNavigationButton(
             text = text,
-            navController = navController,
-            route = route
+            textColor = White,
+            bgColor = Primary500,
+            onButtonClick = { navController.navigate(route) },
+            font = FontFamily(Font(R.font.urbanist_bold))
         )
 
         Spacer(modifier = Modifier.height(24.dp))

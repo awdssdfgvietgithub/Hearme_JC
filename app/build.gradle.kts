@@ -100,5 +100,5 @@ dependencies {
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
 
     implementation(project(":mylibrary"))
-    implementation(project(":lib"))
+//    implementation(project(":lib"))
 }

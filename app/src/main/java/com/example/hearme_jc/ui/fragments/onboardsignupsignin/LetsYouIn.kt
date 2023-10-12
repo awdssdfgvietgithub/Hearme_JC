@@ -47,8 +47,10 @@ import com.example.hearme_jc.R
 import com.example.hearme_jc.data.model.SignInMethod
 import com.example.hearme_jc.data.model.SignInMethodData
 import com.example.hearme_jc.ui.Screen
-import com.example.hearme_jc.ui.activities.MainNavigationButton
 import com.example.hearme_jc.ui.theme.Hearme_JCTheme
+import com.example.hearme_jc.ui.theme.Primary500
+import com.example.hearme_jc.ui.theme.White
+import com.example.mylibrary.AppNavigationButton
 
 @Composable
 fun LetsYouInScreen(
@@ -90,10 +92,12 @@ fun LetsYouInScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         if (navController != null) {
-            MainNavigationButton(
+            AppNavigationButton(
                 text = stringResource(id = R.string.method_sign_in_password),
-                navController = navController,
-                route = Screen.SignIn.route
+                textColor = White,
+                bgColor = Primary500,
+                onButtonClick = { navController.navigate(Screen.SignIn.route) },
+                font = FontFamily(Font(R.font.urbanist_bold))
             )
         }
 

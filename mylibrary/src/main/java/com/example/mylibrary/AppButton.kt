@@ -1,13 +1,15 @@
 package com.example.mylibrary
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Text
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -18,20 +20,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 
 @Composable
 fun AppNavigationButton(
     modifier: Modifier = Modifier,
     text: String,
-    navController: NavController,
-    route: String,
+    onButtonClick: () -> Unit = {},
     textColor: Color,
     bgColor: Color,
     font: FontFamily,
 ) {
     Button(
-        onClick = { navController.navigate(route) },
+        onClick = { onButtonClick() },
         modifier = modifier
             .fillMaxWidth()
             .shadow(
@@ -50,12 +50,46 @@ fun AppNavigationButton(
             style = TextStyle(
                 fontSize = 16.sp,
                 lineHeight = 22.4.sp,
-//                fontFamily = font,
+                fontFamily = font,
                 fontWeight = FontWeight(700),
                 color = textColor,
                 textAlign = TextAlign.Center,
                 letterSpacing = 0.2.sp,
             )
+        )
+    }
+}
+
+@Composable
+fun PairButton(
+    modifier: Modifier = Modifier,
+    text1: String,
+    text2: String,
+    textColor1: Color,
+    textColor2: Color,
+    bgColor1: Color,
+    bgColor2: Color,
+    font: FontFamily,
+    onButtonClick1: () -> Unit = {},
+    onButtonClick2: () -> Unit = {},
+) {
+    Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        AppNavigationButton(
+            modifier = Modifier.weight(1f),
+            text = text1,
+            onButtonClick = { onButtonClick1() },
+            textColor = textColor1,
+            bgColor = bgColor1,
+            font = font
+        )
+
+        AppNavigationButton(
+            modifier = Modifier.weight(1f),
+            text = text2,
+            onButtonClick = { onButtonClick2() },
+            textColor = textColor2,
+            bgColor = bgColor2,
+            font = font
         )
     }
 }

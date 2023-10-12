@@ -30,7 +30,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.hearme_jc.R
 import com.example.hearme_jc.ui.Screen
-import com.example.hearme_jc.ui.activities.MainNavigationButton
+import com.example.hearme_jc.ui.theme.Primary500
+import com.example.hearme_jc.ui.theme.White
+import com.example.mylibrary.AppNavigationButton
 
 @Composable
 fun WalkThroughScreen(
@@ -86,10 +88,12 @@ fun BottomSheet(modifier: Modifier = Modifier, navController: NavController) {
             Spacer(modifier = Modifier.height(40.dp))
             Spacer(modifier = Modifier.height(40.dp))
 
-            MainNavigationButton(
+            AppNavigationButton(
                 text = stringResource(id = R.string.started_button_text),
-                navController = navController,
-                route = Screen.LetYouIn.route
+                textColor = White,
+                bgColor = Primary500,
+                onButtonClick = { navController.navigate(Screen.LetYouIn.route) },
+                font = FontFamily(Font(R.font.urbanist_bold))
             )
         }
     }

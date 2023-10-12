@@ -7,6 +7,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.hearme_jc.ui.fragments.accountsetup.CreateNewPinScreen
 import com.example.hearme_jc.ui.fragments.accountsetup.FillYourProfileScreen
+import com.example.hearme_jc.ui.fragments.accountsetup.FollowArtistsScreen
+import com.example.hearme_jc.ui.fragments.accountsetup.SetYourFingerprintScreen
 import com.example.hearme_jc.ui.fragments.homeactionmenu.HomeScreen
 import com.example.hearme_jc.ui.fragments.onboardsignupsignin.LetsYouInScreen
 import com.example.hearme_jc.ui.fragments.onboardsignupsignin.SignInScreen
@@ -42,7 +44,12 @@ fun NavGraph(
         composable(Screen.CreateNewPin.route) {
             CreateNewPinScreen(navController = navController)
         }
-
+        composable(Screen.SetYourFingerprint.route) {
+            SetYourFingerprintScreen(navController = navController)
+        }
+        composable(Screen.FollowArtists.route) {
+            FollowArtistsScreen(navController = navController)
+        }
 
         //Home & Action menu
         composable(Screen.Home.route) {

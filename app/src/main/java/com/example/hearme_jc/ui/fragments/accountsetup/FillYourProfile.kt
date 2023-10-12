@@ -1,7 +1,5 @@
 package com.example.hearme_jc.ui.fragments.accountsetup
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -28,9 +26,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -41,12 +40,11 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 import com.example.hearme_jc.R
 import com.example.hearme_jc.ui.Screen
-import com.example.hearme_jc.ui.activities.MainTextField
-import com.example.hearme_jc.ui.activities.PairButton
 import com.example.hearme_jc.ui.theme.Hearme_JCTheme
-import com.example.hearme_jc.ui.theme.Primary100
 import com.example.hearme_jc.ui.theme.Primary500
 import com.example.hearme_jc.ui.theme.White
+import com.example.mylibrary.AppTextField
+import com.example.mylibrary.PairButton
 
 @Composable
 fun FillYourProfileScreen(modifier: Modifier = Modifier, navController: NavController) {
@@ -56,18 +54,18 @@ fun FillYourProfileScreen(modifier: Modifier = Modifier, navController: NavContr
             .padding(top = 24.dp, end = 24.dp, start = 24.dp)
             .background(MaterialTheme.colorScheme.background),
     ) {
-        ContainerFillData(modifier = Modifier.weight(1f), navController = navController)
+        ContainerFillData(modifier = Modifier.weight(1f))
 
         PairButton(
             text1 = "Skip",
             text2 = "Continue",
-            route1 = Screen.CreateNewPin.route,
-            route2 = Screen.CreateNewPin.route,
             textColor1 = MaterialTheme.colorScheme.onTertiary,
             textColor2 = White,
             bgColor1 = MaterialTheme.colorScheme.onSecondaryContainer,
             bgColor2 = Primary500,
-            navController = navController,
+            font = FontFamily(Font(R.font.urbanist_bold)),
+            onButtonClick1 = { navController.navigate(Screen.CreateNewPin.route) },
+            onButtonClick2 = { navController.navigate(Screen.CreateNewPin.route) },
         )
 
         Spacer(modifier = Modifier.height(48.dp))
@@ -75,19 +73,55 @@ fun FillYourProfileScreen(modifier: Modifier = Modifier, navController: NavContr
 }
 
 @Composable
-fun ContainerFillData(modifier: Modifier = Modifier, navController: NavController) {
+fun ContainerFillData(modifier: Modifier = Modifier) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(24.dp)) {
         ContainerChooseAvatar()
 
-        MainTextField(placeholderText = "Full Name")
+        AppTextField(
+            placeholderText = "Full Name",
+            placeholderFont = FontFamily(Font(R.font.urbanist_regular)),
+            inputFont = FontFamily(Font(R.font.urbanist_semibold)),
+            mainColor = MaterialTheme.colorScheme.onBackground,
+            bgColor = MaterialTheme.colorScheme.primary
+        )
+        AppTextField(
+            placeholderText = "Full Name",
+            placeholderFont = FontFamily(Font(R.font.urbanist_regular)),
+            inputFont = FontFamily(Font(R.font.urbanist_semibold)),
+            mainColor = MaterialTheme.colorScheme.onBackground,
+            bgColor = MaterialTheme.colorScheme.primary
+        )
 
-        MainTextField(placeholderText = "Nick Name")
+        AppTextField(
+            placeholderText = "Nick Name",
+            placeholderFont = FontFamily(Font(R.font.urbanist_regular)),
+            inputFont = FontFamily(Font(R.font.urbanist_semibold)),
+            mainColor = MaterialTheme.colorScheme.onBackground,
+            bgColor = MaterialTheme.colorScheme.primary
+        )
 
-        MainTextField(placeholderText = "Date of Birth")
+        AppTextField(
+            placeholderText = "Date of Birth",
+            placeholderFont = FontFamily(Font(R.font.urbanist_regular)),
+            inputFont = FontFamily(Font(R.font.urbanist_semibold)),
+            mainColor = MaterialTheme.colorScheme.onBackground,
+            bgColor = MaterialTheme.colorScheme.primary
+        )
 
-        MainTextField(placeholderText = "Email")
+        AppTextField(
+            placeholderText = "Email", placeholderFont = FontFamily(Font(R.font.urbanist_regular)),
+            inputFont = FontFamily(Font(R.font.urbanist_semibold)),
+            mainColor = MaterialTheme.colorScheme.onBackground,
+            bgColor = MaterialTheme.colorScheme.primary
+        )
 
-        MainTextField(placeholderText = "Phone Number")
+        AppTextField(
+            placeholderText = "Phone Number",
+            placeholderFont = FontFamily(Font(R.font.urbanist_regular)),
+            inputFont = FontFamily(Font(R.font.urbanist_semibold)),
+            mainColor = MaterialTheme.colorScheme.onBackground,
+            bgColor = MaterialTheme.colorScheme.primary
+        )
     }
 }
 
