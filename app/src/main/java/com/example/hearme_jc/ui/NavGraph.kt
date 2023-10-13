@@ -1,7 +1,6 @@
 package com.example.hearme_jc.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -9,6 +8,9 @@ import com.example.hearme_jc.ui.fragments.accountsetup.CreateNewPinScreen
 import com.example.hearme_jc.ui.fragments.accountsetup.FillYourProfileScreen
 import com.example.hearme_jc.ui.fragments.accountsetup.FollowArtistsScreen
 import com.example.hearme_jc.ui.fragments.accountsetup.SetYourFingerprintScreen
+import com.example.hearme_jc.ui.fragments.forgotresetpassword.CreateNewPasswordScreen
+import com.example.hearme_jc.ui.fragments.forgotresetpassword.SelectMethodsScreen
+import com.example.hearme_jc.ui.fragments.forgotresetpassword.TypeOTPScreen
 import com.example.hearme_jc.ui.fragments.homeactionmenu.HomeScreen
 import com.example.hearme_jc.ui.fragments.onboardsignupsignin.LetsYouInScreen
 import com.example.hearme_jc.ui.fragments.onboardsignupsignin.SignInScreen
@@ -20,7 +22,7 @@ import com.example.hearme_jc.ui.fragments.onboardsignupsignin.WalkThroughScreen
 fun NavGraph(
     navController: NavHostController,
 ) {
-    NavHost(navController = navController, startDestination = Screen.Splash.route) {
+    NavHost(navController = navController, startDestination = Screen.SelectMethods.route) {
         composable(Screen.Splash.route) {
             SplashScreen(navController = navController)
         }
@@ -49,6 +51,17 @@ fun NavGraph(
         }
         composable(Screen.FollowArtists.route) {
             FollowArtistsScreen(navController = navController)
+        }
+
+        //Forgot & reset password
+        composable(Screen.SelectMethods.route) {
+            SelectMethodsScreen(navController = navController)
+        }
+        composable(Screen.TypeOTP.route) {
+            TypeOTPScreen(navController = navController)
+        }
+        composable(Screen.CreateNewPassword.route) {
+            CreateNewPasswordScreen(navController = navController)
         }
 
         //Home & Action menu

@@ -1,6 +1,5 @@
 package com.example.hearme_jc.ui.activities
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -53,8 +52,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
@@ -74,6 +71,7 @@ fun MainScreen() {
 
     //Check to recompose topBar when navigating to a screen/fragment
     when (navBackStackEntry?.destination?.route) {
+        //Onboarding, Sign up & Sign in
         Screen.Splash.route -> {
             isShowToolbar.value = false
         }
@@ -100,6 +98,7 @@ fun MainScreen() {
 
         }
 
+        //Account Setup
         Screen.FillYourProfile.route -> {
             isShowToolbar.value = true
             onTitleChange.value = "Fill Your Profile"
@@ -120,6 +119,23 @@ fun MainScreen() {
             onTitleChange.value = "Follow Artists"
         }
 
+        //Forgot & Reset password
+        Screen.SelectMethods.route -> {
+            isShowToolbar.value = true
+            onTitleChange.value = "Forgot Password"
+        }
+
+        Screen.TypeOTP.route -> {
+            isShowToolbar.value = true
+            onTitleChange.value = "Forgot Password"
+        }
+
+        Screen.CreateNewPassword.route -> {
+            isShowToolbar.value = true
+            onTitleChange.value = "Create New Password"
+        }
+
+        //Home & Action menu
         Screen.Home.route -> {
             isShowToolbar.value = true
             onTitleChange.value = ""

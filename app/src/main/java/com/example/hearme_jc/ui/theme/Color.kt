@@ -35,6 +35,7 @@ val Greyscale800 = Color(0xFF424242)
 val Greyscale900 = Color(0xFF212121)
 
 val Primary100 = Color(0xFFE6F9ED)
+val Primary300 = Color(0xFF6ADA92)
 val Primary500 = Color(0xFF06C149)
 val Primary700 = Color(0xFF0E9E42)
 val TranparentGreen = Color(0x06C14914)

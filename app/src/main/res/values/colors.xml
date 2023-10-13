@@ -44,4 +44,12 @@
     <color name="circle_background_vector">#F2F2F2</color>
     <color name="window_vector">#CCCCCC</color>
     <color name="leave_and_cloud_vector">#E6E6E6</color>
+
+    <color name="shirt_and_item_phone_vector">#E6E6E6</color>
+    <color name="background_phone_vector">#FFFFFF</color>
+    <color name="outline_phone_and_card_vector">#3F3D56</color>
+    <color name="bottom_line_vector">#CCCCCC</color>
+    <color name="lock_vector">#FFFFFF</color>
+
+    <color name="circle_and_leaves_vector">#F1F1F1</color>
 </resources>

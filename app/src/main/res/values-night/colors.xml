@@ -4,4 +4,11 @@
     <color name="window_vector">#212121</color>
     <color name="leave_and_cloud_vector">#1F222A</color>
 
+    <color name="shirt_and_item_phone_vector">#35383F</color>
+    <color name="background_phone_vector">#3F3D56</color>
+    <color name="outline_phone_and_card_vector">#1F222A</color>
+    <color name="bottom_line_vector">#35383F</color>
+    <color name="lock_vector">#1F222A</color>
+
+    <color name="circle_and_leaves_vector">#35383F</color>
 </resources>

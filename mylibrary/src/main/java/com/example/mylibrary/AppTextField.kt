@@ -7,13 +7,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,14 +24,70 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+
+@Composable
+fun AppTextFieldPIN(
+    modifier: Modifier = Modifier,
+    inputFont: FontFamily,
+    bgColor: Color,
+    mainColor: Color,
+    onChangeText: (String) -> String,
+    focusBorder: Color,
+    unfocusedBorder: Color,
+) {
+    val text = ""
+
+    val maxChar = 1
+
+    var number by rememberSaveable {
+        mutableStateOf("")
+    }
+
+    var isTextFocused by rememberSaveable {
+        mutableStateOf(false)
+    }
+
+    androidx.compose.material3.OutlinedTextField(
+        modifier = modifier
+            .background(
+                color = bgColor,
+                shape = RoundedCornerShape(size = 16.dp),
+            )
+            .fillMaxWidth(),
+        value = onChangeText(text),
+        readOnly = true,
+        singleLine = true,
+        onValueChange = {
+            if (it.length <= maxChar) number = it
+
+        },
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = focusBorder, unfocusedBorderColor = unfocusedBorder,
+        ),
+        shape = RoundedCornerShape(size = 16.dp),
+        textStyle = TextStyle(
+            fontSize = 40.sp,
+            lineHeight = 28.8.sp,
+            fontFamily = inputFont,
+            fontWeight = FontWeight(700),
+            color = mainColor,
+            letterSpacing = 0.2.sp,
+            textAlign = TextAlign.Center
+        ),
+        visualTransformation = PasswordVisualTransformation(mask = '\u25CF'),
+
+        keyboardOptions =
+        KeyboardOptions(keyboardType = KeyboardType.Number)
+    )
+}
 
 @Composable
 fun AppTextFieldLeadingIcon(

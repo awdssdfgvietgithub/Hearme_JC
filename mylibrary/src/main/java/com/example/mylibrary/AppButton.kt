@@ -29,20 +29,32 @@ fun AppNavigationButton(
     textColor: Color,
     bgColor: Color,
     font: FontFamily,
+    haveShadow: Boolean = true,
 ) {
     Button(
         onClick = { onButtonClick() },
-        modifier = modifier
+        shape = RoundedCornerShape(size = 100.dp),
+        colors = ButtonDefaults.buttonColors(bgColor),
+        modifier =
+        if (haveShadow)
+            modifier
+                .fillMaxWidth()
+                .shadow(
+                    elevation = 6.dp,
+                    spotColor = Color(0x4006C149),
+                    ambientColor = Color(0x4006C149),
+                    shape = RoundedCornerShape(size = 100.dp),
+                )
+                .width(380.dp)
+                .height(58.dp)
+        else modifier
             .fillMaxWidth()
             .shadow(
-                elevation = 24.dp,
-                spotColor = Color(0x4006C149),
-                ambientColor = Color(0x4006C149),
-                shape = RoundedCornerShape(size = 100.dp),
+                elevation = 0.dp,
             )
             .width(380.dp)
             .height(58.dp),
-        colors = ButtonDefaults.buttonColors(bgColor)
+        elevation = if (haveShadow) ButtonDefaults.elevation(6.dp, 6.dp) else ButtonDefaults.elevation(0.dp, 0.dp),
     ) {
         Text(
             text = text,
@@ -72,15 +84,17 @@ fun PairButton(
     font: FontFamily,
     onButtonClick1: () -> Unit = {},
     onButtonClick2: () -> Unit = {},
+    haveShadow: Boolean = true,
 ) {
-    Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+    Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         AppNavigationButton(
             modifier = Modifier.weight(1f),
             text = text1,
             onButtonClick = { onButtonClick1() },
             textColor = textColor1,
             bgColor = bgColor1,
-            font = font
+            font = font,
+            haveShadow = haveShadow
         )
 
         AppNavigationButton(
@@ -89,7 +103,8 @@ fun PairButton(
             onButtonClick = { onButtonClick2() },
             textColor = textColor2,
             bgColor = bgColor2,
-            font = font
+            font = font,
+            haveShadow = haveShadow
         )
     }
 }

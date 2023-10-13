@@ -46,6 +46,15 @@ dependencies {
     implementation("androidx.compose.material:material:1.5.3")
 
     implementation("androidx.compose.material:material-icons-extended:1.5.3")
+    implementation("androidx.compose.material3:material3:1.1.2")
+    implementation("androidx.navigation:navigation-runtime-ktx:2.7.4")
 
+    // Android Studio Preview support
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    // Optional - Intergration with Constriant layout
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+
+//    implementation(project(":app"))
 
 }
