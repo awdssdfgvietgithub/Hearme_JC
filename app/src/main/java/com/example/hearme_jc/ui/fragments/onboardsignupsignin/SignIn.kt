@@ -19,11 +19,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -53,7 +51,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.hearme_jc.R
 import com.example.hearme_jc.data.model.SignInMethod
 import com.example.hearme_jc.data.model.SignInMethodData
-import com.example.hearme_jc.ui.Screen
+import com.example.hearme_jc.navigation.Screen
 import com.example.hearme_jc.ui.theme.Hearme_JCTheme
 import com.example.hearme_jc.ui.theme.Primary500
 import com.example.hearme_jc.ui.theme.White
@@ -235,12 +233,17 @@ fun ContainerForSignInOrSignUp(
         Spacer(modifier = Modifier.height(24.dp))
 
         val text = if (isSignIn) "Sign in" else "Sign up"
-        val route = if (isSignIn) Screen.Home.route else Screen.FillYourProfile.route
         AppNavigationButton(
             text = text,
             textColor = White,
             bgColor = Primary500,
-            onButtonClick = { navController.navigate(route) },
+            onButtonClick = {
+                if (isSignIn) navController.navigate(Screen.Home.route) {
+                    popUpTo(0) {
+                        inclusive = true
+                    }
+                } else navController.navigate(Screen.FillYourProfile.route)
+            },
             font = FontFamily(Font(R.font.urbanist_bold))
         )
 

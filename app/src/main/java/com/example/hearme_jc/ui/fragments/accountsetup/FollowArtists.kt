@@ -38,13 +38,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.hearme_jc.R
 import com.example.hearme_jc.data.model.Artist
 import com.example.hearme_jc.data.model.ArtistsData
-import com.example.hearme_jc.ui.Screen
+import com.example.hearme_jc.navigation.Screen
 import com.example.hearme_jc.ui.theme.Hearme_JCTheme
 import com.example.hearme_jc.ui.theme.Primary500
 import com.example.hearme_jc.ui.theme.White
@@ -102,8 +101,20 @@ fun CardPairButton(modifier: Modifier = Modifier, navController: NavController) 
             bgColor1 = MaterialTheme.colorScheme.onSecondaryContainer,
             bgColor2 = Primary500,
             font = FontFamily(Font(R.font.urbanist_bold)),
-            onButtonClick1 = { navController.navigate(Screen.Home.route) },
-            onButtonClick2 = { navController.navigate(Screen.Home.route) },
+            onButtonClick1 = {
+                navController.navigate(Screen.Home.route) {
+                    popUpTo(0) {
+                        inclusive = true
+                    }
+                }
+            },
+            onButtonClick2 = {
+                navController.navigate(Screen.Home.route) {
+                    popUpTo(0) {
+                        inclusive = true
+                    }
+                }
+            },
             haveShadow = false
         )
     }

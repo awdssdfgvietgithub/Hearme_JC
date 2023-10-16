@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.hearme_jc.R
-import com.example.hearme_jc.ui.Screen
+import com.example.hearme_jc.navigation.Screen
 import kotlinx.coroutines.delay
 
 @Composable

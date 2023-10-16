@@ -1,6 +1,5 @@
 package com.example.hearme_jc.ui.fragments.onboardsignupsignin
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -27,7 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.hearme_jc.R
-import com.example.hearme_jc.ui.Screen
+import com.example.hearme_jc.navigation.Screen
 import com.example.hearme_jc.ui.theme.Hearme_JCTheme
 
 @Composable
