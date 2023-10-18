@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.util.findImplementationFromInterface
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -62,6 +60,7 @@ dependencies {
     //</
     // such as input and measurement/layout
     implementation("androidx.compose.ui:ui")
+    implementation("com.google.android.material:material:1.10.0")
     // Android Studio Preview support
     debugImplementation("androidx.compose.ui:ui-tooling")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -92,6 +91,9 @@ dependencies {
     implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
     // Optional - Intergration with Constriant layout
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+    // Optional - Viewpager
+    implementation("com.google.accompanist:accompanist-pager:0.23.1")
+    implementation("com.google.accompanist:accompanist-pager-indicators:0.13.0")
     ///>
 
     testImplementation("junit:junit:4.13.2")

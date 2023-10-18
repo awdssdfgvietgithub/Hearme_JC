@@ -2,14 +2,14 @@ package com.example.hearme_jc.navigation
 
 sealed class Screen(val route: String) {
     //Nested navigation
-    object Onboard: Screen(route = "onboard")
-    object Auth: Screen(route = "auth")
-    object Setup: Screen(route = "setup")
-    object TabHome: Screen(route = "tab_home")
-    object TabExplore: Screen(route = "tab_explore")
-    object TabLibrary: Screen(route = "tab_library")
-    object TabProfile: Screen(route = "tab_profile")
-
+    object Onboard : Screen(route = "onboard")
+    object Auth : Screen(route = "auth")
+    object Setup : Screen(route = "setup")
+    object TabHome : Screen(route = "tab_home")
+    object TabExplore : Screen(route = "tab_explore")
+    object TabLibrary : Screen(route = "tab_library")
+    object TabProfile : Screen(route = "tab_profile")
+//    object ViewPagerNotification : Screen(route = "view_pager_notification")
 
     //Onboard
     object Splash : Screen(route = "splash_screen")
@@ -31,6 +31,9 @@ sealed class Screen(val route: String) {
 
     //Tab Home
     object Home : Screen(route = "home")
+    object SeeAllTrendingNow : Screen(route = "see_all_trending_now")
+    object SeeAllPopularArtists : Screen(route = "see_all_popular_artists")
+    object Notification : Screen(route = "notification")
 
     //Tab Explore
     object Explore : Screen(route = "explore")
@@ -40,4 +43,8 @@ sealed class Screen(val route: String) {
 
     //Tab Profile
     object Profile : Screen(route = "profile")
+
+    //View Pager Notification
+//    object SongsNotification : Screen(route = "songs_notification")
+//    object PodcastsNotification : Screen(route = "podcasts_notification")
 }

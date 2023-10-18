@@ -8,7 +8,7 @@ import androidx.navigation.compose.NavHost
 fun NavGraph(
     navController: NavHostController,
 ) {
-    NavHost(navController = navController, startDestination = Screen.Onboard.route) {
+    NavHost(navController = navController, startDestination = Screen.TabHome.route) {
         //Onboard
         onboardGraph(navController)
 

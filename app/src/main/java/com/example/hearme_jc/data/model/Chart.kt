@@ -4,7 +4,7 @@ import com.example.hearme_jc.R
 
 data class Chart(val chartId: String, val chartName: String, val image: Int)
 
-class FakeData {
+class ChartData {
     companion object {
         fun dataChart(): ArrayList<Chart> {
             val dataChart = ArrayList<Chart>()

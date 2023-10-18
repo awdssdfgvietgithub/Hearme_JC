@@ -1,6 +1,7 @@
 package com.example.hearme_jc.data.model
 
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 
 data class Music(
     val musicID: String,
@@ -15,7 +16,11 @@ data class Music(
     val path: String = "https://cdn.pixabay.com/audio/2023/07/03/audio_80cd47077b.mp3",
     val information: String? = null,
     var isPlaying: Boolean? = false,
-)
+) {
+    fun GetArtist(artistID: String): Artist? {
+        return ArtistsData.dataArtist().firstOrNull { it.artistId == artistID }
+    }
+}
 
 class MusicsData {
     companion object {
@@ -97,7 +102,7 @@ class MusicsData {
                         "ms006",
                         "Forever After All",
                         600,
-                        "https://s3-alpha-sig.figma.com/img/8328/f145/8bf703f1334a093e8168e707aa49ae97?Expires=1696809600&Signature=K5eWbNPypaiUcAPxqvVAn~TjHeRHkWvSRwp~gQQ3Dz6ns9eYauW2rb0cRvTvegDLQ3ur69~X0oU-PisjLfmIf72tM52iBT42bNAsaU9FZxZ5WdHTehOOOzPTGZC88mRbR96jZqhH27M0xDnvY45nDPU9ToFCoNCrcgN6IqJCsNNn0l6zihXejIQ-I7bDQCpOBIYoZSlyt0JW5HIK6b5FrPRZh-VbAK7idhi4L8nQXXbwrPWWScwkLIU0qg6UkUWuFFLUpe~n6SN6yIphsr8gzcICdu0KtJv1OYccfmbNSRJN-1zfJ2nrFy-OEqNaP6oDqNtJOxEe0zNgzXN1gNBl1w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
+                        "https://s3-alpha-sig.figma.com/img/8328/f145/8bf703f1334a093e8168e707aa49ae97?Expires=1698624000&Signature=IcktGDcoRJLhKFug0RTAIIdK93GfkY1tQYeV1yr1EQxtaQNKSBSg6ljb8PwCMvJHCgBcnTpY5PACkXtwPc4FimYIysroMk3LTW6OJyrAWOVM3ZcfrluHyWtGUz-V0OQuuhINTqMisBieZ6mhNeo1Ry0~sdgZnfjzY~AlC4e-rbhsYIap2Iar5rGfzbJpv5N1ZTIdjmKM3vq01AjcLH4SWbowsIHbiul-kB0z4Eo7yYIbHn6D0JR~EDLymES27C40RS0d3IGSZj5mb4~vWq9tB1DG754xuTbCDnA-zbfNEAxFUqNDCVzW9rfOQZ-umXCKWiTlKS2ohaBQjWbqrJNDpw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
                         Time(0, 4, 40),
                         Date("11/05/2023"),
                         "ca003",
@@ -136,7 +141,7 @@ class MusicsData {
                         "ms009",
                         "593: Dallas Taylor | The Psychology of Sound Design",
                         200,
-                        "https://s3-alpha-sig.figma.com/img/9b23/9488/35a4ee044e985f4fc0ad99aa61f67225?Expires=1696809600&Signature=NUACqhFHW3sXoIj6EsvfeGfzAJBfndybsqG2CkGRYKOwsts4yFpCw~kFM7ESer2JwYLN~I9U0KmyYreSk8Z30ITpLqbeu1D9EHGsYWRwzd~swAEFUFny0EIVAy5YYNi3s7i-SmDroNctg-RleXArNnKImTbUXyp1hlS7b-NU0FBEP5poX12TaNZYJ2mzywH70Y1W7byOkDLPeA52lP5sigfrFqceXB-ZV~7XzxJsP0yxtkXD~2K6RIAWuOPiJ2SXpXG18llZv6h2PZ0cOH-0GJSaZNgq9YjLzkT17qDnDreN6hdh2l83Y53hdCawegQDrCGsBLpCxXIfcDvucTLHFw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
+                        "https://s3-alpha-sig.figma.com/img/9b23/9488/35a4ee044e985f4fc0ad99aa61f67225?Expires=1698624000&Signature=AvIjUeybpAxfaTa3Eq8nRn9Z6qUkdAJUw2ptKzKsASxdJwl4fACjs4~amXdkwMZwyUUgjamoRKgckUq4aJ1t56o5PsmPYfVWEFCO-uRtOaEtFSOUCAtcfEwq~f1K7VGZd7lxeThbMtLygS-Afn2J5OBLA5iDwwOfMFCXhlk7n5lEnYms8rmRk8u1PvY5hQjjnAkx4lEFEpXpVB6lkL0c80HUsWxZex6hBs5zdIaIetLGg4y6PbwxxEYOcJ3VId8R3KpQA0Q-mmJTZnoNwPfx0V4Mfd3uhRAFM~rb~~CQf1V-bWKgumVCpvtR1QaRG7akyyulIOjIo272OnB-1GKZhg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
                         Time(0, 48, 35),
                         calYesterday.time,
                         "ca002",
@@ -151,7 +156,7 @@ class MusicsData {
                         "ms010",
                         "837: Amy Webb | Changing Lives with Synthetic Biology  ",
                         500,
-                        "https://s3-alpha-sig.figma.com/img/e11b/0138/2a27cf992de63e5ce47a0a8da996c096?Expires=1696809600&Signature=L-sQCu5lrY4GKLNhfUWNOH2GVOtOUak49SPQlGOiMV5sQcmQ61GAvuVWiOoT4nuonsBfgwQM71byNVjLlGqbmdtWwezbCMVrsp8bYBPOdjqrZkv2uscPAJopbX2jJhxkN6OZALgOnCdLhnHptE~~jMfdXHp9Q9JDFrbN5IkAad--2oCvTqFB25ZaAbteRoAVvgYEZnJ-Bnp64DayddTVukzYetQz0~E2MAU38AVwWTDMC0~-vYTsXCIGiBhvtf53iZQOOyfQtnNM4ls0W8ie5R-P3pbw5Ir6FrI6LqdQUmItdF8q~RELN4nwUVA0bNRoegxqQ2P-cr7Cw~7BIuMiNg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
+                        "https://s3-alpha-sig.figma.com/img/bd8c/dd28/bedb56fafecef4a4741a242dd3d897e9?Expires=1698624000&Signature=Ar3-S5YATjVkDNEmO3FU~SetkwsFoPSi7my2skmzbYQvbcdqCx4kidTARSVnnFkTVn4a-CJiKbq74MZoZKSgMtsAASmrdJ0W4nkKvskWyPyP45PE~C7-euhEc9-7SYMxVsbyAwak6t5U9i-9aQgT5emVVcTxEvzY2ugYpGnkHbr2EZZj6DVwATaij7nrr0pxXggqtEUDb-Y1liCeMZyaedfKBIwnM9PtJxoGi9W~v83A2CdeQ46Xovf5wdaYP3zXbVXLDmm8ZAU6VJudSExWJUn96HY7p5Az3flPOnuLcor-qF3J7kqnUR-h08RreIa3OjHeMBIj1aCJbHF9myjjKg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
                         Time(0, 34, 54),
                         calToday.time,
                         "ca002",
@@ -192,7 +197,7 @@ class MusicsData {
                         "ms013",
                         "Sharks",
                         200,
-                        "https://s3-alpha-sig.figma.com/img/5822/25eb/7dd77abaa2a7d741d2ea6db5f4748610?Expires=1696809600&Signature=jgxK8oPHwwnuZal1d5e0kxCTHuKcDsUugJ6k28DWU-Z7dkrqqV2qHFkRslV-RWondMEFN4MmIfeEa-eUv47rtdrSwsvyGdQA56cBYHOC-FdK3AlY5ozlba15YuNNRWPMm45o3nkCcWwJUTyhFCtJjGVnG~v3nW1qJvsAizhig-KSgtytOtGJRGWkd~EdRo8CKmvQt-qYNe7uwbT2dJYF3eu2mQ7Wa0m22r0wLw4KlEbDw44Zt8YvBvYH~YFdKwDO-XhCbdJZUB2hfq1MEZ3mwLzkcgUL3642mRLFu4ADXyyLe9zReXlBYpFPTdv6g6SHAFi7455OmR-dsXu4tW19ng__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
+                        "https://s3-alpha-sig.figma.com/img/9d88/5607/87f73b42744eec682913ce7eb92a19f5?Expires=1698624000&Signature=qKsngf5xqDB7e5Dr03Mmfly-UTLUwmp7qqto-an7dhEZJcSYhXWiTuXyJGe8eiN0FXBRBTjHHC-ylLuigkxi-xweLq8Z-ZWE4~4xsPtpJcXG4D5Yd2AXWsdnlTspDmgc8b4Eu-QcbJIuZ~DwbNas7B8rJxMcPVOtmCIkePCIInknhXFETHxGGSyWrNBDfh5rYU7aotxYfxDP9K7P3N2a3C2kz-qlwI8dSNmf7u678BvzLmDFVIQ6s7vzMXS7jhieb0GsTkpEDRZYYIdg~72rzHdyT1ldHNOCPVXFFriATn4d-SMHCAL98qmpv32V9sY11waSCBjL5wAmsq-opOUhrQ__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
                         Time(0, 3, 35),
                         Date("9/08/2023"),
                         "ca007",
@@ -205,7 +210,7 @@ class MusicsData {
                         "ms014",
                         "621: Reid Hoffman | Surprising Entrepreneurial Truths",
                         15,
-                        "https://s3-alpha-sig.figma.com/img/0bb2/dbba/64cde090ac8a56c1e620b12d7e7f51a6?Expires=1696809600&Signature=LA6Oo1nvzfMQA3Qn0i53KD1ISs83O3f08HqaCl3IwJ12YghgDSDVnUtKY0BBHfld~HTqJhHe4EfEcXjUaN50U6z4UBprBOJBVwfHi6HQe5Xf7-mBFpPJFGHiWSl5Z8W~fej~1-F5WAMF~cTJoqv1A290C4TZIgzONRPLxDC51L1P4kvrhUldTsPcln4OpQtwdglAvStgZ3FSC5LDEYgpcBe5--ja5aQwMaBRmqL7R-wp1-QFc7GjWfyrPRlhqycF55ALE1URUp3-QvwdZpbhZa1Kc5eMYbCZ2SvMiX~KCVP1qmCkg~xKiZTGySpnKB4iSvFtVSBSaCVwpQyyCnXD5g__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
+                        "https://s3-alpha-sig.figma.com/img/0bb2/dbba/64cde090ac8a56c1e620b12d7e7f51a6?Expires=1698624000&Signature=HrmY4Mo5vwVI2v0GTZufCRS3mj2OehVvRcupPvP32DOc3EYP~bqvz2xQgh8I8abLlWpGsW05ED8uS5KGXjTYazWx9EvhiUn~cb-f-kELuopwJQSc1tC7ClbF0uZDnfWY8731Q6i1uFGtFUJCj7YCdtmDaeCfu4nSLui67WB69uac7XKPA3HPRG3ip9o1IVxl7kHaTog-r-gUn-Wb~R5~msU3Dmf2AYqN~3L1VEUidnMgt1JMGTqUWTnpTADDtPdL3INvueTsoUfsk7be1H9jz1hDcueWAqCEN01g76QM7y5A5p1aaEBn9CCSPLrsplyyw3XGd5QsMUIPXoWtNM0oFQ__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
                         Time(0, 28, 25),
                         calToday.time,
                         "ca002",
@@ -220,7 +225,7 @@ class MusicsData {
                         "ms015",
                         "Pain",
                         692,
-                        "https://s3-alpha-sig.figma.com/img/692e/8125/07e12ccaff200ac1214f42ac2c466f1a?Expires=1696809600&Signature=hRojTeDSrSeP8RyOQYCGnBfFFeQX1diE~dZrhzAS0NPUNBkEmdgMktVAD-FQsN9dsRVk2R4V~Hn7bbZgqPYUjq9Lfoz8FYdGIP2zlQjAJ0PPyjBF1noNd1mHcv-IXz54B3v9Ly8z9lbBulxIqHR3c6lhekUyProP8jPBBvwMEQMjfaNh3Pt2GcQlxlWscdHyTe3kY9JD9Nl7kBNzz5wpju5cAs0G3lWIloCU1-n65K0wcLZ7abjOJKnWg-SECo696A51ETdPerB3cxNhrc9yczAuTAnM861pg9vdvSKTwT3pBKGQ3C-fdNq4vJXqYfvBNskU~KDxFS0WIVxd4fRWBw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
+                        "https://s3-alpha-sig.figma.com/img/692e/8125/07e12ccaff200ac1214f42ac2c466f1a?Expires=1698624000&Signature=lSEwtXKgXYrI86cerM6PUDAPVzoK59UalQbBW092MZx8XTZ9MAD786uhYj6uEVUR8Qm79ave9UAQUo1Pfjy-epVOTuzNaoziN3-cSzEdlBTG8ZFnMfv~AtIQGNuCqn3xKCea9CQlQflw86aSEoOkfzqT9CU7WOM0HbriDGjW99apFjOhPKqP6lnycmZ5ihzGMibweGVatoJMpbxZW0A-TOssvnPuRdjUDt0bSJDwmwgtfQ9oMmSe~BZJzmgHX6o498UMm0GDFFIFGcBzdiiCbD4TpxzS2p0qaV0~ryt2epP76ZUK3a-VFcIEKeZtsyAOXjLSIrRDSciONxiWt0BMSQ__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
                         Time(0, 3, 23),
                         Date("15/04/2023"),
                         "ca007",
@@ -233,7 +238,7 @@ class MusicsData {
                         "ms016",
                         "Motomami",
                         1203,
-                        "https://s3-alpha-sig.figma.com/img/36e6/bfb5/58b9b28e29d52bd7f484b799db3341f6?Expires=1696809600&Signature=Dl9fVg~AZ1X70QegXpHFCm1vl-0r95m6G0A4Co3s9VNUq~YZ-Cd7FH-4aRdLmU~7v6SyCd-6aYmMlccqh8v4kmwUVHW6TfJ-uYXLa-V5jNTLZfUe2n72DnjZ0m2AgT6Czng3-vJos54uNN9S0mtuvzJLQ~PXit3p7th3iju2wcV33RHC0Zhkkv5BeKPBlUuRKrrnVao3ME0UkHwBOm5VYzKO9-fQAkSC-5VqJT8Se71DWz4jUGxdoXE-lgGgoYTE2t4P9h8LoKR1XY~87WHCiDJ2nRO6x8o43~hDlWxe6~QVIZ2Woiy0ok47xgDR4aIl6bMje5nj73IT-EYtQkY2sA__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
+                        "https://s3-alpha-sig.figma.com/img/36e6/bfb5/58b9b28e29d52bd7f484b799db3341f6?Expires=1698624000&Signature=Z9oRLhP5FWwstTYxaAYwL1eBlSrXSJ2l9QhbtqwjyNPYUOegHoeERm0ld5XbPvrIJIFx6ZzCviX2up~NOORnaSAubCcNk2hDB~ls3g4R~WREijiqf~uRoFs2Sj09wpAjgmDZv4~ge3U-IUKVbRa-NYtw6sQ7MSODPPE~~EnfrzVqEuwPWR3F9EYH-KwzFo6Qp11oNjK0DCwoQNpWiINRO1Sw3Ysd0YAC1z6wKrksAntFy4t0eFiiyaHIAnpsI3yL94WDmDyUbOffq-u2cqGPk8mRQyErGhzl7A4GlaEZ3P24nqvo1J2-zwLMOg2WYyb8uwCvl7PzgxKXboDkQYdkCw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
                         Time(0, 3, 43),
                         calYesterday.time,
                         "ca008",
@@ -246,7 +251,7 @@ class MusicsData {
                         "ms017",
                         "Positions",
                         982,
-                        "https://s3-alpha-sig.figma.com/img/9c08/fb16/f1449e135ce592b7fb46860f97792e50?Expires=1696809600&Signature=X73kPNym8btwytntkzry0UQNUC62LmrLJ2uQXCsLuUeC5C9E7mEf3nfO5XxrDE8GOcyinAOlB2Zy4ci9Jas56KFdzdLB~e2Qd2zXLD7X5ynDFDI-FKcJA0fWBwlmgtBuzWVwfRpAsEllNamGzMayhwSgHFUO8X5AxYJICarQq8n1ZZ8dmJ1918ZEtDaNrTgoArWQILicAXODbhQ4~Iv3HlIcuNA5G6yIi67S-LaMM-ZNSgkjBv2XstQfVmxNcLXrXF3W2jYS-xuR1k~p-LJ~HWTWdfKE1h-QPVAXomaenHJYf-thwc4F1GqCAsCjKYF24LrnOjg6kMaUi-n-9Y0l2Q__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
+                        "https://s3-alpha-sig.figma.com/img/9c08/fb16/f1449e135ce592b7fb46860f97792e50?Expires=1698624000&Signature=Mk6dCKGWEd~5KCHTTWKr22CUD1EPJk0IBvK1IMtniWFvoM-5M3f5XSqedOk7Le1Bt3yU4rwGZXsNcvZVxdZZGrc690NCWbUPcWhGzKgiLH9qc1GihYv4ejMsS76SfPidme-S9PFAoawT3--1XhfIbCJlmf-Mqxu1wPtwPe~4PH1IEwO31M7FyIMhmFv2s5I~jNL-qGfQYrNjOSWCbfWjZH0fK0XyX~5dwyc8A14aMSEdqWyk2m85Tn2d4TMrEpoQEBZObKeDMomN6BrTSAd9czVGaHct3XwOEFuELGWf4SBCRVAd1EDFE4-WZprV583FDuZOzw-7EdreX~ZWXGvSLg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
                         Time(0, 4, 23),
                         Date("11/09/2023"),
                         "ca008",
@@ -259,7 +264,7 @@ class MusicsData {
                         "ms018",
                         "Firework - Acoustic",
                         32,
-                        "https://s3-alpha-sig.figma.com/img/a378/e53f/76aed56f8d8581b227777d466c0b5116?Expires=1696809600&Signature=SwmgG~146zalGlwECyAjg-h7wZrFjvU4fNO9BoO-twcAysJqjxlC4Lucr-yYZILU9Gl2~5BmL3gsBRz8VWJid3nruVVh52-37oSZZKJa3fZoxojt6anngtUZeOCD8bLlOAUcpE0RXrNGwXZFBtehLy7kLt1FkIvGk2Pmkg4B8ZgUhw19uRGXZeuA78ntCIMYmL~9tDNpSIUsmT1Ts8a8broJyR1fH2tKu03~XLrHXfJ9cysMVyzzRrHukGMaNzh34gAxDwiKi30ytAnV31-2G~2gYglH~iyuZZsHF6VKjmvd~1NLtBFRV9RG9oUhCaDGNt8WSO-MZa5pEr8JgJhz9g__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
+                        "https://s3-alpha-sig.figma.com/img/a378/e53f/76aed56f8d8581b227777d466c0b5116?Expires=1698624000&Signature=e5B0uaaCxFor~1BnqHhTQrK0cZw9~IxoDVbQlFcNt38UwmbEgbhIaGqwROZhoISGNp44qBDB4kVKFyQCcitvvcQt~f5c9TflnLq~cWjIDXns~yhM1DvSSaliuuKSMVcRjvlcwOq~wey8XwBBep~~SF8MnBb77eW-D28NDj-PVp~4j~MMT6u~-pP7QqaUQWt6WWW9Rtd~2mKoJppSG4RKNb36vnLpyFHoUtCq1YBUJpFvxrpJTs91QD9hT3wZHPi7a7Swsdqg01Uwx3GkxZkgguvES2GDAT1bP1ZfyxKXQzrrYnCMFaBSjavsPtZ9syT5bmqkQHTRsmJqgLGCxlXBDA__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
                         Time(0, 3, 56),
                         Date("06/03/2023"),
                         "ca009",
@@ -272,7 +277,7 @@ class MusicsData {
                         "ms019",
                         "Roar",
                         2031,
-                        "https://s3-alpha-sig.figma.com/img/2b42/112c/fc6f30c195474a93f691153f3d390bcf?Expires=1696809600&Signature=XgdllpYOoSwarPeePzQpx~K-3wA6EeRTwMlZ9HUU5Mdl8ogTyFYErgiOKueFna1LZxcN1rya2EWnK317PchKLmFbT-6sGzYokkg-ttrQVhZ7Pf5PsVkVIrx6WLxA-oyi9ankFrYfM7NIjcvhhwDR-18rnpXPerWEgnchRYwDxNSpOftEnUTEmBNEeJ8PB-sW9CDwrKc1Iw~ksplCMnU1wdao0AYkzMpNCo8F95rOTo53HQ-FpAkqxTvIGgnV1uL7sCjkmLRdrAgwxk8S~fBPb7EaX48cG7ijpyjtJnfLOq1A5ce5BpONzES4CjNKlsls4RhnulJTU7VnPLIucC1a3A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
+                        "https://s3-alpha-sig.figma.com/img/2b42/112c/fc6f30c195474a93f691153f3d390bcf?Expires=1698624000&Signature=muvbaZEzj2NKYJisO3pJCKRGbGb~ERXItx3DgmTOiUB8KccaHJp4aXOudE64CAx2~PHv8PcNW7qOwpf8NRrjD9ovfsEboIgp2eA~FDKyCY8g~BKQAEvPNI0~EPjM6MpTZSpUoejJgQj39TKa2oBMCgilim6ZdCSJl6KM3DWhfOiUvrJR3tPQX2mzBW08NqK0J~KtMWlur0at6FcamcbcjCXTZOuANAQ79f0YKyLol6AXVuWGoVBANYjlwtySytFswPzc-UffWJeXk8B2beZkchIu35U9dzRfqeke3hqq-8zrAg2UPGlfCLe~oFg0S-mP71qsK3eiQ7z9Y6~7VTXJsQ__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
                         Time(0, 3, 23),
                         calToday.time,
                         "ca009",
@@ -285,7 +290,7 @@ class MusicsData {
                         "ms020",
                         "Teenage Dream",
                         92,
-                        "https://s3-alpha-sig.figma.com/img/01b3/9d00/9dbf61695471ddeda0845c05273cd4ee?Expires=1696809600&Signature=nxNcIB-DLS9OheVHS~RZmi4BB6zb3z4rVAisTyIrnsamv6fBVzf21vvCqEjqLMUKczbUd9n1bWIn0hWlHodnchKoUQ2MAadVWwMuVSDo0K-tTDtLUr6caCuHOPCo~zod6UGIHbiAJJuurD4eQ9Tn-zQrw66HsGQST9vF3FvAOoYsMeK0XEM5fDAzGRgLHFm6e5RPYzhm4A-NAxuGJOfpZQ5a-xskDUAWlKKRNNEZNw~5ftN-EvbAl1zNq1gWHeAjfIy~-PimE6Jsne0hLkoLW42AknZXEVbzPvTVDaYEierCMeD9-JVhmpN9Xb6fhyH2avLqQpQi80pIzm2kj7IysA__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
+                        "https://s3-alpha-sig.figma.com/img/01b3/9d00/9dbf61695471ddeda0845c05273cd4ee?Expires=1698624000&Signature=YXfh9x0VAkgUU-GLKQIUh1I4Q8zq~kmk5L3fDsqaH-DWtcGq~n74-TfdVqkfF3OMP3AIuZgDMqk7rU9EJDNQC9yJnQbjKEyyJ1pp7M6Ydzr9P-137QC02rx2EzNVcENh87R9wvI7CLe~1C4nrwG7PJ4E93oAW9U-RTaaTwLY6MAIFpED4QM8MpxuPTmXXh3kwM~1s3DSypKfwmIZy8apAmB56QSulBtxcxKUouTiSSGbqpg90U0~DSB3tDudbdJULtD8CPsmE0lm6Qcd1~aJav--sLiNQcMwSEuzn2r6HFC40RFr7mizt51x-QOlVQb-AjOKOOJFOkhtLW-mOvShLA__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
                         Time(0, 2, 34),
                         Date("24/03/2023"),
                         "ca010",
@@ -298,7 +303,7 @@ class MusicsData {
                         "ms021",
                         "Last Friday Night",
                         572,
-                        "https://s3-alpha-sig.figma.com/img/5822/25eb/7dd77abaa2a7d741d2ea6db5f4748610?Expires=1696809600&Signature=jgxK8oPHwwnuZal1d5e0kxCTHuKcDsUugJ6k28DWU-Z7dkrqqV2qHFkRslV-RWondMEFN4MmIfeEa-eUv47rtdrSwsvyGdQA56cBYHOC-FdK3AlY5ozlba15YuNNRWPMm45o3nkCcWwJUTyhFCtJjGVnG~v3nW1qJvsAizhig-KSgtytOtGJRGWkd~EdRo8CKmvQt-qYNe7uwbT2dJYF3eu2mQ7Wa0m22r0wLw4KlEbDw44Zt8YvBvYH~YFdKwDO-XhCbdJZUB2hfq1MEZ3mwLzkcgUL3642mRLFu4ADXyyLe9zReXlBYpFPTdv6g6SHAFi7455OmR-dsXu4tW19ng__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
+                        "https://s3-alpha-sig.figma.com/img/5822/25eb/7dd77abaa2a7d741d2ea6db5f4748610?Expires=1698624000&Signature=UPItPx~BdXt4wnTSd1ZaJLV2-xaoOrlkItnDmjKSn5f3oniVYVf7mxapQ-n-19hM9hhxr-MvTF4W~ZlB1A8a6zzQMdXJtiZhJz3jqu0Y9cY8G4uuKzIDvtu-ZERxav-ozhQuILbtErI4W7eWqjfBF~2RyKMuhzT190F2km86J7~0nCP9sk2zL7EjYezsGJmO7Vtofw4T~gWTMioAlQjWgxZj7k2lIGS7EhNhtnN3~pVAkffTDjYUaN61FDfJZ1pvFoGqmX~v05hmlgsF0GV007-tTUV1lBynwZ90zYXUh8sXxwUFmpXDqtidlabBVfcUgPYhn4ZZT1Q~X3HnIDMb9w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
                         Time(0, 4, 45),
                         Date("01/02/2023"),
                         "ca010",
@@ -311,7 +316,7 @@ class MusicsData {
                         "ms022",
                         "487: Mike Rowe | Dirty Jobs",
                         42,
-                        "https://s3-alpha-sig.figma.com/img/bd8c/dd28/bedb56fafecef4a4741a242dd3d897e9?Expires=1696809600&Signature=oP7k50nHTOhCCgr8~TAQ2c8KCVKNCQWObKqNbIAfE1U4DSQ71-JjgSesVJ827WikkBT5utsBwEqx8LQEGpuAY-3mmKVUe~JQbndKjTmP1gei8xw1WGD2oaSy2zZqZH~FZQNdm-2MFTYx7ifgaidcth3rqpd8PpE2~o7GS4GM3ig6mAVXSbtDfYwpa6IFl3Gnu9Cr1Ji1s9peuHtwPbChY4vBi1lnE8hg1qr3i4omRwZSILYfr9pIwrkdY8LepRTTtoYQzzIFP2sQJanhpjl4sYvQXcZw~u5Qw8IM2h4-wbc9rqdCUYsYJJEMqGPZMe2WxozCKxhe7lUWfbNM1m71zg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
+                        "https://s3-alpha-sig.figma.com/img/bd8c/dd28/bedb56fafecef4a4741a242dd3d897e9?Expires=1698624000&Signature=Ar3-S5YATjVkDNEmO3FU~SetkwsFoPSi7my2skmzbYQvbcdqCx4kidTARSVnnFkTVn4a-CJiKbq74MZoZKSgMtsAASmrdJ0W4nkKvskWyPyP45PE~C7-euhEc9-7SYMxVsbyAwak6t5U9i-9aQgT5emVVcTxEvzY2ugYpGnkHbr2EZZj6DVwATaij7nrr0pxXggqtEUDb-Y1liCeMZyaedfKBIwnM9PtJxoGi9W~v83A2CdeQ46Xovf5wdaYP3zXbVXLDmm8ZAU6VJudSExWJUn96HY7p5Az3flPOnuLcor-qF3J7kqnUR-h08RreIa3OjHeMBIj1aCJbHF9myjjKg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
                         Time(0, 50, 53),
                         Date("23/06/2023"),
                         "ca002",
@@ -326,7 +331,7 @@ class MusicsData {
                         "ms023",
                         "938: Tom Wright | Billion Dollar",
                         15,
-                        "https://s3-alpha-sig.figma.com/img/659e/0b9b/3cc4cdb73fd94445f46a2de36086d8f6?Expires=1696809600&Signature=mFsA6GDE5LotY-zThBg6FgYMjNBuQ-wu8QFTCwBdiVssTxT4qoxgA9naYLIyp5GoWm2mwMqTkDhE7sKsu4ochBogQnxgsGOPH1-rFGnOb39EWsggbMZpqgZnpUCvsmn0YbSn1C6nlrOqXutjR-irgj9OV6QW7xPpkI9Vz2XwYCGXGB1uW8-bV~WtorOWBBPrxaVIfWtoc4dL6eLEYlWmqNj1DszMF092cmLCbthcfqY-nXqjizMlOyp3HVf657QJAutFMYO2Ogn9Pu~zLy2uechaFOmRU1pAeprVL~tTgqVwbPBZ4FZEb3~B4NE4PSjmYg376xgDnUGO6qud2a1KPw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
+                        "https://s3-alpha-sig.figma.com/img/27ec/c26e/388f34cee13da5fc9b512da39e876b3e?Expires=1698624000&Signature=ajxgDcQGM4gOMQ8xUEuO5-ZYvsGKZ7lwSVG~Yu7UdDHmjW90bxaXxNkCytIYZw-VBP2onfJjDocMQXgYw5wHEknNWxQrkgyJJfqq6c3N9z8EzRjaxWe2ecxIP2CTleKiv-S4fp0UIDTOlLGhg2OM~0~LUwNp7q8ubpKRkI2J0siwd53xSmKe2XZ07E-m1kA5icVOYHq4~h5Q7aNr~8ibWLNX2K8UWlmst6sw2KmKB0pHxPsgZVSl~08R3woGC9SDUR-JpBFeEMIIlW6QPKaETNqOQFqfTUmkKRWbj5jHfFAcmQkyCfgY0-k1~oZwFZ2dsLVSg3B7j4PyOdPCpUzgRQ__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
                         Time(0, 40, 33),
                         Date("05/02/2023"),
                         "ca002",
@@ -340,7 +345,7 @@ class MusicsData {
                         "ms024",
                         "610: Bill Sullivan | Pleased to Meet",
                         292,
-                        "https://s3-alpha-sig.figma.com/img/4743/c387/a4ee427a3f240139dc1f70f94ffe5351?Expires=1696809600&Signature=DU16Sl5VGBs-W1HeSvDDpD2TNF6MdxNdnsWvT8SOkTomAMY84tXo2LFPKR03yFtoYEVJu3Fd3O8kbZ-FM98a7g6KMoj7aiLh0RALyNzlaC6FPPh2Dwgr1k~PnrnEGgQlJwSOgFglk8r83QCS-ggHZMXCPHtUXV4auC0MKg1YWbhjrdR57hjYnwshwAH9T3c6DNhUL4EfW2f7aBFSmBW5zVdwd61uX9PKXQiKDXJ~4QINOjR-7cnL~IOf8KOFK128j1pxfantZdutWnqS7GTeD0YSEwb2hLmADE0dKCdy6Lp78UQsra4t6jQMYHAEr103tEmd8N~DVNQWefIksg8WYw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
+                        "https://s3-alpha-sig.figma.com/img/4743/c387/a4ee427a3f240139dc1f70f94ffe5351?Expires=1698624000&Signature=Az4tbLlqCqD5cc57eop6d1Ekm8gbGRdIEBhOutVgMOCGhMI0cifGt3r92otQb0y~j3O8xq7K0c7cm3sMTRy9j~W96va3nEYc7rwcbCBvHCfT17KbyMi9z3nssbelCeZvn8nvTZxeqcSgTGfdp3yAXQXRdmv3fe-FOVYpmY3ZlYiqHmpmwopLKES0JK8m1TH62oYFlUJe2A7WD7Pxff~JMkX6uniUYCl-QrrjKh8Z0jyI3dPh2cWWB-pYIYEh8IHcs99eFx6ucJfFtsor5BpMCjA1dH6yLtnQFf4~MGFKbRztzs~CRb8xb9TgD7dwAn3i6hkk9Rpcow3YZaaX5iWaXA__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
                         Time(0, 15, 35),
                         Date("10/05/2023"),
                         "ca002",
@@ -355,7 +360,7 @@ class MusicsData {
                         "ms025",
                         "688: A-Rod | Still Having a Ball After All",
                         292,
-                        "https://s3-alpha-sig.figma.com/img/2c49/b0ed/e234f658c60075523c1ddbadd5543d8a?Expires=1696809600&Signature=naJ8KZveokhzm0YXkmyZkD9Jpx0L2j8szCrUWb9RyW9sWToZNVbjQmHVa~KBqN8O1bIBnvl~wlJu2zZo59DDzlAk3PYz9P01q8Uetbv60mgL6rWKXwiTpdmwY16P~ch3CPaWvHH9QjQodtYT1ewnSLKo1nifzvdecvafOKADTimxs-vv6rpwZOHtVC2VQuGMmtWaSrnYggROb8rqWLVJR5XLKCaUfT22FSyQEM8YImuxUBO4-q2YBdxeD-fPAdanCUt6eS9azeICaeRgmpxNZobqwWmfm4LM6f50ZAI0~czAAddPEL6VplLDJLxDwiBdEhy5gAz8sARSMCyV~ItRAw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
+                        "https://s3-alpha-sig.figma.com/img/2c49/b0ed/e234f658c60075523c1ddbadd5543d8a?Expires=1698624000&Signature=Pkt6lSXknOKmduH4qCPEu1m6I1Tdl2ifw26sh8sJZCQeX8ntU0j9nI-ZB0a1x-b5ytgyKClIRf6CEpgV9tjKFJCxYoqcvqxtrEDqReAYTIybH67CfuNdq~FSNtLeeA~2yPFnheHy3tVT-ip6OWpsX9yLAbX046sccL9iHtjIWcIilAPLVQFfu~Iaa5NDOkTErTq7fC2zslgJof2iDVCYSBCE6R-jGld4a-6CVr5695UTWn0enObcB4FgFapCebncpzu4QAxHLVjd-P3RnDf2~nPzr~8jTEed-4dJ489SLVeRbYC8y7HoJSu18Y7ZMDM5GULyQXMBd8kGh1Yiv~mHzg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
                         Time(0, 25, 35),
                         Date("15/07/2023"),
                         "ca002",
@@ -369,7 +374,7 @@ class MusicsData {
                         "ms026",
                         "831: Desmond Shum | Wealth, Power, Corruption, and Ven",
                         292,
-                        "https://s3-alpha-sig.figma.com/img/70a7/4f46/b2666580eb98313b4d05502d23eafc39?Expires=1696809600&Signature=Ypn75Dq6Z8gmSEofaKCBeWQvvjKxEvRgqjh6NQLpMOu5PanQ70KT7L0q4W0eRWhHaa5xucbDn6wk2B1fpH4FHT~evw5MtMQDsQt2U0Bu8m6EWcYb9Z9a8r3Yh9IDSzm~OC7qikG9ajjI9xxP7-3cOfGcGkPIeYsFlptG6NpyA37ze-fvenFf92m9E75eQAvf7C-NlboL~dno2UcTwW~-lZc7YGtMN5~nlbbQTfHBioKpcTlvb~YzAZR9vapb9gqQ4bwpeIRUoiIIhNhY0AD7jttUCk3QIHfBENh8WqfwLkuqOoyX6ceoTNhyEyRSlRuYHr5dtPKESMlK8fZTijWM6w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
+                        "https://s3-alpha-sig.figma.com/img/70a7/4f46/b2666580eb98313b4d05502d23eafc39?Expires=1698624000&Signature=PHE5J9~taJrzpNJtJLzqNMwUX2nUTsRxJ~~HGT7rltZwFBraf-3Ji4mp499gm7ZcJDD1oPkfx~-AgAlR1qr2uhSt~9u6lYNatlQE7-9gXqhB77SI2ICSMk7QFp1GqjvWKwuVtDvD6YTyAIi06W4b0EvFUqXVwaI3nt~A5ztyXpn~7006TfkEGCblU3jfLn-on9dbesLecwONxzXKGCAC5IbC4YI4MxEbWPf7jdGK73uX4HR-KCyrgzkzRPuEqXr94hQivlolLYpsiTenlVEWmHYwYBlPXcA5aAL17T9ImpEO6qLvUfV8YEs8As~dDGx5VqHbY3N6SHGOgbOjx0ZFFg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
                         Time(0, 32, 12),
                         Date("12/08/2023"),
                         "ca002",
@@ -384,7 +389,7 @@ class MusicsData {
                         "ms027",
                         "396: Chris Voss | Hostage Negotiation Tactics",
                         292,
-                        "https://s3-alpha-sig.figma.com/img/d314/77c1/0dd76442332f9af797ad4cf0c673f073?Expires=1696809600&Signature=XNWHzMF~Dn2P7SlxD7DTnOK-fpN4pQtnSlJt6zekVTuRMqunAbj7BDpynCKWZSktziuYP4XrrxfxX5Mk31bQs0T0tCtrpnV9p~-xUtazlMCvj4f3T4qkb4NVtQ8sK9l8vv0QIQiNC2Og0W6799RZJhEi6si21TrbLjdEmhKSx5e2zZEd3-kKhQ0HVXuxPTfR-DehZg~2-CLmuLGnO~~6ypkXZ8vYrdi1SmqFCPTQtWuMWxnwqBZTq~3JKTwdObP8k9RUfHVNyUs0oEaQ~KlP2-oloFm4Das505kL2huULpiDcuBUwowtBT~pkREg0MCgy8JqKeheihHdoOO8XwCY8A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
+                        "https://s3-alpha-sig.figma.com/img/d314/77c1/0dd76442332f9af797ad4cf0c673f073?Expires=1698624000&Signature=ZzN1E5kwuOuZ1MfL7zsedSnEn31uoeb-618ipRoIlSeigBGGRgiidO2bY6mptA03QuSlVgEgEcoGs-I4IdiqQRBKnUDI~SBmG3iMRGGhoe9Bp0-QZGcnNzLJ5X3kx0RfZYERxRNYL45E5RRudlTxCJYLZ-fD2bUccFB-qd~h4bZJnAHLGl5mMpfpbNuPSmVffzHLUB8JrULundXxprDS8MdX9o03uP0jFZYa8TQg3ULqLoOAKjSQTomRx4gbxQtBeq5NecrXy7kiy3rRCk5UQG3RQPJiEEamTtCUWnobOcUvGKUSS0q~d4TOOHgyEqCXCHnC4En-WOs-59ID5C5T6g__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
                         Time(0, 23, 32),
                         Date("05/09/2023"),
                         "ca002",

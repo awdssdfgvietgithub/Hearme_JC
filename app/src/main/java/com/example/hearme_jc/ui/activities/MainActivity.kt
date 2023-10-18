@@ -42,6 +42,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -232,6 +233,55 @@ fun MainScreen() {
 
             isShowSearch.value = true
             isShowNotification.value = true
+            isShowMore.value = false
+            isShowFilter.value = false
+            isShowScan.value = false
+            isShowEdit.value = false
+        }
+
+        Screen.SeeAllTrendingNow.route -> {
+            isShowNavBar.value = true
+            isShowToolbar.value = true
+            onTitleChange.value = "Trending Now"
+            navIconChanged.value = R.drawable.ic_arrow_back
+            isShowAvatar.value = false
+
+            isShowSearch.value = true
+            isShowNotification.value = false
+            isShowMore.value = false
+            isShowFilter.value = false
+            isShowScan.value = false
+            isShowEdit.value = false
+        }
+
+        Screen.SeeAllPopularArtists.route -> {
+            isShowNavBar.value = true
+            isShowToolbar.value = true
+            onTitleChange.value = "Popular Artists"
+            navIconChanged.value = R.drawable.ic_arrow_back
+            isShowAvatar.value = false
+
+            isShowSearch.value = true
+            isShowNotification.value = false
+            isShowMore.value = false
+            isShowFilter.value = false
+            isShowScan.value = false
+            isShowEdit.value = false
+        }
+
+        Screen.Notification.route -> {
+            isShowNavBar.value = true
+            isShowToolbar.value = true
+            onTitleChange.value = "Popular Artists"
+            navIconChanged.value = R.drawable.ic_arrow_back
+            isShowAvatar.value = false
+
+            isShowSearch.value = false
+            isShowNotification.value = false
+            isShowMore.value = true
+            isShowFilter.value = false
+            isShowScan.value = false
+            isShowEdit.value = false
         }
 
         //Tab Explore
@@ -241,7 +291,12 @@ fun MainScreen() {
             onTitleChange.value = ""
             isShowAvatar.value = true
 
+            isShowSearch.value = false
+            isShowNotification.value = false
             isShowMore.value = true
+            isShowFilter.value = false
+            isShowScan.value = false
+            isShowEdit.value = false
         }
 
         //Tab Library
@@ -252,7 +307,11 @@ fun MainScreen() {
             isShowAvatar.value = true
 
             isShowSearch.value = true
+            isShowNotification.value = false
             isShowMore.value = true
+            isShowFilter.value = false
+            isShowScan.value = false
+            isShowEdit.value = false
         }
 
         //Tab Profile
@@ -262,7 +321,12 @@ fun MainScreen() {
             onTitleChange.value = ""
             isShowAvatar.value = true
 
+            isShowSearch.value = false
+            isShowNotification.value = false
             isShowMore.value = true
+            isShowFilter.value = false
+            isShowScan.value = false
+            isShowEdit.value = false
         }
     }
 
@@ -282,7 +346,10 @@ fun MainScreen() {
                         route == Screen.FollowArtists.route ||
                         route == Screen.SelectMethods.route ||
                         route == Screen.TypeOTP.route ||
-                        route == Screen.CreateNewPassword.route
+                        route == Screen.CreateNewPassword.route ||
+                        route == Screen.SeeAllTrendingNow.route ||
+                        route == Screen.SeeAllPopularArtists.route ||
+                        route == Screen.Notification.route
                     )
                         navController.popBackStack()
                 },
@@ -294,6 +361,7 @@ fun MainScreen() {
                 isShowFilter = isShowFilter,
                 isShowScan = isShowScan,
                 isShowEdit = isShowEdit,
+                navController = navController
             )
         },
         bottomBar = {
@@ -323,6 +391,7 @@ fun TopBar(
     isShowFilter: MutableState<Boolean>,
     isShowScan: MutableState<Boolean>,
     isShowEdit: MutableState<Boolean>,
+    navController: NavController,
 ) {
     AnimatedVisibility(visible = isVisible.value) {
         TopAppBar(
@@ -408,7 +477,7 @@ fun TopBar(
                     }
                 }
                 AnimatedVisibility(visible = isShowNotification.value) {
-                    IconButton(onClick = { }) {
+                    IconButton(onClick = { navController.navigate(Screen.Notification.route) }) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_notification),
                             contentDescription = "Notification",
@@ -455,60 +524,6 @@ fun TopBar(
             })
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun TopBarPreview() {
-//    Hearme_JCTheme {
-//        Surface(color = MaterialTheme.colorScheme.background) {
-//            val navController = rememberNavController()
-//            //State of topBar, false is its invisible
-//            val isShowToolbar = rememberSaveable {
-//                mutableStateOf(true)
-//            }
-//
-//            //State of topBar, title of its
-//            val onTitleChange = rememberSaveable {
-//                mutableStateOf("Nguyen Van Nam")
-//            }
-//
-//            //State of navIcon
-//            val navIconChanged = rememberSaveable {
-//                mutableIntStateOf(R.drawable.ic_arrow_back)
-//            }
-//
-//            //State of navIcon
-//            val isShowAvatar = rememberSaveable {
-//                mutableStateOf(true)
-//            }
-//
-//            //Get current screen/fragment
-//            val navBackStackEntry by navController.currentBackStackEntryAsState()
-//            val route = navBackStackEntry?.destination?.route
-//
-//            TopBar(
-//                isVisible = isShowToolbar,
-//                onTitleChange = onTitleChange,
-//                onNavIconClicked = {
-//                    if (route == Screen.LetYouIn.route ||
-//                        route == Screen.SignUp.route ||
-//                        route == Screen.SignIn.route ||
-//                        route == Screen.FillYourProfile.route ||
-//                        route == Screen.CreateNewPin.route ||
-//                        route == Screen.SetYourFingerprint.route ||
-//                        route == Screen.FollowArtists.route ||
-//                        route == Screen.SelectMethods.route ||
-//                        route == Screen.TypeOTP.route ||
-//                        route == Screen.CreateNewPassword.route
-//                    )
-//                        navController.popBackStack()
-//                },
-//                isShowAvatar = isShowAvatar,
-//                navIcon = navIconChanged,
-//            )
-//        }
-//    }
-//}
 
 @Composable
 fun BottomBar(
