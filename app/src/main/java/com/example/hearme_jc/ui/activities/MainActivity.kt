@@ -3,6 +3,7 @@ package com.example.hearme_jc.ui.activities
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -50,6 +51,7 @@ import androidx.navigation.compose.rememberNavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.hearme_jc.R
+import com.example.hearme_jc.data.viewmodel.UserViewModel
 import com.example.hearme_jc.navigation.NavGraph
 import com.example.hearme_jc.navigation.Screen
 import com.example.hearme_jc.ui.activities.data.Destinations
@@ -58,6 +60,7 @@ import com.example.hearme_jc.ui.theme.Hearme_JCTheme
 import com.example.hearme_jc.ui.theme.Primary500
 
 class MainActivity : ComponentActivity() {
+    private val userViewModel: UserViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -66,7 +69,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen()
+                    MainScreen(userViewModel = userViewModel)
                 }
             }
         }
@@ -74,7 +77,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainScreen() {
+fun MainScreen(userViewModel: UserViewModel) {
     val navController: NavHostController = rememberNavController()
     //State of topBar, false is its invisible
     val isShowToolbar = rememberSaveable {
@@ -370,7 +373,7 @@ fun MainScreen() {
     ) { values ->
         Column(modifier = Modifier.padding(values)) {
             NavGraph(
-                navController = navController
+                navController = navController, userViewModel = userViewModel
             )
         }
     }

@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,15 +22,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.hearme_jc.R
+import com.example.hearme_jc.data.viewmodel.UserViewModel
 import com.example.hearme_jc.navigation.Screen
 import com.example.hearme_jc.ui.fragments.onboardsignupsignin.ContainerRememberMe
-import com.example.hearme_jc.ui.theme.Hearme_JCTheme
 import com.example.hearme_jc.ui.theme.Primary300
 import com.example.hearme_jc.ui.theme.Primary500
 import com.example.hearme_jc.ui.theme.White
@@ -40,7 +37,7 @@ import com.example.mylibrary.AppNavigationButton
 import com.example.mylibrary.AppTextFieldLeadingIcon
 
 @Composable
-fun CreateNewPasswordScreen(modifier: Modifier = Modifier, navController: NavController) {
+fun CreateNewPasswordScreen(modifier: Modifier = Modifier, navController: NavController, userViewModel: UserViewModel) {
     var showDialog by rememberSaveable {
         mutableStateOf(false)
     }
@@ -107,6 +104,14 @@ fun CreateNewPasswordScreen(modifier: Modifier = Modifier, navController: NavCon
 
 @Composable
 fun ContainerCreateNewPassword(modifier: Modifier = Modifier) {
+    val password = rememberSaveable {
+        mutableStateOf("")
+    }
+
+    val rePassword = rememberSaveable {
+        mutableStateOf("")
+    }
+
     Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(24.dp)) {
         Text(
             text = "Create Your New Password",
@@ -127,7 +132,8 @@ fun ContainerCreateNewPassword(modifier: Modifier = Modifier) {
             inputFont = FontFamily(Font(R.font.urbanist_semibold)),
             mainColor = MaterialTheme.colorScheme.onBackground,
             isPasswordType = true,
-            bgColor = MaterialTheme.colorScheme.primary
+            bgColor = MaterialTheme.colorScheme.primary,
+            text = password
         )
 
         AppTextFieldLeadingIcon(
@@ -137,22 +143,23 @@ fun ContainerCreateNewPassword(modifier: Modifier = Modifier) {
             inputFont = FontFamily(Font(R.font.urbanist_semibold)),
             mainColor = MaterialTheme.colorScheme.onBackground,
             isPasswordType = true,
-            bgColor = MaterialTheme.colorScheme.primary
+            bgColor = MaterialTheme.colorScheme.primary,
+            text = rePassword
         )
     }
 }
 
-@Preview(showBackground = true, widthDp = 412, heightDp = 915)
-@Composable
-fun CreateNewPasswordScreenPreview() {
-    Hearme_JCTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            val navController = rememberNavController()
-
-            CreateNewPasswordScreen(navController = navController)
-        }
-    }
-}
+//@Preview(showBackground = true, widthDp = 412, heightDp = 915)
+//@Composable
+//fun CreateNewPasswordScreenPreview() {
+//    Hearme_JCTheme {
+//        Surface(
+//            modifier = Modifier.fillMaxSize(),
+//            color = MaterialTheme.colorScheme.background
+//        ) {
+//            val navController = rememberNavController()
+//
+//            CreateNewPasswordScreen(navController = navController)
+//        }
+//    }
+//}

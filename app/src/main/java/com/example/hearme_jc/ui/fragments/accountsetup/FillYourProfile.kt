@@ -1,9 +1,11 @@
 package com.example.hearme_jc.ui.fragments.accountsetup
 
 import android.net.Uri
+import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,8 +20,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -30,31 +32,59 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 import com.example.hearme_jc.R
+import com.example.hearme_jc.data.model.Name
+import com.example.hearme_jc.data.viewmodel.UserViewModel
 import com.example.hearme_jc.navigation.Screen
-import com.example.hearme_jc.ui.theme.Hearme_JCTheme
 import com.example.hearme_jc.ui.theme.Primary500
 import com.example.hearme_jc.ui.theme.White
 import com.example.mylibrary.AppTextField
+import com.example.mylibrary.AppTextFieldDate
+import com.example.mylibrary.AppTextFieldHaveTrailingIcon
 import com.example.mylibrary.PairButton
+import java.time.LocalDate
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun FillYourProfileScreen(modifier: Modifier = Modifier, navController: NavController) {
+fun FillYourProfileScreen(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    userViewModel: UserViewModel,
+    email: String,
+) {
+    val fullName = rememberSaveable {
+        mutableStateOf("")
+    }
+
+    val nickName = rememberSaveable {
+        mutableStateOf("")
+    }
+
+    val dob = rememberSaveable {
+        mutableStateOf(LocalDate.parse("1500-01-01"))
+    }
+
+    val secEmail = rememberSaveable {
+        mutableStateOf("")
+    }
+
+    val phone = rememberSaveable {
+        mutableStateOf("")
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
             .padding(top = 24.dp, end = 24.dp, start = 24.dp)
             .background(MaterialTheme.colorScheme.background),
     ) {
-        ContainerFillData(modifier = Modifier.weight(1f))
+        ContainerFillData(modifier = Modifier.weight(1f), fullName, nickName, dob, secEmail, phone)
 
         PairButton(
             text1 = "Skip",
@@ -65,15 +95,38 @@ fun FillYourProfileScreen(modifier: Modifier = Modifier, navController: NavContr
             bgColor2 = Primary500,
             font = FontFamily(Font(R.font.urbanist_bold)),
             onButtonClick1 = { navController.navigate(Screen.CreateNewPin.route) },
-            onButtonClick2 = { navController.navigate(Screen.CreateNewPin.route) },
+            onButtonClick2 = {
+                val rs = userViewModel.FillProfile(
+                    email,
+                    Name(fullName.value, nickName.value),
+                    dob.value,
+                    secEmail.value,
+                    phone.value
+                ).toInt()
+                if (rs == 0) {
+
+                } else if (rs == 1) {
+                    navController.navigate(Screen.CreateNewPin.route)
+                } else {
+
+                }
+            },
         )
 
         Spacer(modifier = Modifier.height(48.dp))
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ContainerFillData(modifier: Modifier = Modifier) {
+fun ContainerFillData(
+    modifier: Modifier = Modifier,
+    fullName: MutableState<String>,
+    nickName: MutableState<String>,
+    dob: MutableState<LocalDate>,
+    secEmail: MutableState<String>,
+    phone: MutableState<String>,
+) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(24.dp)) {
         ContainerChooseAvatar()
 
@@ -82,14 +135,8 @@ fun ContainerFillData(modifier: Modifier = Modifier) {
             placeholderFont = FontFamily(Font(R.font.urbanist_regular)),
             inputFont = FontFamily(Font(R.font.urbanist_semibold)),
             mainColor = MaterialTheme.colorScheme.onBackground,
-            bgColor = MaterialTheme.colorScheme.primary
-        )
-        AppTextField(
-            placeholderText = "Full Name",
-            placeholderFont = FontFamily(Font(R.font.urbanist_regular)),
-            inputFont = FontFamily(Font(R.font.urbanist_semibold)),
-            mainColor = MaterialTheme.colorScheme.onBackground,
-            bgColor = MaterialTheme.colorScheme.primary
+            bgColor = MaterialTheme.colorScheme.primary,
+            text = fullName,
         )
 
         AppTextField(
@@ -97,22 +144,28 @@ fun ContainerFillData(modifier: Modifier = Modifier) {
             placeholderFont = FontFamily(Font(R.font.urbanist_regular)),
             inputFont = FontFamily(Font(R.font.urbanist_semibold)),
             mainColor = MaterialTheme.colorScheme.onBackground,
-            bgColor = MaterialTheme.colorScheme.primary
+            bgColor = MaterialTheme.colorScheme.primary,
+            text = nickName
         )
 
-        AppTextField(
+        AppTextFieldDate(
             placeholderText = "Date of Birth",
             placeholderFont = FontFamily(Font(R.font.urbanist_regular)),
             inputFont = FontFamily(Font(R.font.urbanist_semibold)),
             mainColor = MaterialTheme.colorScheme.onBackground,
-            bgColor = MaterialTheme.colorScheme.primary
+            bgColor = MaterialTheme.colorScheme.primary,
+            dob = dob,
+            trailingIcon = R.drawable.ic_date,
         )
 
-        AppTextField(
-            placeholderText = "Email", placeholderFont = FontFamily(Font(R.font.urbanist_regular)),
+        AppTextFieldHaveTrailingIcon(
+            placeholderText = "Email",
+            placeholderFont = FontFamily(Font(R.font.urbanist_regular)),
             inputFont = FontFamily(Font(R.font.urbanist_semibold)),
             mainColor = MaterialTheme.colorScheme.onBackground,
-            bgColor = MaterialTheme.colorScheme.primary
+            bgColor = MaterialTheme.colorScheme.primary,
+            text = secEmail,
+            trailingIcon = R.drawable.ic_mail
         )
 
         AppTextField(
@@ -120,14 +173,14 @@ fun ContainerFillData(modifier: Modifier = Modifier) {
             placeholderFont = FontFamily(Font(R.font.urbanist_regular)),
             inputFont = FontFamily(Font(R.font.urbanist_semibold)),
             mainColor = MaterialTheme.colorScheme.onBackground,
-            bgColor = MaterialTheme.colorScheme.primary
+            bgColor = MaterialTheme.colorScheme.primary,
+            text = phone
         )
     }
 }
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-
 fun ContainerChooseAvatar(modifier: Modifier = Modifier) {
     var uri by rememberSaveable {
         mutableStateOf<Uri?>(null)
@@ -178,17 +231,17 @@ fun ContainerChooseAvatar(modifier: Modifier = Modifier) {
     }
 }
 
-@Preview(showBackground = true, widthDp = 412, heightDp = 915)
-@Composable
-fun FillYourProfileScreenPreview() {
-    Hearme_JCTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            val navController = rememberNavController()
-
-            FillYourProfileScreen(navController = navController)
-        }
-    }
-}
+//@Preview(showBackground = true, widthDp = 412, heightDp = 915)
+//@Composable
+//fun FillYourProfileScreenPreview() {
+//    Hearme_JCTheme {
+//        Surface(
+//            modifier = Modifier.fillMaxSize(),
+//            color = MaterialTheme.colorScheme.background
+//        ) {
+//            val navController = rememberNavController()
+//
+//            FillYourProfileScreen(navController = navController)
+//        }
+//    }
+//}

@@ -7,14 +7,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -50,6 +49,9 @@ import java.util.Calendar
 fun NotificationScreen(navController: NavController) {
     val pagerState = rememberPagerState(initialPage = 0)
     val scope = rememberCoroutineScope()
+//    val expandStates = remember(items.size) {
+//        List(Data.size) { mutableStateOf(false) }
+//    }
 
     Column(
         modifier = Modifier
@@ -63,10 +65,15 @@ fun NotificationScreen(navController: NavController) {
             }
         })
 
-        HorizontalPager(modifier = Modifier.weight(1f), state = pagerState, count = 2) { index ->
-            when (index) {
-                0 -> SongsNotificationScreen(navController = navController)
-                1 -> PodcastsNotificationScreen(navController = navController)
+        Column(
+            modifier = Modifier
+                .weight(1f)
+        ) {
+            HorizontalPager(state = pagerState, count = 2) { index ->
+                when (index) {
+                    0 -> SongsNotificationScreen(navController = navController)
+                    1 -> PodcastsNotificationScreen(navController = navController)
+                }
             }
         }
     }
@@ -74,34 +81,35 @@ fun NotificationScreen(navController: NavController) {
 
 @Composable
 fun SongsNotificationScreen(navController: NavController) {
-    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-        Text(
-            text = "New Music Release Today",
-            style = TextStyle(
-                fontSize = 18.sp,
-                lineHeight = 21.6.sp,
-                fontFamily = FontFamily(Font(R.font.urbanist_bold)),
-                fontWeight = FontWeight(700),
-                color = MaterialTheme.colorScheme.onBackground,
+    LazyColumn() {
+        item {
+            Text(
+                text = "New Music Release Today",
+                style = TextStyle(
+                    fontSize = 18.sp,
+                    lineHeight = 21.6.sp,
+                    fontFamily = FontFamily(Font(R.font.urbanist_bold)),
+                    fontWeight = FontWeight(700),
+                    color = MaterialTheme.colorScheme.onBackground,
 
-                )
-        )
+                    )
+            )
+            LazyColumnSongs()
+        }
+        item {
+            Text(
+                text = "Yesterday",
+                style = TextStyle(
+                    fontSize = 18.sp,
+                    lineHeight = 21.6.sp,
+                    fontFamily = FontFamily(Font(R.font.urbanist_bold)),
+                    fontWeight = FontWeight(700),
+                    color = MaterialTheme.colorScheme.onBackground,
 
-        LazyColumnSongs(modifier = Modifier.fillMaxWidth())
-
-        Text(
-            text = "Yesterday",
-            style = TextStyle(
-                fontSize = 18.sp,
-                lineHeight = 21.6.sp,
-                fontFamily = FontFamily(Font(R.font.urbanist_bold)),
-                fontWeight = FontWeight(700),
-                color = MaterialTheme.colorScheme.onBackground,
-
-                )
-        )
-
-        LazyColumnSongs(modifier = Modifier.fillMaxSize(), isYesterday = true)
+                    )
+            )
+            LazyColumnSongs(isYesterday = true)
+        }
     }
 }
 
@@ -121,7 +129,7 @@ fun LazyColumnSongs(modifier: Modifier = Modifier, isYesterday: Boolean = false)
                 it.release
             ).compareTo(
                 yesterdayDate
-            ) == 0
+            ) == 0 && it.categoryID != "ca002"
         }
     else
         data.filter {
@@ -132,7 +140,7 @@ fun LazyColumnSongs(modifier: Modifier = Modifier, isYesterday: Boolean = false)
             ) == 0
         }
     LazyColumn(
-        modifier = modifier,
+        modifier = modifier.height(400.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp),
         contentPadding = PaddingValues(bottom = if (isYesterday) 24.dp else 0.dp)
     ) {

@@ -43,6 +43,7 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.example.hearme_jc.R
 import com.example.hearme_jc.data.model.Artist
 import com.example.hearme_jc.data.model.ArtistsData
+import com.example.hearme_jc.data.viewmodel.UserViewModel
 import com.example.hearme_jc.navigation.Screen
 import com.example.hearme_jc.ui.theme.Hearme_JCTheme
 import com.example.hearme_jc.ui.theme.Primary500
@@ -51,7 +52,7 @@ import com.example.mylibrary.AppToggleButton
 import com.example.mylibrary.PairButton
 
 @Composable
-fun FollowArtistsScreen(modifier: Modifier = Modifier, navController: NavController) {
+fun FollowArtistsScreen(modifier: Modifier = Modifier, navController: NavController, userViewModel: UserViewModel) {
     Column(modifier.fillMaxSize()) {
         Column(
             modifier = modifier

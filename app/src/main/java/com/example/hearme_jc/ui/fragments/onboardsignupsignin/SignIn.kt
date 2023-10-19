@@ -1,5 +1,6 @@
 package com.example.hearme_jc.ui.fragments.onboardsignupsignin
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -25,7 +26,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -43,23 +43,21 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.hearme_jc.R
 import com.example.hearme_jc.data.model.SignInMethod
 import com.example.hearme_jc.data.model.SignInMethodData
+import com.example.hearme_jc.data.viewmodel.UserViewModel
 import com.example.hearme_jc.navigation.Screen
-import com.example.hearme_jc.ui.theme.Hearme_JCTheme
 import com.example.hearme_jc.ui.theme.Primary500
 import com.example.hearme_jc.ui.theme.White
 import com.example.mylibrary.AppNavigationButton
 import com.example.mylibrary.AppTextFieldLeadingIcon
 
 @Composable
-fun SignInScreen(modifier: Modifier = Modifier, navController: NavController) {
+fun SignInScreen(modifier: Modifier = Modifier, navController: NavController, userViewModel: UserViewModel) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -88,7 +86,7 @@ fun SignInScreen(modifier: Modifier = Modifier, navController: NavController) {
             ),
         )
 
-        ContainerForSignInOrSignUp(navController = navController)
+        ContainerForSignInOrSignUp(navController = navController, userViewModel = userViewModel)
 
         ContainerForChooseOptions()
 
@@ -199,9 +197,18 @@ fun ContainerForSignInOrSignUp(
     modifier: Modifier = Modifier,
     navController: NavController,
     isSignIn: Boolean = true,
+    userViewModel: UserViewModel,
 ) {
     var isChecked by rememberSaveable {
         mutableStateOf(false)
+    }
+
+    val email = rememberSaveable {
+        mutableStateOf("")
+    }
+
+    val password = rememberSaveable {
+        mutableStateOf("")
     }
 
     Column(modifier = modifier, verticalArrangement = Arrangement.Center) {
@@ -211,7 +218,8 @@ fun ContainerForSignInOrSignUp(
             placeholderFont = FontFamily(Font(R.font.urbanist_regular)),
             inputFont = FontFamily(Font(R.font.urbanist_semibold)),
             mainColor = MaterialTheme.colorScheme.onBackground,
-            bgColor = MaterialTheme.colorScheme.primary
+            bgColor = MaterialTheme.colorScheme.primary,
+            text = email
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -223,7 +231,8 @@ fun ContainerForSignInOrSignUp(
             inputFont = FontFamily(Font(R.font.urbanist_semibold)),
             mainColor = MaterialTheme.colorScheme.onBackground,
             isPasswordType = true,
-            bgColor = MaterialTheme.colorScheme.primary
+            bgColor = MaterialTheme.colorScheme.primary,
+            text = password
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -238,11 +247,43 @@ fun ContainerForSignInOrSignUp(
             textColor = White,
             bgColor = Primary500,
             onButtonClick = {
-                if (isSignIn) navController.navigate(Screen.Home.route) {
-                    popUpTo(0) {
-                        inclusive = true
+                if (isSignIn) {
+                    when (userViewModel.Login(email.value, password.value).toInt()) {
+                        0 -> {
+                            Log.v("RESULT", "Rỗng")
+                        }
+
+                        1 -> {
+                            Log.v("RESULT", "Thành công")
+                            navController.navigate("${Screen.Home.route}/${email.value}") {
+                                popUpTo(0) {
+                                    inclusive = true
+                                }
+                            }
+                        }
+
+                        else -> {
+                            Log.v("RESULT", "0 tồn tại")
+
+                        }
                     }
-                } else navController.navigate(Screen.FillYourProfile.route)
+                } else {
+                    when (userViewModel.Register(email.value, password.value).toInt()) {
+                        0 -> {
+                            Log.v("RESULT", "Rỗng")
+                        }
+
+                        1 -> {
+                            Log.v("RESULT", "Thành công")
+                            navController.navigate("${Screen.FillYourProfile.route}/${email.value}")
+                        }
+
+                        else -> {
+                            Log.v("RESULT", "Trùng email")
+
+                        }
+                    }
+                }
             },
             font = FontFamily(Font(R.font.urbanist_bold))
         )
@@ -266,17 +307,17 @@ fun ContainerForSignInOrSignUp(
     }
 }
 
-@Preview(showBackground = true, widthDp = 412, heightDp = 915)
-@Composable
-fun SignInPreview() {
-    Hearme_JCTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            val navController = rememberNavController()
-
-            SignInScreen(navController = navController)
-        }
-    }
-}
+//@Preview(showBackground = true, widthDp = 412, heightDp = 915)
+//@Composable
+//fun SignInPreview() {
+//    Hearme_JCTheme {
+//        Surface(
+//            modifier = Modifier.fillMaxSize(),
+//            color = MaterialTheme.colorScheme.background
+//        ) {
+//            val navController = rememberNavController()
+//
+//            SignInScreen(navController = navController)
+//        }
+//    }
+//}

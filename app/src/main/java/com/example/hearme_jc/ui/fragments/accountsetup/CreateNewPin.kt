@@ -5,11 +5,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
@@ -22,14 +20,12 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.hearme_jc.R
+import com.example.hearme_jc.data.viewmodel.UserViewModel
 import com.example.hearme_jc.navigation.Screen
-import com.example.hearme_jc.ui.theme.Hearme_JCTheme
 import com.example.hearme_jc.ui.theme.Primary500
 import com.example.hearme_jc.ui.theme.White
 import com.example.mylibrary.AppNavigationButton
@@ -37,7 +33,7 @@ import com.example.mylibrary.AppTextFieldPIN
 import com.example.mylibrary.PadNumbers
 
 @Composable
-fun CreateNewPinScreen(modifier: Modifier = Modifier, navController: NavController) {
+fun CreateNewPinScreen(modifier: Modifier = Modifier, navController: NavController,userViewModel: UserViewModel) {
     val numberArray = rememberSaveable(
         saver = listSaver(
             save = { it.toList() },
@@ -156,17 +152,17 @@ fun RowAppTextFieldPIN(
     }
 }
 
-@Preview(showBackground = true, widthDp = 412, heightDp = 915)
-@Composable
-fun CreateNewPinScreenPreview() {
-    Hearme_JCTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            val navController = rememberNavController()
-
-            CreateNewPinScreen(navController = navController)
-        }
-    }
-}
+//@Preview(showBackground = true, widthDp = 412, heightDp = 915)
+//@Composable
+//fun CreateNewPinScreenPreview() {
+//    Hearme_JCTheme {
+//        Surface(
+//            modifier = Modifier.fillMaxSize(),
+//            color = MaterialTheme.colorScheme.background
+//        ) {
+//            val navController = rememberNavController()
+//
+//            CreateNewPinScreen(navController = navController)
+//        }
+//    }
+//}

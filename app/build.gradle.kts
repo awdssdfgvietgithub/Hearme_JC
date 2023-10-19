@@ -94,6 +94,9 @@ dependencies {
     // Optional - Viewpager
     implementation("com.google.accompanist:accompanist-pager:0.23.1")
     implementation("com.google.accompanist:accompanist-pager-indicators:0.13.0")
+    // Optional - Sheets Compose Dialogs
+    implementation("com.maxkeppeler.sheets-compose-dialogs:core:1.0.2")
+    implementation("com.maxkeppeler.sheets-compose-dialogs:calendar:1.0.2")
     ///>
 
     testImplementation("junit:junit:4.13.2")

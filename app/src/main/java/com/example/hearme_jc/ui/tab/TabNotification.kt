@@ -24,7 +24,13 @@ enum class TabNotification(val title: String) {
 
 @Composable
 fun TabSongs(modifier: Modifier = Modifier, selectedTabIndex: Int, onSelectedTab: (TabNotification) -> Unit) {
-    TabRow(modifier = modifier.fillMaxWidth(), selectedTabIndex = selectedTabIndex, contentColor = Primary500, backgroundColor = Color.Transparent) {
+    TabRow(
+        modifier = modifier.fillMaxWidth(),
+        selectedTabIndex = selectedTabIndex,
+        contentColor = Primary500,
+        backgroundColor = Color.Transparent,
+
+    ) {
         TabNotification.values().forEachIndexed() { index, tabPage ->
             Tab(
                 selected = index == selectedTabIndex,

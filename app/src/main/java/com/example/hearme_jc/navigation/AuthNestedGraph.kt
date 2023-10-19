@@ -4,19 +4,20 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.example.hearme_jc.data.viewmodel.UserViewModel
 import com.example.hearme_jc.ui.fragments.forgotresetpassword.CreateNewPasswordScreen
 import com.example.hearme_jc.ui.fragments.forgotresetpassword.SelectMethodsScreen
 import com.example.hearme_jc.ui.fragments.forgotresetpassword.TypeOTPScreen
 import com.example.hearme_jc.ui.fragments.onboardsignupsignin.SignInScreen
 import com.example.hearme_jc.ui.fragments.onboardsignupsignin.SignUpScreen
 
-fun NavGraphBuilder.authGraph(navController: NavController) {
+fun NavGraphBuilder.authGraph(navController: NavController, userViewModel: UserViewModel) {
     navigation(startDestination = Screen.SignIn.route, route = Screen.Auth.route) {
         composable(route = Screen.SignIn.route) {
-            SignInScreen(navController = navController)
+            SignInScreen(navController = navController, userViewModel = userViewModel)
         }
         composable(route = Screen.SignUp.route) {
-            SignUpScreen(navController = navController)
+            SignUpScreen(navController = navController, userViewModel = userViewModel)
         }
         composable(route = Screen.SelectMethods.route) {
             SelectMethodsScreen(navController = navController)
@@ -25,7 +26,7 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
             TypeOTPScreen(navController = navController)
         }
         composable(route = Screen.CreateNewPassword.route) {
-            CreateNewPasswordScreen(navController = navController)
+            CreateNewPasswordScreen(navController = navController, userViewModel = userViewModel)
         }
     }
 }
