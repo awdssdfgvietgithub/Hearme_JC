@@ -1,4 +1,4 @@
-package com.example.hearme_jc.ui.fragments.homeactionmenu
+package com.example.hearme_jc.ui.fragments.homeactionmenu.screen
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
@@ -33,7 +33,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.hearme_jc.R
 import com.example.hearme_jc.data.model.Music
-import com.example.hearme_jc.data.model.MusicsData
+import com.example.hearme_jc.data.viewmodel.ArtistViewModel
+import com.example.hearme_jc.data.viewmodel.MusicViewModel
 import com.example.hearme_jc.ui.tab.TabSongs
 import com.example.hearme_jc.ui.theme.Primary500
 import com.example.mylibrary.ButtonMorePopupSpinner
@@ -42,12 +43,14 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Calendar
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun NotificationScreen(navController: NavController) {
+fun NotificationScreen(
+    navController: NavController,
+    musicViewModel: MusicViewModel,
+    artistViewModel: ArtistViewModel,
+) {
     val pagerState = rememberPagerState(initialPage = 0)
     val scope = rememberCoroutineScope()
 
@@ -69,8 +72,17 @@ fun NotificationScreen(navController: NavController) {
         ) {
             HorizontalPager(state = pagerState, count = 2) { index ->
                 when (index) {
-                    0 -> SongsNotificationScreen(navController = navController)
-                    1 -> PodcastsNotificationScreen(navController = navController)
+                    0 -> SongsNotificationScreen(
+                        navController = navController,
+                        artistViewModel = artistViewModel,
+                        musicViewModel = musicViewModel
+                    )
+
+                    1 -> PodcastsNotificationScreen(
+                        navController = navController,
+                        artistViewModel = artistViewModel,
+                        musicViewModel = musicViewModel
+                    )
                 }
             }
         }
@@ -78,7 +90,7 @@ fun NotificationScreen(navController: NavController) {
 }
 
 @Composable
-fun SongsNotificationScreen(navController: NavController) {
+fun SongsNotificationScreen(navController: NavController, artistViewModel: ArtistViewModel, musicViewModel: MusicViewModel) {
     LazyColumn() {
         item {
             Text(
@@ -92,7 +104,7 @@ fun SongsNotificationScreen(navController: NavController) {
 
                     )
             )
-            LazyColumnSongs()
+            LazyColumnSongs(isToday = true, artistViewModel = artistViewModel, musicViewModel = musicViewModel)
         }
         item {
             Text(
@@ -106,50 +118,31 @@ fun SongsNotificationScreen(navController: NavController) {
 
                     )
             )
-            LazyColumnSongs(isYesterday = true)
+            LazyColumnSongs(isToday = false, artistViewModel = artistViewModel, musicViewModel = musicViewModel)
         }
     }
 }
 
 @Composable
-fun LazyColumnSongs(modifier: Modifier = Modifier, isYesterday: Boolean = false) {
-    val formatter = SimpleDateFormat("dd/MM/yyyy")
-    val calToday = Calendar.getInstance()
-    val calYesterday = Calendar.getInstance()
-    calYesterday.add(Calendar.DATE, -1)
-    val currentDate = formatter.format(calToday.time) // format date now
-    val yesterdayDate = formatter.format(calYesterday.time) // format yesterday date
-
-    val data: ArrayList<Music> = MusicsData.dataMusic()
-    val filterData = if (isYesterday)
-        data.filter {
-            formatter.format(
-                it.release
-            ).compareTo(
-                yesterdayDate
-            ) == 0 && it.categoryID != "ca002"
-        }
-    else
-        data.filter {
-            formatter.format(
-                it.release
-            ).compareTo(
-                currentDate
-            ) == 0 && it.categoryID != "ca002"
-        }
+fun LazyColumnSongs(
+    modifier: Modifier = Modifier,
+    isToday: Boolean = true,
+    artistViewModel: ArtistViewModel,
+    musicViewModel: MusicViewModel,
+) {
     LazyColumn(
         modifier = modifier.height(400.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp),
-        contentPadding = PaddingValues(bottom = if (isYesterday) 24.dp else 0.dp)
+        contentPadding = PaddingValues(bottom = if (isToday) 24.dp else 0.dp)
     ) {
-        items(filterData) {
-            SongItemView(modifier = Modifier, it)
+        items(musicViewModel.GetMusicRelease(isToday, true)) {
+            SongItemView(modifier = Modifier, it, artistViewModel = artistViewModel)
         }
     }
 }
 
 @Composable
-fun SongItemView(modifier: Modifier = Modifier, it: Music) {
+fun SongItemView(modifier: Modifier = Modifier, it: Music, artistViewModel: ArtistViewModel) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -158,7 +151,9 @@ fun SongItemView(modifier: Modifier = Modifier, it: Music) {
         MusicCard(
             modifier = Modifier.width(80.dp), music = it, modifierGI = Modifier
                 .size(80.dp)
-                .clip(RoundedCornerShape(20.dp)), isHaveMusicName = false
+                .clip(RoundedCornerShape(20.dp)),
+            isHaveMusicName = false,
+            artistViewModel = artistViewModel
         )
 
         Column(
@@ -192,7 +187,7 @@ fun SongItemView(modifier: Modifier = Modifier, it: Music) {
                 )
 
                 Text(
-                    text = "${it.duration.m}:${it.duration.s} mins",
+                    text = "${it.duration?.m}:${it.duration?.s} mins",
                     style = TextStyle(
                         fontSize = 12.sp,
                         fontFamily = FontFamily(Font(R.font.urbanist_medium)),
@@ -220,7 +215,7 @@ fun SongItemView(modifier: Modifier = Modifier, it: Music) {
 
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(
-                    text = it.GetArtist(artistID = it.artistID)?.artistName ?: "",
+                    text = artistViewModel.GetArtist(it.artistID.toString()).artistName,
                     style = TextStyle(
                         fontSize = 12.sp,
                         fontFamily = FontFamily(Font(R.font.urbanist_medium)),
@@ -242,7 +237,7 @@ fun SongItemView(modifier: Modifier = Modifier, it: Music) {
                 )
 
                 Text(
-                    text = if (it.isAlbum) "Album" else "Single",
+                    text = if (it.isAlbum == true) "Album" else "Single",
                     style = TextStyle(
                         fontSize = 12.sp,
                         fontFamily = FontFamily(Font(R.font.urbanist_medium)),
@@ -272,7 +267,7 @@ fun SongItemView(modifier: Modifier = Modifier, it: Music) {
 }
 
 @Composable
-fun PodcastsNotificationScreen(navController: NavController) {
+fun PodcastsNotificationScreen(navController: NavController, artistViewModel: ArtistViewModel, musicViewModel: MusicViewModel) {
     LazyColumn() {
         item {
             Text(
@@ -286,7 +281,7 @@ fun PodcastsNotificationScreen(navController: NavController) {
 
                     )
             )
-            LazyColumnPodcasts()
+            LazyColumnPodcasts(isToday = true, artistViewModel = artistViewModel, musicViewModel = musicViewModel)
         }
         item {
             Text(
@@ -300,45 +295,26 @@ fun PodcastsNotificationScreen(navController: NavController) {
 
                     )
             )
-            LazyColumnPodcasts(isYesterday = true)
+            LazyColumnPodcasts(isToday = false, artistViewModel = artistViewModel, musicViewModel = musicViewModel)
         }
     }
 }
 
 @SuppressLint("SimpleDateFormat")
 @Composable
-fun LazyColumnPodcasts(modifier: Modifier = Modifier, isYesterday: Boolean = false) {
-    val formatter = SimpleDateFormat("dd/MM/yyyy")
-    val calToday = Calendar.getInstance()
-    val calYesterday = Calendar.getInstance()
-    calYesterday.add(Calendar.DATE, -1)
-    val currentDate = formatter.format(calToday.time) // format date now
-    val yesterdayDate = formatter.format(calYesterday.time) // format yesterday date
-
-    val data: ArrayList<Music> = MusicsData.dataMusic()
-    val filterData = if (isYesterday)
-        data.filter {
-            formatter.format(
-                it.release
-            ).compareTo(
-                yesterdayDate
-            ) == 0 && it.categoryID == "ca002"
-        }
-    else
-        data.filter {
-            formatter.format(
-                it.release
-            ).compareTo(
-                currentDate
-            ) == 0 && it.categoryID == "ca002"
-        }
+fun LazyColumnPodcasts(
+    modifier: Modifier = Modifier,
+    isToday: Boolean = true,
+    musicViewModel: MusicViewModel,
+    artistViewModel: ArtistViewModel,
+) {
     LazyColumn(
         modifier = modifier.height(400.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp),
-        contentPadding = PaddingValues(bottom = if (isYesterday) 24.dp else 0.dp)
+        contentPadding = PaddingValues(bottom = if (isToday) 24.dp else 0.dp)
     ) {
-        items(filterData) {
-            SongItemView(modifier = Modifier, it)
+        items(musicViewModel.GetMusicRelease(isToday, false)) {
+            SongItemView(modifier = Modifier, it, artistViewModel = artistViewModel)
         }
     }
 }

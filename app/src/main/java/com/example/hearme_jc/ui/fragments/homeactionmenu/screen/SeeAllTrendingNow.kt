@@ -1,4 +1,4 @@
-package com.example.hearme_jc.ui.fragments.homeactionmenu
+package com.example.hearme_jc.ui.fragments.homeactionmenu.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,21 +13,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.hearme_jc.data.model.MusicsData
+import com.example.hearme_jc.data.viewmodel.ArtistViewModel
+import com.example.hearme_jc.data.viewmodel.MusicViewModel
 
 @Composable
-fun SeeAllTrendingNowScreen(navController: NavController) {
+fun SeeAllTrendingNowScreen(navController: NavController, musicViewModel: MusicViewModel, artistViewModel: ArtistViewModel) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(160.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(top = 24.dp, end = 24.dp, start = 24.dp, bottom = 48.dp)
     ) {
-        items(MusicsData.dataMusic().sortedByDescending { it.totalListeners }.take(10)) {
+        items(musicViewModel.GetTrendingMusics(10)) {
             MusicCard(
                 modifier = Modifier.width(184.dp), music = it, modifierGI = Modifier
                     .size(184.dp)
-                    .clip(RoundedCornerShape(40.dp))
+                    .clip(RoundedCornerShape(40.dp)),
+                artistViewModel = artistViewModel
             )
         }
     }

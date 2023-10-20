@@ -5,10 +5,11 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -43,14 +45,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavBackStackEntry
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -59,45 +58,26 @@ import androidx.navigation.compose.rememberNavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.hearme_jc.R
-import com.example.hearme_jc.data.viewmodel.EmailViewModel
-import com.example.hearme_jc.data.viewmodel.UserViewModel
 import com.example.hearme_jc.navigation.NavGraph
 import com.example.hearme_jc.navigation.Screen
 import com.example.hearme_jc.ui.activities.data.Destinations
+import com.example.hearme_jc.ui.fragments.searchdetailsplay.screen.AppSearchBar
 import com.example.hearme_jc.ui.theme.Greyscale500
 import com.example.hearme_jc.ui.theme.Hearme_JCTheme
 import com.example.hearme_jc.ui.theme.Primary500
 
-//extensions
-@Composable
-inline fun <reified T : ViewModel> NavBackStackEntry?.viewModel(): T? = this?.let {
-    viewModel(viewModelStoreOwner = it)
-}
-
-@Composable
-inline fun <reified T : ViewModel> NavBackStackEntry.viewModel(
-    viewModelStoreOwner: ViewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
-        "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-    }
-): T {
-    return androidx.lifecycle.viewmodel.compose.viewModel(
-        viewModelStoreOwner = viewModelStoreOwner, key = T::class.java.name
-    )
-}
-
 class MainActivity : ComponentActivity() {
-
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             Hearme_JCTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen(userViewModel = userViewModel)
+                    MainScreen()
                 }
             }
         }
@@ -106,8 +86,9 @@ class MainActivity : ComponentActivity() {
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun MainScreen(userViewModel: UserViewModel) {
+fun MainScreen() {
     val navController: NavHostController = rememberNavController()
+
     //State of topBar, false is its invisible
     val isShowToolbar = rememberSaveable {
         mutableStateOf(false)
@@ -158,6 +139,19 @@ fun MainScreen(userViewModel: UserViewModel) {
         mutableStateOf(false)
     }
 
+    //Search bar
+    val query = rememberSaveable {
+        mutableStateOf("")
+    }
+
+    val active = rememberSaveable {
+        mutableStateOf(false)
+    }
+
+    val isShowSearchBar = rememberSaveable {
+        mutableStateOf(false)
+    }
+
     //Get current screen/fragment
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val route = navBackStackEntry?.destination?.route
@@ -169,6 +163,7 @@ fun MainScreen(userViewModel: UserViewModel) {
         Screen.Splash.route -> {
             isShowNavBar.value = false
             isShowToolbar.value = false
+
         }
 
         Screen.Walkthrough.route -> {
@@ -258,11 +253,12 @@ fun MainScreen(userViewModel: UserViewModel) {
         }
 
         //Tab Home
-        "${Screen.Home.route}/{email}" -> {
+        Screen.Home.route -> {
             isShowNavBar.value = true
             isShowToolbar.value = true
             onTitleChange.value = ""
             isShowAvatar.value = true
+            isShowSearchBar.value = false
 
             isShowSearch.value = true
             isShowNotification.value = true
@@ -278,6 +274,7 @@ fun MainScreen(userViewModel: UserViewModel) {
             onTitleChange.value = "Trending Now"
             navIconChanged.value = R.drawable.ic_arrow_back
             isShowAvatar.value = false
+            isShowSearchBar.value = false
 
             isShowSearch.value = true
             isShowNotification.value = false
@@ -293,6 +290,7 @@ fun MainScreen(userViewModel: UserViewModel) {
             onTitleChange.value = "Popular Artists"
             navIconChanged.value = R.drawable.ic_arrow_back
             isShowAvatar.value = false
+            isShowSearchBar.value = false
 
             isShowSearch.value = true
             isShowNotification.value = false
@@ -308,6 +306,7 @@ fun MainScreen(userViewModel: UserViewModel) {
             onTitleChange.value = "Popular Artists"
             navIconChanged.value = R.drawable.ic_arrow_back
             isShowAvatar.value = false
+            isShowSearchBar.value = false
 
             isShowSearch.value = false
             isShowNotification.value = false
@@ -321,8 +320,10 @@ fun MainScreen(userViewModel: UserViewModel) {
         Screen.Explore.route -> {
             isShowNavBar.value = true
             isShowToolbar.value = true
-            onTitleChange.value = ""
-            isShowAvatar.value = true
+            onTitleChange.value = "Explore"
+            navIconChanged.value = R.drawable.ic_music
+            isShowAvatar.value = false
+            isShowSearchBar.value = true
 
             isShowSearch.value = false
             isShowNotification.value = false
@@ -338,6 +339,7 @@ fun MainScreen(userViewModel: UserViewModel) {
             isShowToolbar.value = true
             onTitleChange.value = ""
             isShowAvatar.value = true
+            isShowSearchBar.value = false
 
             isShowSearch.value = true
             isShowNotification.value = false
@@ -353,6 +355,7 @@ fun MainScreen(userViewModel: UserViewModel) {
             isShowToolbar.value = true
             onTitleChange.value = ""
             isShowAvatar.value = true
+            isShowSearchBar.value = false
 
             isShowSearch.value = false
             isShowNotification.value = false
@@ -364,47 +367,60 @@ fun MainScreen(userViewModel: UserViewModel) {
     }
 
     val buttonsVisible = remember { mutableStateOf(true) }
+
     Scaffold(
         topBar = {
-            TopBar(
-                isVisible = isShowToolbar,
-                onTitleChange = onTitleChange,
-                onNavIconClicked = {
-                    if (route == Screen.LetYouIn.route ||
-                        route == Screen.SignUp.route ||
-                        route == Screen.SignIn.route ||
-                        route == Screen.FillYourProfile.route ||
-                        route == Screen.CreateNewPin.route ||
-                        route == Screen.SetYourFingerprint.route ||
-                        route == Screen.FollowArtists.route ||
-                        route == Screen.SelectMethods.route ||
-                        route == Screen.TypeOTP.route ||
-                        route == Screen.CreateNewPassword.route ||
-                        route == Screen.SeeAllTrendingNow.route ||
-                        route == Screen.SeeAllPopularArtists.route ||
-                        route == Screen.Notification.route
+            Column(modifier = Modifier) {
+                AnimatedVisibility(visible = !active.value) {
+                    TopBar(
+                        isVisible = isShowToolbar,
+                        onTitleChange = onTitleChange,
+                        onNavIconClicked = {
+                            if (route == Screen.LetYouIn.route ||
+                                route == Screen.SignUp.route ||
+                                route == Screen.SignIn.route ||
+                                route == Screen.FillYourProfile.route ||
+                                route == Screen.CreateNewPin.route ||
+                                route == Screen.SetYourFingerprint.route ||
+                                route == Screen.FollowArtists.route ||
+                                route == Screen.SelectMethods.route ||
+                                route == Screen.TypeOTP.route ||
+                                route == Screen.CreateNewPassword.route ||
+                                route == Screen.SeeAllTrendingNow.route ||
+                                route == Screen.SeeAllPopularArtists.route ||
+                                route == Screen.Notification.route
+                            )
+                                navController.popBackStack()
+                        },
+                        isShowAvatar = isShowAvatar,
+                        navIcon = navIconChanged,
+                        isShowSearch = isShowSearch,
+                        isShowNotification = isShowNotification,
+                        isShowMore = isShowMore,
+                        isShowFilter = isShowFilter,
+                        isShowScan = isShowScan,
+                        isShowEdit = isShowEdit,
+                        navController = navController
                     )
-                        navController.popBackStack()
-                },
-                isShowAvatar = isShowAvatar,
-                navIcon = navIconChanged,
-                isShowSearch = isShowSearch,
-                isShowNotification = isShowNotification,
-                isShowMore = isShowMore,
-                isShowFilter = isShowFilter,
-                isShowScan = isShowScan,
-                isShowEdit = isShowEdit,
-                navController = navController
-            )
+                }
+                AnimatedVisibility(visible = isShowSearchBar.value) {
+                    AppSearchBar(query = query, active = active)
+                }
+            }
         },
         bottomBar = {
-            BottomBar(navController = navController, state = buttonsVisible, modifier = Modifier, isVisible = isShowNavBar)
+            AnimatedVisibility(visible = !active.value) {
+                BottomBar(navController = navController, state = buttonsVisible, modifier = Modifier, isVisible = isShowNavBar)
+            }
         },
     ) { values ->
-        Column(modifier = Modifier.padding(values)) {
+        Box(
+            modifier = Modifier
+                .padding(values)
+                .fillMaxSize()
+        ) {
             NavGraph(
                 navController = navController,
-                userViewModel = userViewModel,
             )
         }
     }
@@ -566,6 +582,7 @@ fun BottomBar(
     modifier: Modifier = Modifier,
     isVisible: MutableState<Boolean>,
 ) {
+
     AnimatedVisibility(visible = isVisible.value) {
         val screens = listOf(
             Destinations.HomeScreen, Destinations.ExploreScreen, Destinations.LibraryScreen, Destinations.ProfileScreen
@@ -581,10 +598,29 @@ fun BottomBar(
             screens.forEach { screen ->
 
                 NavigationBarItem(
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .background(MaterialTheme.colorScheme.background, RoundedCornerShape(24.dp))
+                        .clip(RoundedCornerShape(24.dp)),
                     icon = {
-                        Icon(painter = painterResource(id = screen.icon!!), contentDescription = "")
+                        Icon(
+                            painter = painterResource(id = screen.icon!!),
+                            contentDescription = "",
+                            modifier = Modifier.size(24.dp),
+                        )
                     },
-                    selected = currentRoute == screen.route,
+                    label = {
+                        Text(
+                            text = screen.title!!,
+                            style = TextStyle(
+                                fontSize = 10.sp,
+                                fontFamily = FontFamily(Font(R.font.urbanist_medium)),
+                                fontWeight = FontWeight(500),
+                                textAlign = TextAlign.Center,
+                                letterSpacing = 0.2.sp,
+                            )
+                        )
+                    },
                     onClick = {
                         navController.navigate(screen.route) {
                             popUpTo(navController.graph.findStartDestination().id) {
@@ -595,10 +631,17 @@ fun BottomBar(
                         }
                     },
                     colors = NavigationBarItemDefaults.colors(
-                        unselectedTextColor = Greyscale500, selectedTextColor = Primary500
+                        unselectedTextColor = Greyscale500,
+                        selectedTextColor = Primary500,
+                        selectedIconColor = Primary500,
+                        unselectedIconColor = Greyscale500,
+                        indicatorColor = MaterialTheme.colorScheme.background
                     ),
+                    selected = currentRoute == screen.route,
                 )
             }
         }
     }
+
+
 }

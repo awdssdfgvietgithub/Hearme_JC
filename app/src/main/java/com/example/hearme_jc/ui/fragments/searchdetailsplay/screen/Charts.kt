@@ -1,4 +1,4 @@
-package com.example.hearme_jc.ui.fragments.profilesetting
+package com.example.hearme_jc.ui.fragments.searchdetailsplay.screen
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -12,13 +12,13 @@ import androidx.navigation.compose.rememberNavController
 import com.example.hearme_jc.ui.theme.Hearme_JCTheme
 
 @Composable
-fun ProfileScreen(navController: NavController) {
+fun ChartsScreen(navController: NavController) {
     Text(text = "Profile")
 }
 
 @Preview(showBackground = true, widthDp = 412, heightDp = 915)
 @Composable
-fun ProfileScreenPreview() {
+fun ChartsScreenPreview() {
     Hearme_JCTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -26,7 +26,7 @@ fun ProfileScreenPreview() {
         ) {
             val navController = rememberNavController()
 
-            ProfileScreen(navController = navController)
+            ChartsScreen(navController = navController)
         }
     }
 }

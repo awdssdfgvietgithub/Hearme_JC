@@ -1,4 +1,4 @@
-package com.example.hearme_jc.ui.fragments.onboardsignupsignin
+package com.example.hearme_jc.ui.fragments.onboardsignupsignin.screen
 
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable

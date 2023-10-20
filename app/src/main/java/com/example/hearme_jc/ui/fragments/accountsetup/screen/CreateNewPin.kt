@@ -1,4 +1,4 @@
-package com.example.hearme_jc.ui.fragments.accountsetup
+package com.example.hearme_jc.ui.fragments.accountsetup.screen
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.hearme_jc.R
+import com.example.hearme_jc.data.viewmodel.EmailViewModel
 import com.example.hearme_jc.data.viewmodel.UserViewModel
 import com.example.hearme_jc.navigation.Screen
 import com.example.hearme_jc.ui.theme.Primary500
@@ -33,14 +34,19 @@ import com.example.mylibrary.AppTextFieldPIN
 import com.example.mylibrary.PadNumbers
 
 @Composable
-fun CreateNewPinScreen(modifier: Modifier = Modifier, navController: NavController, userViewModel: UserViewModel, email: String) {
+fun CreateNewPinScreen(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    emailViewModel: EmailViewModel,
+    userViewModel: UserViewModel,
+) {
     val numberArray = rememberSaveable(
         saver = listSaver(
             save = { it.toList() },
             restore = { mutableStateListOf<String>().apply { addAll(it) } }
         )
     ) { mutableStateListOf<String>() }
-    Log.v("CreateNewPinScreen",email)
+    Log.v("CreateNewPinScreen", emailViewModel.GetEmail())
     Column(modifier = modifier) {
         Spacer(modifier = Modifier.weight(1f))
 
@@ -78,22 +84,21 @@ fun CreateNewPinScreen(modifier: Modifier = Modifier, navController: NavControll
                 Font(R.font.urbanist_bold)
             ),
             onButtonClick = {
-                val rs = userViewModel.CreateNewPin(email, pin = numberArray).toInt()
-                when (rs) {
+                when (userViewModel.CreateNewPin(emailViewModel.GetEmail(), pin = numberArray).toInt()) {
                     0 -> {
-                        Log.v("CreateNewPin","Email rong")
+                        Log.v("CreateNewPin", "Email rong")
                     }
 
                     2 -> {
-                        Log.v("CreateNewPin","Pin rong")
+                        Log.v("CreateNewPin", "Pin rong")
                     }
 
                     1 -> {
-                        navController.navigate("${Screen.SetYourFingerprint.route}/$email")
+                        navController.navigate(Screen.SetYourFingerprint.route)
                     }
 
                     else -> {
-                        Log.v("CreateNewPin","Email khong chinh xac")
+                        Log.v("CreateNewPin", "Email khong chinh xac")
                     }
                 }
             }

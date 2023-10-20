@@ -97,6 +97,10 @@ dependencies {
     // Optional - Sheets Compose Dialogs
     implementation("com.maxkeppeler.sheets-compose-dialogs:core:1.0.2")
     implementation("com.maxkeppeler.sheets-compose-dialogs:calendar:1.0.2")
+    // Optional - Hilt
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    //
+    implementation("com.google.accompanist:accompanist-insets:0.30.1")
     ///>
 
     testImplementation("junit:junit:4.13.2")

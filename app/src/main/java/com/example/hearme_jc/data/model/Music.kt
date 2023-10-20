@@ -7,20 +7,16 @@ data class Music(
     val musicID: String,
     val musicName: String,
     val totalListeners: Int = 0,
-    val image: String,
-    val duration: Time,
-    val release: Date,
-    val categoryID: String,
-    val artistID: String,
-    val isAlbum: Boolean,
+    val image: String? = null,
+    val duration: Time? = null,
+    val release: Date? = null,
+    val categoryID: String? = null,
+    val artistID: String? = null,
+    val isAlbum: Boolean? = null,
     val path: String = "https://cdn.pixabay.com/audio/2023/07/03/audio_80cd47077b.mp3",
     val information: String? = null,
     var isPlaying: Boolean? = false,
-) {
-    fun GetArtist(artistID: String): Artist? {
-        return ArtistsData.dataArtist().firstOrNull { it.artistId == artistID }
-    }
-}
+)
 
 class MusicsData {
     companion object {

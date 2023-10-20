@@ -2,43 +2,52 @@ package com.example.hearme_jc.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import androidx.navigation.navArgument
-import com.example.hearme_jc.ui.fragments.homeactionmenu.HomeScreen
-import com.example.hearme_jc.ui.fragments.homeactionmenu.NotificationScreen
-import com.example.hearme_jc.ui.fragments.homeactionmenu.SeeAllPopularArtistsScreen
-import com.example.hearme_jc.ui.fragments.homeactionmenu.SeeAllTrendingNowScreen
+import com.example.hearme_jc.data.viewmodel.ArtistViewModel
+import com.example.hearme_jc.data.viewmodel.EmailViewModel
+import com.example.hearme_jc.data.viewmodel.MusicViewModel
+import com.example.hearme_jc.data.viewmodel.UserViewModel
+import com.example.hearme_jc.ui.fragments.homeactionmenu.screen.HomeScreen
+import com.example.hearme_jc.ui.fragments.homeactionmenu.screen.NotificationScreen
+import com.example.hearme_jc.ui.fragments.homeactionmenu.screen.SeeAllPopularArtistsScreen
+import com.example.hearme_jc.ui.fragments.homeactionmenu.screen.SeeAllTrendingNowScreen
 
-fun NavGraphBuilder.tabHomeGraph(navController: NavController) {
+fun NavGraphBuilder.tabHomeGraph(
+    navController: NavController,
+    emailViewModel: EmailViewModel,
+    userViewModel: UserViewModel,
+    musicViewModel: MusicViewModel,
+    artistViewModel: ArtistViewModel,
+) {
     navigation(
-        startDestination = "${Screen.Home.route}/phuongviet.huit@gmail.com", route = Screen.TabHome.route
+        startDestination = Screen.Home.route, route = Screen.TabHome.route
     ) {
-        composable(route = "${Screen.Home.route}/{email}",
-            arguments = listOf(navArgument("email") {
-                type = NavType.StringType
-            })
-        ) {
-            val emailParams = it.arguments?.getString("email").toString()
-            HomeScreen(navController = navController, email = emailParams)
+        composable(route = Screen.Home.route) {
+            HomeScreen(
+                navController = navController,
+                emailViewModel = emailViewModel,
+                userViewModel = userViewModel,
+                musicViewModel = musicViewModel,
+                artistViewModel = artistViewModel
+            )
         }
         composable(Screen.SeeAllTrendingNow.route) {
-            SeeAllTrendingNowScreen(navController = navController)
+            SeeAllTrendingNowScreen(
+                navController = navController,
+                musicViewModel = musicViewModel,
+                artistViewModel = artistViewModel
+            )
         }
         composable(Screen.SeeAllPopularArtists.route) {
-            SeeAllPopularArtistsScreen(navController = navController)
+            SeeAllPopularArtistsScreen(navController = navController, artistViewModel = artistViewModel)
         }
         composable(route = Screen.Notification.route) {
-            NotificationScreen(navController = navController)
+            NotificationScreen(
+                navController = navController,
+                musicViewModel = musicViewModel,
+                artistViewModel = artistViewModel
+            )
         }
-
-//        composable(route = Screen.SongsNotification.route) {
-////            SignInScreen(navController = navController)
-//        }
-//
-//        composable(route = Screen.PodcastsNotification.route) {
-////            SignInScreen(navController = navController)
-//        }
     }
 }

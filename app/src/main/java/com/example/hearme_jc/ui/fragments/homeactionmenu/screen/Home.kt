@@ -1,4 +1,4 @@
-package com.example.hearme_jc.ui.fragments.homeactionmenu
+package com.example.hearme_jc.ui.fragments.homeactionmenu.screen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -40,23 +40,34 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.hearme_jc.R
 import com.example.hearme_jc.data.model.Artist
-import com.example.hearme_jc.data.model.ArtistsData
 import com.example.hearme_jc.data.model.Chart
 import com.example.hearme_jc.data.model.ChartData
 import com.example.hearme_jc.data.model.Music
-import com.example.hearme_jc.data.model.MusicsData
+import com.example.hearme_jc.data.viewmodel.ArtistViewModel
+import com.example.hearme_jc.data.viewmodel.EmailViewModel
+import com.example.hearme_jc.data.viewmodel.MusicViewModel
+import com.example.hearme_jc.data.viewmodel.UserViewModel
 import com.example.hearme_jc.navigation.Screen
 import com.example.hearme_jc.ui.theme.Primary500
 
 @Composable
-fun HomeScreen(navController: NavController, email: String) {
+fun HomeScreen(
+    navController: NavController,
+    emailViewModel: EmailViewModel,
+    userViewModel: UserViewModel,
+    musicViewModel: MusicViewModel,
+    artistViewModel: ArtistViewModel,
+) {
+//    Log.v("HomeScreen GET", emailViewModel.GetEmail())
+//    Log.v("Current List", userViewModel.GetAllUsers().first { it.email == emailViewModel.GetEmail() }.toString())
+
     Column(
         modifier = Modifier
             .padding(top = 24.dp)
             .verticalScroll(rememberScrollState()), Arrangement.spacedBy(32.dp)
     ) {
-        ContainerTrendingNow(navController = navController)
-        ContainerPopularArtists(navController = navController)
+        ContainerTrendingNow(navController = navController, artistViewModel = artistViewModel, musicViewModel = musicViewModel)
+        ContainerPopularArtists(navController = navController, artistViewModel = artistViewModel)
         ContainerTopChar(navController = navController)
     }
 }
@@ -121,7 +132,7 @@ fun ChartCard(modifier: Modifier, chart: Chart, modifierGI: Modifier) {
 }
 
 @Composable
-fun ContainerPopularArtists(modifier: Modifier = Modifier, navController: NavController) {
+fun ContainerPopularArtists(modifier: Modifier = Modifier, navController: NavController, artistViewModel: ArtistViewModel) {
     Column(modifier = modifier, Arrangement.spacedBy(16.dp)) {
         Row(
             modifier = Modifier
@@ -133,18 +144,18 @@ fun ContainerPopularArtists(modifier: Modifier = Modifier, navController: NavCon
             SeeAllLazyRow(modifier = Modifier.weight(1f), onClick = { navController.navigate(Screen.SeeAllPopularArtists.route) })
         }
 
-        LazyRowArtistCard(modifier = Modifier)
+        LazyRowArtistCard(modifier = Modifier, artistViewModel = artistViewModel)
     }
 }
 
 @Composable
-fun LazyRowArtistCard(modifier: Modifier = Modifier) {
+fun LazyRowArtistCard(modifier: Modifier = Modifier, artistViewModel: ArtistViewModel) {
     LazyRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(end = 24.dp, start = 24.dp)
     ) {
-        items(ArtistsData.dataArtist().sortedByDescending { it.totalFollowers }.take(5)) {
+        items(artistViewModel.GetPopularArtists(5)) {
             ArtistCard(modifier = Modifier.width(160.dp), artist = it, modifierGI = Modifier.size(160.dp))
         }
     }
@@ -187,7 +198,12 @@ fun ArtistCard(modifier: Modifier, artist: Artist, modifierGI: Modifier) {
 }
 
 @Composable
-fun ContainerTrendingNow(modifier: Modifier = Modifier, navController: NavController) {
+fun ContainerTrendingNow(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    artistViewModel: ArtistViewModel,
+    musicViewModel: MusicViewModel,
+) {
     Column(modifier = modifier, Arrangement.spacedBy(16.dp)) {
         Row(
             modifier = Modifier
@@ -199,22 +215,23 @@ fun ContainerTrendingNow(modifier: Modifier = Modifier, navController: NavContro
             SeeAllLazyRow(modifier = Modifier.weight(1f), onClick = { navController.navigate(Screen.SeeAllTrendingNow.route) })
         }
 
-        LazyRowMusicCard(modifier = Modifier)
+        LazyRowMusicCard(modifier = Modifier, artistViewModel = artistViewModel, musicViewModel = musicViewModel)
     }
 }
 
 @Composable
-fun LazyRowMusicCard(modifier: Modifier) {
+fun LazyRowMusicCard(modifier: Modifier, artistViewModel: ArtistViewModel, musicViewModel: MusicViewModel) {
     LazyRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(end = 24.dp, start = 24.dp)
     ) {
-        items(MusicsData.dataMusic().sortedByDescending { it.totalListeners }.take(5)) {
+        items(musicViewModel.GetTrendingMusics(5)) {
             MusicCard(
                 modifier = Modifier.width(160.dp), music = it, modifierGI = Modifier
                     .size(160.dp)
-                    .clip(RoundedCornerShape(32.dp))
+                    .clip(RoundedCornerShape(32.dp)),
+                artistViewModel = artistViewModel
             )
         }
     }
@@ -222,7 +239,13 @@ fun LazyRowMusicCard(modifier: Modifier) {
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun MusicCard(modifier: Modifier, music: Music, modifierGI: Modifier, isHaveMusicName: Boolean = true) {
+fun MusicCard(
+    modifier: Modifier,
+    music: Music,
+    modifierGI: Modifier,
+    isHaveMusicName: Boolean = true,
+    artistViewModel: ArtistViewModel,
+) {
     Card(modifier = Modifier, colors = CardDefaults.cardColors(Color.Transparent)) {
         Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
             GlideImage(
@@ -234,7 +257,7 @@ fun MusicCard(modifier: Modifier, music: Music, modifierGI: Modifier, isHaveMusi
 
             if (isHaveMusicName)
                 Text(
-                    text = "${music.musicName} - ${music.GetArtist(music.artistID)?.artistName}",
+                    text = "${music.musicName} - ${artistViewModel.GetArtist(music.artistID.toString()).artistName}",
                     style = TextStyle(
                         fontSize = 18.sp,
                         lineHeight = 25.2.sp,

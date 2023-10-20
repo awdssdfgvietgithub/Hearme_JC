@@ -4,9 +4,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.hearme_jc.ui.fragments.onboardsignupsignin.LetsYouInScreen
-import com.example.hearme_jc.ui.fragments.onboardsignupsignin.SplashScreen
-import com.example.hearme_jc.ui.fragments.onboardsignupsignin.WalkThroughScreen
+import com.example.hearme_jc.ui.fragments.onboardsignupsignin.screen.LetsYouInScreen
+import com.example.hearme_jc.ui.fragments.onboardsignupsignin.screen.SplashScreen
+import com.example.hearme_jc.ui.fragments.onboardsignupsignin.screen.WalkThroughScreen
 
 fun NavGraphBuilder.onboardGraph(navController: NavController) {
     navigation(startDestination = Screen.Splash.route, route = Screen.Onboard.route) {

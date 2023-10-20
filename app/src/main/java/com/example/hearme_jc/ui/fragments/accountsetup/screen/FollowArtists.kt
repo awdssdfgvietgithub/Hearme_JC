@@ -1,4 +1,4 @@
-package com.example.hearme_jc.ui.fragments.accountsetup
+package com.example.hearme_jc.ui.fragments.accountsetup.screen
 
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -44,6 +44,7 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.example.hearme_jc.R
 import com.example.hearme_jc.data.model.Artist
 import com.example.hearme_jc.data.model.ArtistsData
+import com.example.hearme_jc.data.viewmodel.EmailViewModel
 import com.example.hearme_jc.data.viewmodel.UserViewModel
 import com.example.hearme_jc.navigation.Screen
 import com.example.hearme_jc.ui.theme.Primary500
@@ -55,10 +56,9 @@ import com.example.mylibrary.PairButton
 fun FollowArtistsScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
+    emailViewModel: EmailViewModel,
     userViewModel: UserViewModel,
-    email: String,
 ) {
-    Log.v("Email", email)
     Column(modifier.fillMaxSize()) {
         Column(
             modifier = modifier
@@ -81,9 +81,9 @@ fun FollowArtistsScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            LazyColumnRowItemArtist(modifier.weight(1f), userViewModel, email)
+            LazyColumnRowItemArtist(modifier.weight(1f), userViewModel, emailViewModel.GetEmail())
         }
-        CardPairButton(navController = navController, email = email)
+        CardPairButton(navController = navController, email = emailViewModel.GetEmail())
     }
 }
 
@@ -147,8 +147,7 @@ fun RowItemArtist(modifier: Modifier = Modifier, artist: Artist, userViewModel: 
     val isCheck = rememberSaveable {
         mutableStateOf(false)
     }
-    val rs = userViewModel.UpdateArtistsFollowing(email, artist, isCheck.value).toInt()
-    when (rs) {
+    when (userViewModel.UpdateArtistsFollowing(email, artist, isCheck.value).toInt()) {
         0 -> {
             Log.v("UpdateArtistFollow", "Email rong")
         }

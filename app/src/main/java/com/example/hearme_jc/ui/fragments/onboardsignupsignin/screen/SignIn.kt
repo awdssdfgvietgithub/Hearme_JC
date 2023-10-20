@@ -1,4 +1,4 @@
-package com.example.hearme_jc.ui.fragments.onboardsignupsignin
+package com.example.hearme_jc.ui.fragments.onboardsignupsignin.screen
 
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
@@ -49,6 +49,7 @@ import androidx.navigation.NavController
 import com.example.hearme_jc.R
 import com.example.hearme_jc.data.model.SignInMethod
 import com.example.hearme_jc.data.model.SignInMethodData
+import com.example.hearme_jc.data.viewmodel.EmailViewModel
 import com.example.hearme_jc.data.viewmodel.UserViewModel
 import com.example.hearme_jc.navigation.Screen
 import com.example.hearme_jc.ui.theme.Primary500
@@ -60,6 +61,7 @@ import com.example.mylibrary.AppTextFieldLeadingIcon
 fun SignInScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
+    emailViewModel: EmailViewModel,
     userViewModel: UserViewModel,
 ) {
     Column(
@@ -93,6 +95,7 @@ fun SignInScreen(
         ContainerForSignInOrSignUp(
             navController = navController,
             userViewModel = userViewModel,
+            emailViewModel = emailViewModel
         )
 
         ContainerForChooseOptions()
@@ -205,6 +208,7 @@ fun ContainerForSignInOrSignUp(
     navController: NavController,
     isSignIn: Boolean = true,
     userViewModel: UserViewModel,
+    emailViewModel: EmailViewModel,
 ) {
     var isChecked by rememberSaveable {
         mutableStateOf(false)
@@ -261,7 +265,8 @@ fun ContainerForSignInOrSignUp(
                         }
 
                         1 -> {
-                            navController.navigate("${Screen.Home.route}/${email.value}") {
+                            emailViewModel.SetEmail(email.value)
+                            navController.navigate(Screen.Home.route) {
                                 popUpTo(0) {
                                     inclusive = true
                                 }
@@ -280,7 +285,8 @@ fun ContainerForSignInOrSignUp(
                         }
 
                         1 -> {
-                            navController.navigate("${Screen.FillYourProfile.route}/${email.value}")
+                            emailViewModel.SetEmail(email.value)
+                            navController.navigate(Screen.FillYourProfile.route)
                         }
 
                         else -> {
@@ -307,7 +313,12 @@ fun ContainerForSignInOrSignUp(
                     textAlign = TextAlign.Center,
                     letterSpacing = 0.2.sp,
                 ),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        emailViewModel.SetEmail(email.value)
+                        navController.navigate(Screen.SelectMethods.route)
+                    }
             )
     }
 }

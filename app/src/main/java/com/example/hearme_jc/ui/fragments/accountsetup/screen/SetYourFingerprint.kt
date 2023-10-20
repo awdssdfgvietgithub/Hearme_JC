@@ -1,6 +1,5 @@
-package com.example.hearme_jc.ui.fragments.accountsetup
+package com.example.hearme_jc.ui.fragments.accountsetup.screen
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,9 +29,7 @@ import com.example.hearme_jc.ui.theme.White
 import com.example.mylibrary.PairButton
 
 @Composable
-fun SetYourFingerprintScreen(modifier: Modifier = Modifier, navController: NavController, email: String) {
-    Log.v("SetYourFingerprintScreen",email)
-
+fun SetYourFingerprintScreen(modifier: Modifier = Modifier, navController: NavController) {
     Column(modifier = modifier.padding(start = 24.dp, end = 24.dp)) {
         Spacer(modifier = Modifier.weight(1f))
 
@@ -79,8 +76,8 @@ fun SetYourFingerprintScreen(modifier: Modifier = Modifier, navController: NavCo
             bgColor1 = MaterialTheme.colorScheme.onSecondaryContainer,
             bgColor2 = Primary500,
             font = FontFamily(Font(R.font.urbanist_bold)),
-            onButtonClick1 = { navController.navigate("${Screen.FollowArtists.route}/$email") },
-            onButtonClick2 = { navController.navigate("${Screen.FollowArtists.route}/$email") },
+            onButtonClick1 = { navController.navigate(Screen.FollowArtists.route) },
+            onButtonClick2 = { navController.navigate(Screen.FollowArtists.route) },
         )
 
         Spacer(modifier = Modifier.height(48.dp))

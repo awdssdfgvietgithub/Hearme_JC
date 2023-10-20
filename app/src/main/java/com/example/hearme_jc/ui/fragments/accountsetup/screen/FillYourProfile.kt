@@ -1,9 +1,8 @@
-package com.example.hearme_jc.ui.fragments.accountsetup
+package com.example.hearme_jc.ui.fragments.accountsetup.screen
 
 import android.net.Uri
 import android.os.Build
 import android.util.Log
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -41,6 +40,7 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 import com.example.hearme_jc.R
 import com.example.hearme_jc.data.model.Name
+import com.example.hearme_jc.data.viewmodel.EmailViewModel
 import com.example.hearme_jc.data.viewmodel.UserViewModel
 import com.example.hearme_jc.navigation.Screen
 import com.example.hearme_jc.ui.theme.Primary500
@@ -50,6 +50,7 @@ import com.example.mylibrary.AppTextFieldDate
 import com.example.mylibrary.AppTextFieldHaveTrailingIcon
 import com.example.mylibrary.PairButton
 import java.time.LocalDate
+import androidx.activity.compose.rememberLauncherForActivityResult as rememberLauncherForActivityResult1
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -57,9 +58,9 @@ fun FillYourProfileScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
     userViewModel: UserViewModel,
-    email: String,
+    emailViewModel: EmailViewModel,
 ) {
-    Log.v("FillYourProfileScreen",email)
+    Log.v("FillYourProfileScreen", emailViewModel.GetEmail())
 
     val fullName = rememberSaveable {
         mutableStateOf("")
@@ -100,7 +101,7 @@ fun FillYourProfileScreen(
             onButtonClick1 = { navController.navigate(Screen.CreateNewPin.route) },
             onButtonClick2 = {
                 val rs = userViewModel.FillProfile(
-                    email,
+                    emailViewModel.GetEmail(),
                     Name(fullName.value, nickName.value),
                     dob.value,
                     secEmail.value,
@@ -112,7 +113,7 @@ fun FillYourProfileScreen(
                     }
 
                     1 -> {
-                        navController.navigate("${Screen.CreateNewPin.route}/$email")
+                        navController.navigate(Screen.CreateNewPin.route)
                     }
 
                     2 -> {
@@ -199,7 +200,7 @@ fun ContainerChooseAvatar(modifier: Modifier = Modifier) {
         mutableStateOf<Uri?>(null)
     }
 
-    val singlePhotoPicker = rememberLauncherForActivityResult(
+    val singlePhotoPicker = rememberLauncherForActivityResult1(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = {
             uri = it

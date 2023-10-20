@@ -1,5 +1,6 @@
-package com.example.hearme_jc.ui.fragments.forgotresetpassword
+package com.example.hearme_jc.ui.fragments.forgotresetpassword.screen
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -22,7 +23,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -37,22 +37,25 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.hearme_jc.R
+import com.example.hearme_jc.data.viewmodel.EmailViewModel
 import com.example.hearme_jc.navigation.Screen
-import com.example.hearme_jc.ui.theme.Hearme_JCTheme
 import com.example.hearme_jc.ui.theme.Primary500
 import com.example.hearme_jc.ui.theme.TranparentGreen
 import com.example.hearme_jc.ui.theme.White
 import com.example.mylibrary.AppNavigationButton
 
 @Composable
-fun SelectMethodsScreen(modifier: Modifier = Modifier, navController: NavController) {
-    Column(modifier = modifier.padding(start = 24.dp, end = 24.dp).fillMaxSize()) {
+fun SelectMethodsScreen(modifier: Modifier = Modifier, navController: NavController, emailViewModel: EmailViewModel) {
+    Log.v("SelectMethodsScreen", emailViewModel.GetEmail())
+    Column(
+        modifier = modifier
+            .padding(start = 24.dp, end = 24.dp)
+            .fillMaxSize()
+    ) {
         Spacer(modifier = Modifier.weight(1f))
 
         Image(
@@ -194,17 +197,17 @@ fun ContainerSelectMethods(modifier: Modifier = Modifier) {
     }
 }
 
-@Preview(showBackground = true, widthDp = 412, heightDp = 915)
-@Composable
-fun SelectMethodsScreenPreview() {
-    Hearme_JCTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            val navController = rememberNavController()
-
-            SelectMethodsScreen(navController = navController)
-        }
-    }
-}
+//@Preview(showBackground = true, widthDp = 412, heightDp = 915)
+//@Composable
+//fun SelectMethodsScreenPreview() {
+//    Hearme_JCTheme {
+//        Surface(
+//            modifier = Modifier.fillMaxSize(),
+//            color = MaterialTheme.colorScheme.background
+//        ) {
+//            val navController = rememberNavController()
+//
+//            SelectMethodsScreen(navController = navController)
+//        }
+//    }
+//}

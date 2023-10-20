@@ -9,7 +9,6 @@ sealed class Screen(val route: String) {
     object TabExplore : Screen(route = "tab_explore")
     object TabLibrary : Screen(route = "tab_library")
     object TabProfile : Screen(route = "tab_profile")
-//    object ViewPagerNotification : Screen(route = "view_pager_notification")
 
     //Onboard
     object Splash : Screen(route = "splash_screen")
@@ -37,6 +36,8 @@ sealed class Screen(val route: String) {
 
     //Tab Explore
     object Explore : Screen(route = "explore")
+    object Chart : Screen(route = "charts")
+    object DetailsChart : Screen(route = "details_chart")
 
     //Tab Library
     object Library : Screen(route = "library")

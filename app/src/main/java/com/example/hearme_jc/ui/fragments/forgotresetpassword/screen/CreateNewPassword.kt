@@ -1,4 +1,4 @@
-package com.example.hearme_jc.ui.fragments.forgotresetpassword
+package com.example.hearme_jc.ui.fragments.forgotresetpassword.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -26,9 +26,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.hearme_jc.R
+import com.example.hearme_jc.data.viewmodel.EmailViewModel
 import com.example.hearme_jc.data.viewmodel.UserViewModel
 import com.example.hearme_jc.navigation.Screen
-import com.example.hearme_jc.ui.fragments.onboardsignupsignin.ContainerRememberMe
+import com.example.hearme_jc.ui.fragments.onboardsignupsignin.screen.ContainerRememberMe
 import com.example.hearme_jc.ui.theme.Primary300
 import com.example.hearme_jc.ui.theme.Primary500
 import com.example.hearme_jc.ui.theme.White
@@ -37,7 +38,12 @@ import com.example.mylibrary.AppNavigationButton
 import com.example.mylibrary.AppTextFieldLeadingIcon
 
 @Composable
-fun CreateNewPasswordScreen(modifier: Modifier = Modifier, navController: NavController, userViewModel: UserViewModel) {
+fun CreateNewPasswordScreen(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    emailViewModel: EmailViewModel,
+    userViewModel: UserViewModel,
+) {
     var showDialog by rememberSaveable {
         mutableStateOf(false)
     }

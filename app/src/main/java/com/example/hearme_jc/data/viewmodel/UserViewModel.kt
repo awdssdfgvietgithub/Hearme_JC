@@ -1,5 +1,6 @@
 package com.example.hearme_jc.data.viewmodel
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -17,11 +18,13 @@ import java.time.ZoneId
 import java.util.Date
 
 class UserViewModel : ViewModel() {
-    private var users: MutableState<ArrayList<User>> = mutableStateOf(ArrayList())
+    @SuppressLint("MutableCollectionMutableState")
+    private var _users: MutableState<ArrayList<User>> = mutableStateOf(ArrayList())
+    val users = _users
 
     init {
         viewModelScope.launch {
-            users.value = UsersData.data()
+            _users.value = UsersData.data()
         }
     }
 
@@ -42,7 +45,7 @@ class UserViewModel : ViewModel() {
         if (email.isEmpty() || password.isEmpty())
             return 0
         if (!users.value.any { it.email == email }) {
-            users.value.add(User(email = email, password = password))
+            _users.value.add(User(email = email, password = password))
             return 1
         }
         return 2
@@ -55,7 +58,7 @@ class UserViewModel : ViewModel() {
         if (name.fullName.isEmpty() || name.nickName.isEmpty() || dob == LocalDate.parse("1500-01-01") || secondaryEmail.isEmpty() || phone.isEmpty())
             return 2
         if (users.value.any { it.email == email }) {
-            users.value.first { it.email == email }.apply {
+            _users.value.first { it.email == email }.apply {
                 this.name = name
                 this.dob = Date.from(dob.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
                 this.secondaryEmail = secondaryEmail
@@ -72,7 +75,7 @@ class UserViewModel : ViewModel() {
         if (pin.isEmpty())
             return 2
         if (users.value.any { it.email == email }) {
-            users.value.first { it.email == email }.apply {
+            _users.value.first { it.email == email }.apply {
                 pin.forEach {
                     this.pin?.add(it)
                 }
@@ -89,7 +92,7 @@ class UserViewModel : ViewModel() {
         if (artist.artistId.isEmpty())
             return 2
         if (users.value.any { it.email == email }) {
-            users.value.first { it.email == email }.apply {
+            _users.value.first { it.email == email }.apply {
                 if (isFollow)
                     this.listArtistsFollowing.add(artist)
                 else
