@@ -27,7 +27,11 @@ import com.example.hearme_jc.data.viewmodel.UserViewModel
 import com.example.hearme_jc.navigation.Screen
 
 @Composable
-fun SignUpScreen(modifier: Modifier = Modifier, navController: NavController, userViewModel: UserViewModel) {
+fun SignUpScreen(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    userViewModel: UserViewModel,
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -56,7 +60,11 @@ fun SignUpScreen(modifier: Modifier = Modifier, navController: NavController, us
             ),
         )
 
-        ContainerForSignInOrSignUp(navController = navController, isSignIn = false, userViewModel = userViewModel)
+        ContainerForSignInOrSignUp(
+            navController = navController,
+            isSignIn = false,
+            userViewModel = userViewModel
+        )
 
         ContainerForChooseOptions()
 

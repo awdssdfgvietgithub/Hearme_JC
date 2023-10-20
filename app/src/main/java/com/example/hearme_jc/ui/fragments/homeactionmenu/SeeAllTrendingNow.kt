@@ -23,9 +23,12 @@ fun SeeAllTrendingNowScreen(navController: NavController) {
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(top = 24.dp, end = 24.dp, start = 24.dp, bottom = 48.dp)
     ) {
-        items(MusicsData.dataMusic()) {
-            MusicCard(modifier = Modifier.width(184.dp), music = it, modifierGI = Modifier.size(184.dp)
-                .clip(RoundedCornerShape(40.dp)))
+        items(MusicsData.dataMusic().sortedByDescending { it.totalListeners }.take(10)) {
+            MusicCard(
+                modifier = Modifier.width(184.dp), music = it, modifierGI = Modifier
+                    .size(184.dp)
+                    .clip(RoundedCornerShape(40.dp))
+            )
         }
     }
 }

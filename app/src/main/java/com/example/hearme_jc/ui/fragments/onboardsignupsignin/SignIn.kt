@@ -57,7 +57,11 @@ import com.example.mylibrary.AppNavigationButton
 import com.example.mylibrary.AppTextFieldLeadingIcon
 
 @Composable
-fun SignInScreen(modifier: Modifier = Modifier, navController: NavController, userViewModel: UserViewModel) {
+fun SignInScreen(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    userViewModel: UserViewModel,
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -86,7 +90,10 @@ fun SignInScreen(modifier: Modifier = Modifier, navController: NavController, us
             ),
         )
 
-        ContainerForSignInOrSignUp(navController = navController, userViewModel = userViewModel)
+        ContainerForSignInOrSignUp(
+            navController = navController,
+            userViewModel = userViewModel,
+        )
 
         ContainerForChooseOptions()
 
@@ -254,7 +261,6 @@ fun ContainerForSignInOrSignUp(
                         }
 
                         1 -> {
-                            Log.v("RESULT", "Thành công")
                             navController.navigate("${Screen.Home.route}/${email.value}") {
                                 popUpTo(0) {
                                     inclusive = true
@@ -274,7 +280,6 @@ fun ContainerForSignInOrSignUp(
                         }
 
                         1 -> {
-                            Log.v("RESULT", "Thành công")
                             navController.navigate("${Screen.FillYourProfile.route}/${email.value}")
                         }
 

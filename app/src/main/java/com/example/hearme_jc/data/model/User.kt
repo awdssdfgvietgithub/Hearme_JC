@@ -11,11 +11,11 @@ data class User(
     var dob: Date? = null,
     val nation: String? = null,
     var phone: String? = null,
-    var pin: Int? = null,
+    var pin: ArrayList<String>? = arrayListOf(),
     var gender: Boolean? = null,
     val isPremium: Boolean? = false,
     var isFirstSignIn: Boolean = true,
-    val listArtistsFollowing: ArrayList<Artist> = ArrayList(), //Artist Following
+    var listArtistsFollowing: ArrayList<Artist> = ArrayList(), //Artist Following
     val listFollowers: ArrayList<User> = ArrayList(), //Followers
     val listMusicsLoved: ArrayList<Music> = ArrayList(), //Love
     val listMusicsListened: ArrayList<Music> = ArrayList(), //History
@@ -40,7 +40,7 @@ class UsersData {
                         Date("06/12/2002"),
                         "VN",
                         "93 982 63 76",
-                        1234,
+                        arrayListOf("1", "2", "3", "4"),
                         true, //true is male, false is female
                         true,
                         false, // true if user the first sign in
@@ -68,7 +68,7 @@ class UsersData {
                         Date("28/12/2002"),
                         "VN",
                         "32 846 79 24",
-                        4567,
+                        arrayListOf("4", "5", "6", "7"),
                         true, // true is male, false is female,
                         true,
                         false, // true if user the first sign in
@@ -96,7 +96,7 @@ class UsersData {
                         Date("28/01/2002"),
                         "VN",
                         "32 846 79 25",
-                        4567,
+                        arrayListOf("4", "5", "6", "7"),
                         true, // true is male, false is female,
                         false,
                         false, // true if user the first sign in
@@ -123,7 +123,7 @@ class UsersData {
                         Date("28/01/2002"),
                         "VN",
                         "32 846 79 25",
-                        4567,
+                        arrayListOf("4", "5", "6", "7"),
                         true, // true is male, false is female,
                         false,
                         false, // true if user the first sign in
@@ -139,7 +139,7 @@ class UsersData {
                         Date("28/01/2002"),
                         "VN",
                         "32 846 79 25",
-                        4567,
+                        arrayListOf("4", "5", "6", "7"),
                         true, // true is male, false is female,
                         false,
                         false, // true if user the first sign in
@@ -155,7 +155,7 @@ class UsersData {
                         Date("28/01/2002"),
                         "VN",
                         "32 846 79 25",
-                        4567,
+                        arrayListOf("4", "5", "6", "7"),
                         true, // true is male, false is female,
                         false,
                         false, // true if user the first sign in
@@ -171,7 +171,7 @@ class UsersData {
                         Date("28/01/2002"),
                         "VN",
                         "32 846 79 25",
-                        4567,
+                        arrayListOf("4", "5", "6", "7"),
                         true, // true is male, false is female,
                         false,
                         false, // true if user the first sign in
@@ -187,7 +187,7 @@ class UsersData {
                         Date("28/01/2002"),
                         "VN",
                         "32 846 79 25",
-                        4567,
+                        arrayListOf("4", "5", "6", "7"),
                         true, // true is male, false is female,
                         false,
                         false, // true if user the first sign in
@@ -203,7 +203,7 @@ class UsersData {
                         Date("28/01/2002"),
                         "VN",
                         "32 846 79 25",
-                        4567,
+                        arrayListOf("4", "5", "6", "7"),
                         true, // true is male, false is female,
                         false,
                         false, // true if user the first sign in
@@ -219,7 +219,7 @@ class UsersData {
                         Date("28/01/2002"),
                         "VN",
                         "32 846 79 25",
-                        4567,
+                        arrayListOf("4", "5", "6", "7"),
                         true, // true is male, false is female,
                         false,
                         false, // true if user the first sign in
@@ -235,7 +235,7 @@ class UsersData {
                         Date("28/01/2002"),
                         "VN",
                         "32 846 79 25",
-                        4567,
+                        arrayListOf("4", "5", "6", "7"),
                         true, // true is male, false is female,
                         false,
                         false, // true if user the first sign in
@@ -251,7 +251,7 @@ class UsersData {
                         Date("28/01/2002"),
                         "VN",
                         "32 846 79 25",
-                        4567,
+                        arrayListOf("4", "5", "6", "7"),
                         true, // true is male, false is female,
                         false,
                         false, // true if user the first sign in
@@ -267,7 +267,7 @@ class UsersData {
                         Date("28/01/2002"),
                         "VN",
                         "32 846 79 25",
-                        4567,
+                        arrayListOf("4", "5", "6", "7"),
                         true, // true is male, false is female,
                         false,
                         false, // true if user the first sign in
@@ -283,7 +283,7 @@ class UsersData {
                         Date("28/01/2002"),
                         "VN",
                         "32 846 79 25",
-                        4567,
+                        arrayListOf("4", "5", "6", "7"),
                         true, // true is male, false is female,
                         false,
                         false, // true if user the first sign in
@@ -299,7 +299,7 @@ class UsersData {
                         Date("28/01/2002"),
                         "VN",
                         "32 846 79 25",
-                        4567,
+                        arrayListOf("4", "5", "6", "7"),
                         true, // true is male, false is female,
                         false,
                         false, // true if user the first sign in
@@ -315,7 +315,7 @@ class UsersData {
                         Date("28/01/2002"),
                         "VN",
                         "32 846 79 25",
-                        4567,
+                        arrayListOf("4", "5", "6", "7"),
                         true, // true is male, false is female,
                         false,
                         false, // true if user the first sign in
@@ -331,7 +331,7 @@ class UsersData {
                         Date("28/01/2002"),
                         "VN",
                         "32 846 79 25",
-                        4567,
+                        arrayListOf("4", "5", "6", "7"),
                         true, // true is male, false is female,
                         false,
                         false, // true if user the first sign in

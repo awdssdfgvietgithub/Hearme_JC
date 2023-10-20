@@ -1,27 +1,19 @@
 package com.example.mylibrary
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -39,26 +31,23 @@ fun AppToggleButton(
     borderColorFalse: Color,
     borderColorTrue: Color,
     fontFamily: FontFamily,
+    isChecked: MutableState<Boolean> = mutableStateOf(false),
 ) {
-    var isChecked by rememberSaveable {
-        mutableStateOf(false)
-    }
-
     OutlinedButton(
-        onClick = { isChecked = !isChecked },
+        onClick = { isChecked.value = !isChecked.value },
         modifier = modifier
             .defaultMinSize(minHeight = 1.dp)
             .padding(top = 2.dp, bottom = 2.dp),
-        colors = if (isChecked) ButtonDefaults.buttonColors(bgColorTrue) else ButtonDefaults.buttonColors(bgColorFalse),
-        border = if (isChecked) BorderStroke(width = 2.dp, color = borderColorTrue) else BorderStroke(
+        colors = if (isChecked.value) ButtonDefaults.buttonColors(bgColorTrue) else ButtonDefaults.buttonColors(bgColorFalse),
+        border = if (isChecked.value) BorderStroke(width = 2.dp, color = borderColorTrue) else BorderStroke(
             width = 0.dp,
             color = borderColorFalse
         )
     ) {
         Text(
             modifier = Modifier,
-            text = if (isChecked) "Following" else "Follow",
-            style = if (isChecked) TextStyle(
+            text = if (isChecked.value) "Following" else "Follow",
+            style = if (isChecked.value) TextStyle(
                 fontSize = 14.sp,
                 lineHeight = 19.6.sp,
                 fontFamily = fontFamily,

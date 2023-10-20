@@ -1,5 +1,6 @@
 package com.example.hearme_jc.ui.fragments.accountsetup
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -21,9 +22,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,7 +36,6 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -45,14 +46,19 @@ import com.example.hearme_jc.data.model.Artist
 import com.example.hearme_jc.data.model.ArtistsData
 import com.example.hearme_jc.data.viewmodel.UserViewModel
 import com.example.hearme_jc.navigation.Screen
-import com.example.hearme_jc.ui.theme.Hearme_JCTheme
 import com.example.hearme_jc.ui.theme.Primary500
 import com.example.hearme_jc.ui.theme.White
 import com.example.mylibrary.AppToggleButton
 import com.example.mylibrary.PairButton
 
 @Composable
-fun FollowArtistsScreen(modifier: Modifier = Modifier, navController: NavController, userViewModel: UserViewModel) {
+fun FollowArtistsScreen(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    userViewModel: UserViewModel,
+    email: String,
+) {
+    Log.v("Email", email)
     Column(modifier.fillMaxSize()) {
         Column(
             modifier = modifier
@@ -75,14 +81,14 @@ fun FollowArtistsScreen(modifier: Modifier = Modifier, navController: NavControl
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            LazyColumnRowItemArtist(modifier.weight(1f))
+            LazyColumnRowItemArtist(modifier.weight(1f), userViewModel, email)
         }
-        CardPairButton(navController = navController)
+        CardPairButton(navController = navController, email = email)
     }
 }
 
 @Composable
-fun CardPairButton(modifier: Modifier = Modifier, navController: NavController) {
+fun CardPairButton(modifier: Modifier = Modifier, navController: NavController, email: String) {
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -103,14 +109,14 @@ fun CardPairButton(modifier: Modifier = Modifier, navController: NavController) 
             bgColor2 = Primary500,
             font = FontFamily(Font(R.font.urbanist_bold)),
             onButtonClick1 = {
-                navController.navigate(Screen.Home.route) {
+                navController.navigate("${Screen.Home.route}/$email") {
                     popUpTo(0) {
                         inclusive = true
                     }
                 }
             },
             onButtonClick2 = {
-                navController.navigate(Screen.Home.route) {
+                navController.navigate("${Screen.Home.route}/$email") {
                     popUpTo(0) {
                         inclusive = true
                     }
@@ -122,7 +128,7 @@ fun CardPairButton(modifier: Modifier = Modifier, navController: NavController) 
 }
 
 @Composable
-fun LazyColumnRowItemArtist(modifier: Modifier = Modifier) {
+fun LazyColumnRowItemArtist(modifier: Modifier = Modifier, userViewModel: UserViewModel, email: String) {
     LazyColumn(
         modifier = modifier
             .fillMaxWidth(),
@@ -130,14 +136,35 @@ fun LazyColumnRowItemArtist(modifier: Modifier = Modifier) {
         contentPadding = PaddingValues(bottom = 24.dp),
     ) {
         items(ArtistsData.dataArtist()) {
-            RowItemArtist(artist = it)
+            RowItemArtist(artist = it, userViewModel = userViewModel, email = email)
         }
     }
 }
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun RowItemArtist(modifier: Modifier = Modifier, artist: Artist) {
+fun RowItemArtist(modifier: Modifier = Modifier, artist: Artist, userViewModel: UserViewModel, email: String) {
+    val isCheck = rememberSaveable {
+        mutableStateOf(false)
+    }
+    val rs = userViewModel.UpdateArtistsFollowing(email, artist, isCheck.value).toInt()
+    when (rs) {
+        0 -> {
+            Log.v("UpdateArtistFollow", "Email rong")
+        }
+
+        2 -> {
+            Log.v("UpdateArtistFollow", "Artist id khong ton tai")
+        }
+
+        1 -> {
+            Log.v("UpdateArtistFollow", "Thanh cong follow ${artist.artistName}")
+        }
+
+        else -> {
+            Log.v("UpdateArtistFollow", "Email khong ton tai")
+        }
+    }
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -193,7 +220,8 @@ fun RowItemArtist(modifier: Modifier = Modifier, artist: Artist) {
             txtColorTrue = Primary500,
             borderColorFalse = White,
             borderColorTrue = Primary500,
-            fontFamily = FontFamily(Font(R.font.urbanist_semibold))
+            fontFamily = FontFamily(Font(R.font.urbanist_semibold)),
+            isChecked = isCheck
         )
     }
 }
@@ -213,18 +241,18 @@ fun RowItemArtist(modifier: Modifier = Modifier, artist: Artist) {
 //    }
 //}
 
-@Preview(showBackground = true)
-@Composable
-fun RowItemArtistPreview() {
-    Hearme_JCTheme {
-        Surface(
-            modifier = Modifier.padding(24.dp),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            RowItemArtist(artist = ArtistsData.dataArtist()[0])
-        }
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun RowItemArtistPreview() {
+//    Hearme_JCTheme {
+//        Surface(
+//            modifier = Modifier.padding(24.dp),
+//            color = MaterialTheme.colorScheme.background
+//        ) {
+//            RowItemArtist(artist = ArtistsData.dataArtist()[0])
+//        }
+//    }
+//}
 
 //@Preview(showBackground = true, widthDp = 412, heightDp = 915)
 //@Composable

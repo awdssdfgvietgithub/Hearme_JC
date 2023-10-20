@@ -33,15 +33,14 @@ import com.example.mylibrary.AppTextFieldPIN
 import com.example.mylibrary.PadNumbers
 
 @Composable
-fun CreateNewPinScreen(modifier: Modifier = Modifier, navController: NavController,userViewModel: UserViewModel) {
+fun CreateNewPinScreen(modifier: Modifier = Modifier, navController: NavController, userViewModel: UserViewModel, email: String) {
     val numberArray = rememberSaveable(
         saver = listSaver(
             save = { it.toList() },
             restore = { mutableStateListOf<String>().apply { addAll(it) } }
         )
     ) { mutableStateListOf<String>() }
-    Log.v("numberArray", "${numberArray.toList()}")
-
+    Log.v("CreateNewPinScreen",email)
     Column(modifier = modifier) {
         Spacer(modifier = Modifier.weight(1f))
 
@@ -78,7 +77,26 @@ fun CreateNewPinScreen(modifier: Modifier = Modifier, navController: NavControll
             text = "Continue", textColor = White, bgColor = Primary500, font = FontFamily(
                 Font(R.font.urbanist_bold)
             ),
-            onButtonClick = { navController.navigate(Screen.SetYourFingerprint.route) }
+            onButtonClick = {
+                val rs = userViewModel.CreateNewPin(email, pin = numberArray).toInt()
+                when (rs) {
+                    0 -> {
+                        Log.v("CreateNewPin","Email rong")
+                    }
+
+                    2 -> {
+                        Log.v("CreateNewPin","Pin rong")
+                    }
+
+                    1 -> {
+                        navController.navigate("${Screen.SetYourFingerprint.route}/$email")
+                    }
+
+                    else -> {
+                        Log.v("CreateNewPin","Email khong chinh xac")
+                    }
+                }
+            }
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -151,18 +169,3 @@ fun RowAppTextFieldPIN(
         )
     }
 }
-
-//@Preview(showBackground = true, widthDp = 412, heightDp = 915)
-//@Composable
-//fun CreateNewPinScreenPreview() {
-//    Hearme_JCTheme {
-//        Surface(
-//            modifier = Modifier.fillMaxSize(),
-//            color = MaterialTheme.colorScheme.background
-//        ) {
-//            val navController = rememberNavController()
-//
-//            CreateNewPinScreen(navController = navController)
-//        }
-//    }
-//}

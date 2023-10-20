@@ -13,7 +13,7 @@ fun NavGraph(
     navController: NavHostController,
     userViewModel: UserViewModel,
 ) {
-    NavHost(navController = navController, startDestination = Screen.Onboard.route) {
+    NavHost(navController = navController, startDestination = Screen.TabHome.route) {
         //Onboard
         onboardGraph(navController)
 

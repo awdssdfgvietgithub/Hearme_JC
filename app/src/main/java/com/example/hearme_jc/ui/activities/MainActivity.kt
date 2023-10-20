@@ -1,9 +1,12 @@
 package com.example.hearme_jc.ui.activities
 
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -43,6 +46,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -51,6 +59,7 @@ import androidx.navigation.compose.rememberNavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.hearme_jc.R
+import com.example.hearme_jc.data.viewmodel.EmailViewModel
 import com.example.hearme_jc.data.viewmodel.UserViewModel
 import com.example.hearme_jc.navigation.NavGraph
 import com.example.hearme_jc.navigation.Screen
@@ -59,8 +68,27 @@ import com.example.hearme_jc.ui.theme.Greyscale500
 import com.example.hearme_jc.ui.theme.Hearme_JCTheme
 import com.example.hearme_jc.ui.theme.Primary500
 
+//extensions
+@Composable
+inline fun <reified T : ViewModel> NavBackStackEntry?.viewModel(): T? = this?.let {
+    viewModel(viewModelStoreOwner = it)
+}
+
+@Composable
+inline fun <reified T : ViewModel> NavBackStackEntry.viewModel(
+    viewModelStoreOwner: ViewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
+        "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+    }
+): T {
+    return androidx.lifecycle.viewmodel.compose.viewModel(
+        viewModelStoreOwner = viewModelStoreOwner, key = T::class.java.name
+    )
+}
+
 class MainActivity : ComponentActivity() {
-    private val userViewModel: UserViewModel by viewModels()
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -76,6 +104,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MainScreen(userViewModel: UserViewModel) {
     val navController: NavHostController = rememberNavController()
@@ -132,6 +161,7 @@ fun MainScreen(userViewModel: UserViewModel) {
     //Get current screen/fragment
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val route = navBackStackEntry?.destination?.route
+    Log.v("navBackStackEntry", route.toString())
 
     //Check to recompose topBar when navigating to a screen/fragment
     when (route) {
@@ -228,7 +258,7 @@ fun MainScreen(userViewModel: UserViewModel) {
         }
 
         //Tab Home
-        Screen.Home.route -> {
+        "${Screen.Home.route}/{email}" -> {
             isShowNavBar.value = true
             isShowToolbar.value = true
             onTitleChange.value = ""
@@ -369,11 +399,12 @@ fun MainScreen(userViewModel: UserViewModel) {
         },
         bottomBar = {
             BottomBar(navController = navController, state = buttonsVisible, modifier = Modifier, isVisible = isShowNavBar)
-        }
+        },
     ) { values ->
         Column(modifier = Modifier.padding(values)) {
             NavGraph(
-                navController = navController, userViewModel = userViewModel
+                navController = navController,
+                userViewModel = userViewModel,
             )
         }
     }

@@ -11,13 +11,22 @@ import com.example.hearme_jc.ui.fragments.forgotresetpassword.TypeOTPScreen
 import com.example.hearme_jc.ui.fragments.onboardsignupsignin.SignInScreen
 import com.example.hearme_jc.ui.fragments.onboardsignupsignin.SignUpScreen
 
-fun NavGraphBuilder.authGraph(navController: NavController, userViewModel: UserViewModel) {
+fun NavGraphBuilder.authGraph(
+    navController: NavController,
+    userViewModel: UserViewModel,
+) {
     navigation(startDestination = Screen.SignIn.route, route = Screen.Auth.route) {
         composable(route = Screen.SignIn.route) {
-            SignInScreen(navController = navController, userViewModel = userViewModel)
+            SignInScreen(
+                navController = navController,
+                userViewModel = userViewModel,
+            )
         }
         composable(route = Screen.SignUp.route) {
-            SignUpScreen(navController = navController, userViewModel = userViewModel)
+            SignUpScreen(
+                navController = navController,
+                userViewModel = userViewModel,
+            )
         }
         composable(route = Screen.SelectMethods.route) {
             SelectMethodsScreen(navController = navController)

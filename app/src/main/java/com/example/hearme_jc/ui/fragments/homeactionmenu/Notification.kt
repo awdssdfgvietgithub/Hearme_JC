@@ -1,5 +1,6 @@
 package com.example.hearme_jc.ui.fragments.homeactionmenu
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -49,9 +50,6 @@ import java.util.Calendar
 fun NotificationScreen(navController: NavController) {
     val pagerState = rememberPagerState(initialPage = 0)
     val scope = rememberCoroutineScope()
-//    val expandStates = remember(items.size) {
-//        List(Data.size) { mutableStateOf(false) }
-//    }
 
     Column(
         modifier = Modifier
@@ -137,7 +135,7 @@ fun LazyColumnSongs(modifier: Modifier = Modifier, isYesterday: Boolean = false)
                 it.release
             ).compareTo(
                 currentDate
-            ) == 0
+            ) == 0 && it.categoryID != "ca002"
         }
     LazyColumn(
         modifier = modifier.height(400.dp),
@@ -207,7 +205,7 @@ fun SongItemView(modifier: Modifier = Modifier, it: Music) {
 
             Text(
                 modifier = modifier.fillMaxWidth(),
-                text = "${it.musicName}",
+                text = it.musicName,
                 style = TextStyle(
                     fontSize = 18.sp,
                     lineHeight = 21.6.sp,
@@ -275,7 +273,74 @@ fun SongItemView(modifier: Modifier = Modifier, it: Music) {
 
 @Composable
 fun PodcastsNotificationScreen(navController: NavController) {
-    Column(modifier = Modifier.fillMaxSize()) {
-        Text(text = "HOHO")
+    LazyColumn() {
+        item {
+            Text(
+                text = "New Podcasts Release Today",
+                style = TextStyle(
+                    fontSize = 18.sp,
+                    lineHeight = 21.6.sp,
+                    fontFamily = FontFamily(Font(R.font.urbanist_bold)),
+                    fontWeight = FontWeight(700),
+                    color = MaterialTheme.colorScheme.onBackground,
+
+                    )
+            )
+            LazyColumnPodcasts()
+        }
+        item {
+            Text(
+                text = "Yesterday",
+                style = TextStyle(
+                    fontSize = 18.sp,
+                    lineHeight = 21.6.sp,
+                    fontFamily = FontFamily(Font(R.font.urbanist_bold)),
+                    fontWeight = FontWeight(700),
+                    color = MaterialTheme.colorScheme.onBackground,
+
+                    )
+            )
+            LazyColumnPodcasts(isYesterday = true)
+        }
     }
 }
+
+@SuppressLint("SimpleDateFormat")
+@Composable
+fun LazyColumnPodcasts(modifier: Modifier = Modifier, isYesterday: Boolean = false) {
+    val formatter = SimpleDateFormat("dd/MM/yyyy")
+    val calToday = Calendar.getInstance()
+    val calYesterday = Calendar.getInstance()
+    calYesterday.add(Calendar.DATE, -1)
+    val currentDate = formatter.format(calToday.time) // format date now
+    val yesterdayDate = formatter.format(calYesterday.time) // format yesterday date
+
+    val data: ArrayList<Music> = MusicsData.dataMusic()
+    val filterData = if (isYesterday)
+        data.filter {
+            formatter.format(
+                it.release
+            ).compareTo(
+                yesterdayDate
+            ) == 0 && it.categoryID == "ca002"
+        }
+    else
+        data.filter {
+            formatter.format(
+                it.release
+            ).compareTo(
+                currentDate
+            ) == 0 && it.categoryID == "ca002"
+        }
+    LazyColumn(
+        modifier = modifier.height(400.dp),
+        verticalArrangement = Arrangement.spacedBy(24.dp),
+        contentPadding = PaddingValues(bottom = if (isYesterday) 24.dp else 0.dp)
+    ) {
+        items(filterData) {
+            SongItemView(modifier = Modifier, it)
+        }
+    }
+}
+
+

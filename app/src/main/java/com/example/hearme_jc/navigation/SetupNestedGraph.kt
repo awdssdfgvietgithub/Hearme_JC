@@ -20,17 +20,28 @@ fun NavGraphBuilder.setupGraph(navController: NavController, userViewModel: User
         composable(route = "${Screen.FillYourProfile.route}/{email}", arguments = listOf(navArgument("email") {
             type = NavType.StringType
         })) {
-            val param = it.arguments?.getString("email") ?: ""
-            FillYourProfileScreen(navController = navController, userViewModel = userViewModel, email = param)
+            val emailParam = it.arguments?.getString("email") ?: ""
+            FillYourProfileScreen(navController = navController, userViewModel = userViewModel, email = emailParam)
         }
-        composable(route = Screen.CreateNewPin.route) {
-            CreateNewPinScreen(navController = navController, userViewModel = userViewModel)
+        composable(route = "${Screen.CreateNewPin.route}/{email}", arguments = listOf(navArgument("email") {
+            type = NavType.StringType
+        })) {
+            val emailParam = it.arguments?.getString("email") ?: ""
+            CreateNewPinScreen(navController = navController, userViewModel = userViewModel, email = emailParam)
         }
-        composable(route = Screen.SetYourFingerprint.route) {
-            SetYourFingerprintScreen(navController = navController)
+        composable(route = "${Screen.SetYourFingerprint.route}/{email}", arguments = listOf(navArgument("email") {
+            type = NavType.StringType
+        })) {
+            val emailParam = it.arguments?.getString("email") ?: ""
+            SetYourFingerprintScreen(navController = navController, email = emailParam)
         }
-        composable(route = Screen.FollowArtists.route) {
-            FollowArtistsScreen(navController = navController, userViewModel = userViewModel)
+        composable(route = "${Screen.FollowArtists.route}/{email}", arguments = listOf(navArgument("email") {
+            type = NavType.StringType
+        })) {
+            val emailParam = it.arguments?.getString("email") ?: ""
+            FollowArtistsScreen(
+                navController = navController, userViewModel = userViewModel, email = emailParam
+            )
         }
     }
 }

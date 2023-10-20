@@ -2,6 +2,7 @@ package com.example.hearme_jc.ui.fragments.accountsetup
 
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -58,6 +59,8 @@ fun FillYourProfileScreen(
     userViewModel: UserViewModel,
     email: String,
 ) {
+    Log.v("FillYourProfileScreen",email)
+
     val fullName = rememberSaveable {
         mutableStateOf("")
     }
@@ -103,12 +106,22 @@ fun FillYourProfileScreen(
                     secEmail.value,
                     phone.value
                 ).toInt()
-                if (rs == 0) {
+                when (rs) {
+                    0 -> {
+                        //Email rong
+                    }
 
-                } else if (rs == 1) {
-                    navController.navigate(Screen.CreateNewPin.route)
-                } else {
+                    1 -> {
+                        navController.navigate("${Screen.CreateNewPin.route}/$email")
+                    }
 
+                    2 -> {
+                        //Thong tin rong
+                    }
+
+                    3 -> {
+                        //Email khong ton tai (Co gi do khong on)
+                    }
                 }
             },
         )

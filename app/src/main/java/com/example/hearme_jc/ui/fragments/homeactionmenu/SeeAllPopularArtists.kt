@@ -21,7 +21,7 @@ fun SeeAllPopularArtistsScreen(navController: NavController) {
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(top = 24.dp, end = 24.dp, start = 24.dp, bottom = 48.dp)
     ) {
-        items(ArtistsData.dataArtist()) {
+        items(ArtistsData.dataArtist().sortedByDescending { it.totalFollowers }.take(10)) {
             ArtistCard(modifier = Modifier.width(184.dp), artist = it, modifierGI = Modifier.size(184.dp))
         }
     }

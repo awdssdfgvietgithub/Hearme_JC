@@ -20,7 +20,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,11 +33,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.hearme_jc.R
@@ -49,11 +46,10 @@ import com.example.hearme_jc.data.model.ChartData
 import com.example.hearme_jc.data.model.Music
 import com.example.hearme_jc.data.model.MusicsData
 import com.example.hearme_jc.navigation.Screen
-import com.example.hearme_jc.ui.theme.Hearme_JCTheme
 import com.example.hearme_jc.ui.theme.Primary500
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController, email: String) {
     Column(
         modifier = Modifier
             .padding(top = 24.dp)
@@ -148,7 +144,7 @@ fun LazyRowArtistCard(modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(end = 24.dp, start = 24.dp)
     ) {
-        items(ArtistsData.dataArtist()) {
+        items(ArtistsData.dataArtist().sortedByDescending { it.totalFollowers }.take(5)) {
             ArtistCard(modifier = Modifier.width(160.dp), artist = it, modifierGI = Modifier.size(160.dp))
         }
     }
@@ -214,7 +210,7 @@ fun LazyRowMusicCard(modifier: Modifier) {
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(end = 24.dp, start = 24.dp)
     ) {
-        items(MusicsData.dataMusic()) {
+        items(MusicsData.dataMusic().sortedByDescending { it.totalListeners }.take(5)) {
             MusicCard(
                 modifier = Modifier.width(160.dp), music = it, modifierGI = Modifier
                     .size(160.dp)
@@ -286,17 +282,17 @@ fun TitleLazyRow(modifier: Modifier, text: String) {
     )
 }
 
-@Preview(showBackground = true, widthDp = 412, heightDp = 915)
-@Composable
-fun HomeScreenPreview() {
-    Hearme_JCTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            val navController = rememberNavController()
-
-            HomeScreen(navController = navController)
-        }
-    }
-}
+//@Preview(showBackground = true, widthDp = 412, heightDp = 915)
+//@Composable
+//fun HomeScreenPreview() {
+//    Hearme_JCTheme {
+//        Surface(
+//            modifier = Modifier.fillMaxSize(),
+//            color = MaterialTheme.colorScheme.background
+//        ) {
+//            val navController = rememberNavController()
+//
+//            HomeScreen(navController = navController)
+//        }
+//    }
+//}

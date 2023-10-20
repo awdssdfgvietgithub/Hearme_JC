@@ -7,6 +7,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.hearme_jc.data.model.Artist
 import com.example.hearme_jc.data.model.Name
 import com.example.hearme_jc.data.model.User
 import com.example.hearme_jc.data.model.UsersData
@@ -51,6 +52,8 @@ class UserViewModel : ViewModel() {
     fun FillProfile(email: String, name: Name, dob: LocalDate, secondaryEmail: String, phone: String): Byte {
         if (email.isEmpty())
             return 0
+        if (name.fullName.isEmpty() || name.nickName.isEmpty() || dob == LocalDate.parse("1500-01-01") || secondaryEmail.isEmpty() || phone.isEmpty())
+            return 2
         if (users.value.any { it.email == email }) {
             users.value.first { it.email == email }.apply {
                 this.name = name
@@ -58,9 +61,43 @@ class UserViewModel : ViewModel() {
                 this.secondaryEmail = secondaryEmail
                 this.phone = phone
             }
-            Log.v("TEST", users.value.first { it.email == email }.toString())
             return 1
         }
-        return 2
+        return 3
+    }
+
+    fun CreateNewPin(email: String, pin: List<String>): Byte {
+        if (email.isEmpty())
+            return 0
+        if (pin.isEmpty())
+            return 2
+        if (users.value.any { it.email == email }) {
+            users.value.first { it.email == email }.apply {
+                pin.forEach {
+                    this.pin?.add(it)
+                }
+            }
+            Log.v("CreateNewPin", users.value.first { it.email == email }.toString())
+            return 1
+        }
+        return 3
+    }
+
+    fun UpdateArtistsFollowing(email: String, artist: Artist, isFollow: Boolean): Byte {
+        if (email.isEmpty())
+            return 0
+        if (artist.artistId.isEmpty())
+            return 2
+        if (users.value.any { it.email == email }) {
+            users.value.first { it.email == email }.apply {
+                if (isFollow)
+                    this.listArtistsFollowing.add(artist)
+                else
+                    this.listArtistsFollowing.remove(artist)
+            }
+            Log.v("UpdateArtistsFollowing", users.value.first { it.email == email }.toString())
+            return 1
+        }
+        return 3
     }
 }
