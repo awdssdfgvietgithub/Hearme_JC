@@ -142,7 +142,8 @@ fun LazyColumnSongs(
 }
 
 @Composable
-fun SongItemView(modifier: Modifier = Modifier, it: Music, artistViewModel: ArtistViewModel) {
+fun SongItemView(modifier: Modifier = Modifier, it: Music, artistViewModel: ArtistViewModel, type: Int = 0) {
+
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -163,40 +164,43 @@ fun SongItemView(modifier: Modifier = Modifier, it: Music, artistViewModel: Arti
             verticalArrangement = Arrangement.spacedBy(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                Text(
-                    text = "Today",
-                    style = TextStyle(
-                        fontSize = 12.sp,
-                        fontFamily = FontFamily(Font(R.font.urbanist_medium)),
-                        fontWeight = FontWeight(500),
-                        color = MaterialTheme.colorScheme.onSecondary,
-                        letterSpacing = 0.2.sp,
+            if (type == 0) {
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Text(
+                        text = "Today",
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            fontFamily = FontFamily(Font(R.font.urbanist_medium)),
+                            fontWeight = FontWeight(500),
+                            color = MaterialTheme.colorScheme.onSecondary,
+                            letterSpacing = 0.2.sp,
+                        )
                     )
-                )
 
-                Text(
-                    text = "|",
-                    style = TextStyle(
-                        fontSize = 12.sp,
-                        fontFamily = FontFamily(Font(R.font.urbanist_medium)),
-                        fontWeight = FontWeight(500),
-                        color = MaterialTheme.colorScheme.onSecondary,
-                        letterSpacing = 0.2.sp,
+                    Text(
+                        text = "|",
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            fontFamily = FontFamily(Font(R.font.urbanist_medium)),
+                            fontWeight = FontWeight(500),
+                            color = MaterialTheme.colorScheme.onSecondary,
+                            letterSpacing = 0.2.sp,
+                        )
                     )
-                )
 
-                Text(
-                    text = "${it.duration?.m}:${it.duration?.s} mins",
-                    style = TextStyle(
-                        fontSize = 12.sp,
-                        fontFamily = FontFamily(Font(R.font.urbanist_medium)),
-                        fontWeight = FontWeight(500),
-                        color = MaterialTheme.colorScheme.onSecondary,
-                        letterSpacing = 0.2.sp,
+                    Text(
+                        text = "${it.duration?.m}:${it.duration?.s} mins",
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            fontFamily = FontFamily(Font(R.font.urbanist_medium)),
+                            fontWeight = FontWeight(500),
+                            color = MaterialTheme.colorScheme.onSecondary,
+                            letterSpacing = 0.2.sp,
+                        )
                     )
-                )
+                }
             }
+
 
             Text(
                 modifier = modifier.fillMaxWidth(),
@@ -224,28 +228,29 @@ fun SongItemView(modifier: Modifier = Modifier, it: Music, artistViewModel: Arti
                         letterSpacing = 0.2.sp,
                     )
                 )
-
-                Text(
-                    text = "|",
-                    style = TextStyle(
-                        fontSize = 12.sp,
-                        fontFamily = FontFamily(Font(R.font.urbanist_medium)),
-                        fontWeight = FontWeight(500),
-                        color = MaterialTheme.colorScheme.onSecondary,
-                        letterSpacing = 0.2.sp,
+                if (type == 0) {
+                    Text(
+                        text = "|",
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            fontFamily = FontFamily(Font(R.font.urbanist_medium)),
+                            fontWeight = FontWeight(500),
+                            color = MaterialTheme.colorScheme.onSecondary,
+                            letterSpacing = 0.2.sp,
+                        )
                     )
-                )
 
-                Text(
-                    text = if (it.isAlbum == true) "Album" else "Single",
-                    style = TextStyle(
-                        fontSize = 12.sp,
-                        fontFamily = FontFamily(Font(R.font.urbanist_medium)),
-                        fontWeight = FontWeight(500),
-                        color = MaterialTheme.colorScheme.onSecondary,
-                        letterSpacing = 0.2.sp,
+                    Text(
+                        text = if (it.isAlbum == true) "Album" else "Single",
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            fontFamily = FontFamily(Font(R.font.urbanist_medium)),
+                            fontWeight = FontWeight(500),
+                            color = MaterialTheme.colorScheme.onSecondary,
+                            letterSpacing = 0.2.sp,
+                        )
                     )
-                )
+                }
             }
         }
 

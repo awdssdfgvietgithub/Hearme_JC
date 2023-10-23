@@ -72,4 +72,20 @@ class MusicViewModel : ViewModel() {
                 } as ArrayList<Music>
 
     }
+
+    fun GetSongsTopUnitedStates() =
+        musics.value.filter { it.categoryID != "ca002" && it.isUSA == true && it.isAlbum == false }
+            .sortedByDescending { it.totalListeners }.take(5)
+
+    fun GetSongsTopGlobal() =
+        musics.value.filter { it.categoryID != "ca002" && it.isAlbum == false }
+            .sortedByDescending { it.totalListeners }.take(5)
+
+    fun GetAlbumsTopUnitedStates() =
+        musics.value.filter { it.categoryID != "ca002" && it.isUSA == true && it.isAlbum == true }
+            .sortedByDescending { it.totalListeners }.take(5)
+
+    fun GetAlbumsTopGlobal() =
+        musics.value.filter { it.categoryID != "ca002" && it.isAlbum == true }
+            .sortedByDescending { it.totalListeners }.take(5)
 }

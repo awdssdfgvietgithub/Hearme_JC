@@ -36,8 +36,9 @@ sealed class Screen(val route: String) {
 
     //Tab Explore
     object Explore : Screen(route = "explore")
-    object Chart : Screen(route = "charts")
-    object DetailsChart : Screen(route = "details_chart")
+    object DetailsCategory : Screen(route = "details_category")
+    object ListMusicsOfDetailsCategory : Screen(route = "list_musics_of_details_category")
+    object ResultSearch : Screen(route = "result_search")
 
     //Tab Library
     object Library : Screen(route = "library")

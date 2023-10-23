@@ -220,7 +220,9 @@ fun RowItemArtist(modifier: Modifier = Modifier, artist: Artist, userViewModel: 
             borderColorFalse = White,
             borderColorTrue = Primary500,
             fontFamily = FontFamily(Font(R.font.urbanist_semibold)),
-            isChecked = isCheck
+            isChecked = isCheck,
+            textTrue = "Following",
+            textFalse = "Follow"
         )
     }
 }

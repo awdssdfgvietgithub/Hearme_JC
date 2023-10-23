@@ -29,7 +29,8 @@ class CategoriesData {
                         "ca001",
                         "Chart",
                         "https://firebasestorage.googleapis.com/v0/b/hearme-app-16567.appspot.com/o/images%2Fartists%2FAriana_Grande.png?alt=media&token=51f77e64-3fa9-4409-b3bb-dbb5afb3a1b3&_gl=1*13i06uz*_ga*MTUyOTk3NDI1NS4xNjkzMzU5NjY4*_ga_CW55HF8NVT*MTY5NTg4MTg4Mi42LjEuMTY5NTg4MzA2MC4xNS4wLjA.",
-                        Charts
+                        Charts,
+
                     )
                 )
                 add(

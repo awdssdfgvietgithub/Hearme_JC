@@ -40,10 +40,10 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.hearme_jc.R
 import com.example.hearme_jc.data.model.Artist
-import com.example.hearme_jc.data.model.Chart
-import com.example.hearme_jc.data.model.ChartData
+import com.example.hearme_jc.data.model.DetailsCategory
 import com.example.hearme_jc.data.model.Music
 import com.example.hearme_jc.data.viewmodel.ArtistViewModel
+import com.example.hearme_jc.data.viewmodel.DetailsCategoryViewModel
 import com.example.hearme_jc.data.viewmodel.EmailViewModel
 import com.example.hearme_jc.data.viewmodel.MusicViewModel
 import com.example.hearme_jc.data.viewmodel.UserViewModel
@@ -57,6 +57,7 @@ fun HomeScreen(
     userViewModel: UserViewModel,
     musicViewModel: MusicViewModel,
     artistViewModel: ArtistViewModel,
+    detailsCategoryViewModel: DetailsCategoryViewModel,
 ) {
 //    Log.v("HomeScreen GET", emailViewModel.GetEmail())
 //    Log.v("Current List", userViewModel.GetAllUsers().first { it.email == emailViewModel.GetEmail() }.toString())
@@ -68,12 +69,16 @@ fun HomeScreen(
     ) {
         ContainerTrendingNow(navController = navController, artistViewModel = artistViewModel, musicViewModel = musicViewModel)
         ContainerPopularArtists(navController = navController, artistViewModel = artistViewModel)
-        ContainerTopChar(navController = navController)
+        ContainerTopChar(navController = navController, detailsCategoryViewModel = detailsCategoryViewModel)
     }
 }
 
 @Composable
-fun ContainerTopChar(modifier: Modifier = Modifier, navController: NavController) {
+fun ContainerTopChar(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+    detailsCategoryViewModel: DetailsCategoryViewModel,
+) {
     Column(modifier = modifier, Arrangement.spacedBy(16.dp)) {
         Row(
             modifier = Modifier
@@ -85,39 +90,44 @@ fun ContainerTopChar(modifier: Modifier = Modifier, navController: NavController
             SeeAllLazyRow(modifier = Modifier.weight(1f), onClick = {})
         }
 
-        LazyRowChartCard(modifier = Modifier)
+        LazyRowChartCard(modifier = Modifier, detailsCategoryViewModel = detailsCategoryViewModel)
     }
 }
 
 @Composable
-fun LazyRowChartCard(modifier: Modifier) {
+fun LazyRowChartCard(modifier: Modifier, detailsCategoryViewModel: DetailsCategoryViewModel) {
     LazyRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(end = 24.dp, start = 24.dp, bottom = 48.dp)
     ) {
-        items(ChartData.dataChart()) {
-            ChartCard(modifier = Modifier.width(160.dp), chart = it, modifierGI = Modifier.size(160.dp))
+        items(detailsCategoryViewModel.GetAllDetailsCategory()) {
+            DetailsCategoryCard(modifier = Modifier.width(160.dp), detailsCategory = it, modifierGI = Modifier.size(160.dp), onClick = {})
         }
     }
 }
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun ChartCard(modifier: Modifier, chart: Chart, modifierGI: Modifier) {
-    Card(modifier = Modifier, colors = CardDefaults.cardColors(Color.Transparent)) {
+fun DetailsCategoryCard(modifier: Modifier, detailsCategory: DetailsCategory, modifierGI: Modifier, onClick: () -> Unit) {
+    Card(
+        modifier = Modifier
+            .clip(RoundedCornerShape(32.dp))
+            .clickable { onClick() },
+        colors = CardDefaults.cardColors(Color.Transparent)
+    ) {
         Box(modifier = modifier, contentAlignment = Alignment.Center) {
             GlideImage(
                 modifier = modifierGI
                     .clip(RoundedCornerShape(32.dp)),
-                model = chart.image,
+                model = detailsCategory.image,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
             )
 
             Text(
                 modifier = Modifier.fillMaxSize(),
-                text = chart.chartName,
+                text = detailsCategory.chartName,
                 style = TextStyle(
                     fontSize = 24.sp,
                     lineHeight = 28.8.sp,

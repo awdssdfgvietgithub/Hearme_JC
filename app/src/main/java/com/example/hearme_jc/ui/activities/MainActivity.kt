@@ -50,6 +50,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -58,6 +59,7 @@ import androidx.navigation.compose.rememberNavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.hearme_jc.R
+import com.example.hearme_jc.data.viewmodel.RecentSearchViewModel
 import com.example.hearme_jc.navigation.NavGraph
 import com.example.hearme_jc.navigation.Screen
 import com.example.hearme_jc.ui.activities.data.Destinations
@@ -72,12 +74,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
+            val recentSearchViewModel: RecentSearchViewModel = viewModel()
             Hearme_JCTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen()
+                    MainScreen(recentSearchViewModel)
                 }
             }
         }
@@ -86,7 +89,7 @@ class MainActivity : ComponentActivity() {
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun MainScreen() {
+fun MainScreen(recentSearchViewModel: RecentSearchViewModel) {
     val navController: NavHostController = rememberNavController()
 
     //State of topBar, false is its invisible
@@ -333,6 +336,53 @@ fun MainScreen() {
             isShowEdit.value = false
         }
 
+        "${Screen.DetailsCategory.route}/{categoryID}" -> {
+            isShowNavBar.value = false
+            isShowToolbar.value = true
+            onTitleChange.value = "Charts"
+            navIconChanged.value = R.drawable.ic_arrow_back
+            isShowAvatar.value = false
+            isShowSearchBar.value = false
+
+            isShowSearch.value = true
+            isShowNotification.value = false
+            isShowMore.value = false
+            isShowFilter.value = false
+            isShowScan.value = false
+            isShowEdit.value = false
+        }
+
+        "${Screen.ListMusicsOfDetailsCategory.route}/{categoryID}/{detailsCategoryID}" -> {
+            isShowNavBar.value = false
+            isShowToolbar.value = true
+            onTitleChange.value = ""
+            navIconChanged.value = R.drawable.ic_arrow_back
+            isShowAvatar.value = false
+            isShowSearchBar.value = false
+
+            isShowSearch.value = false
+            isShowNotification.value = false
+            isShowMore.value = false
+            isShowFilter.value = false
+            isShowScan.value = false
+            isShowEdit.value = false
+        }
+
+        Screen.ResultSearch.route -> {
+            isShowNavBar.value = false
+            isShowToolbar.value = true
+            onTitleChange.value = ""
+            navIconChanged.value = R.drawable.ic_music
+            isShowAvatar.value = false
+            isShowSearchBar.value = true
+
+            isShowSearch.value = false
+            isShowNotification.value = false
+            isShowMore.value = false
+            isShowFilter.value = false
+            isShowScan.value = false
+            isShowEdit.value = false
+        }
         //Tab Library
         Screen.Library.route -> {
             isShowNavBar.value = true
@@ -388,7 +438,9 @@ fun MainScreen() {
                                 route == Screen.CreateNewPassword.route ||
                                 route == Screen.SeeAllTrendingNow.route ||
                                 route == Screen.SeeAllPopularArtists.route ||
-                                route == Screen.Notification.route
+                                route == Screen.Notification.route ||
+                                route == "${Screen.DetailsCategory.route}/{categoryID}" ||
+                                route == "${Screen.ListMusicsOfDetailsCategory.route}/{categoryID}/{detailsCategoryID}"
                             )
                                 navController.popBackStack()
                         },
@@ -400,11 +452,17 @@ fun MainScreen() {
                         isShowFilter = isShowFilter,
                         isShowScan = isShowScan,
                         isShowEdit = isShowEdit,
-                        navController = navController
+                        navController = navController,
+                        recentSearchViewModel = recentSearchViewModel
                     )
                 }
                 AnimatedVisibility(visible = isShowSearchBar.value) {
-                    AppSearchBar(query = query, active = active)
+                    AppSearchBar(
+                        query = query,
+                        active = active,
+                        recentSearchViewModel = recentSearchViewModel,
+                        navController = navController
+                    )
                 }
             }
         },
@@ -442,6 +500,7 @@ fun TopBar(
     isShowScan: MutableState<Boolean>,
     isShowEdit: MutableState<Boolean>,
     navController: NavController,
+    recentSearchViewModel: RecentSearchViewModel,
 ) {
     AnimatedVisibility(visible = isVisible.value) {
         TopAppBar(

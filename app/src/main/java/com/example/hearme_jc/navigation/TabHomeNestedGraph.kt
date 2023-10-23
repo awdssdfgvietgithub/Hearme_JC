@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.example.hearme_jc.data.viewmodel.ArtistViewModel
+import com.example.hearme_jc.data.viewmodel.DetailsCategoryViewModel
 import com.example.hearme_jc.data.viewmodel.EmailViewModel
 import com.example.hearme_jc.data.viewmodel.MusicViewModel
 import com.example.hearme_jc.data.viewmodel.UserViewModel
@@ -24,12 +25,14 @@ fun NavGraphBuilder.tabHomeGraph(
         startDestination = Screen.Home.route, route = Screen.TabHome.route
     ) {
         composable(route = Screen.Home.route) {
+            val detailsCategoryViewModel = it.sharedViewModel<DetailsCategoryViewModel>(navController = navController)
             HomeScreen(
                 navController = navController,
                 emailViewModel = emailViewModel,
                 userViewModel = userViewModel,
                 musicViewModel = musicViewModel,
-                artistViewModel = artistViewModel
+                artistViewModel = artistViewModel,
+                detailsCategoryViewModel = detailsCategoryViewModel
             )
         }
         composable(Screen.SeeAllTrendingNow.route) {

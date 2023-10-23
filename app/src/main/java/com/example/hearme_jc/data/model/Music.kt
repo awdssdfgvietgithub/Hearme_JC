@@ -16,6 +16,7 @@ data class Music(
     val path: String = "https://cdn.pixabay.com/audio/2023/07/03/audio_80cd47077b.mp3",
     val information: String? = null,
     var isPlaying: Boolean? = false,
+    val isUSA: Boolean? = false,
 )
 
 class MusicsData {
@@ -39,6 +40,7 @@ class MusicsData {
                         "ar001",
                         true,
 //                        "http://api.mp3.zing.vn/api/streaming/song/Z66IABZF/128"
+                        isUSA = true
                     )
                 )
                 add(
@@ -51,7 +53,8 @@ class MusicsData {
                         Date("02/5/2023"),
                         "ca001",
                         "ar001",
-                        false
+                        false,
+                        isUSA = true
                     )
                 )
                 add(
@@ -64,7 +67,8 @@ class MusicsData {
                         calYesterday.time,
                         "ca005",
                         "ar001",
-                        true
+                        true,
+                        isUSA = true
                     )
                 )
                 add(
@@ -90,7 +94,8 @@ class MusicsData {
                         calYesterday.time,
                         "ca003",
                         "ar002",
-                        false
+                        false,
+                        isUSA = true
                     )
                 )
                 add(
@@ -116,7 +121,8 @@ class MusicsData {
                         Date("12/07/2023"),
                         "ca004",
                         "ar003",
-                        false
+                        false,
+                        isUSA = true
                     )
                 )
                 add(
@@ -144,7 +150,8 @@ class MusicsData {
                         "ar008",
                         false,
                         "https://cdn.pixabay.com/audio/2023/07/03/audio_80cd47077b.mp3",
-                        "Shaquille O'Neal (@SHAQ) has been retired from basketball for years, but he’s still got his irons in plenty of fires. Here, we’ll discuss everything from superheroes to law enforcement to business to sports to podcasting to — yes — the Flat Earth Theory. What We Discuss with Shaquille O'Neal: The real-world experience Shaq endured preparing for a political race in 2020. How Shaq assembled what he calls The Panel to help manage not only his career but all his important life decisions — and how you can do the same. Why Shaq doesn’t consider himself a celebrity (and why that still isn’t a good reason to bug him in the middle of dinner). How Shaq manages his emotions so he stays non-reactive on and off the court. Does Shaq really believe in the Flat Earth Theory?"
+                        "Shaquille O'Neal (@SHAQ) has been retired from basketball for years, but he’s still got his irons in plenty of fires. Here, we’ll discuss everything from superheroes to law enforcement to business to sports to podcasting to — yes — the Flat Earth Theory. What We Discuss with Shaquille O'Neal: The real-world experience Shaq endured preparing for a political race in 2020. How Shaq assembled what he calls The Panel to help manage not only his career but all his important life decisions — and how you can do the same. Why Shaq doesn’t consider himself a celebrity (and why that still isn’t a good reason to bug him in the middle of dinner). How Shaq manages his emotions so he stays non-reactive on and off the court. Does Shaq really believe in the Flat Earth Theory?",
+                        isUSA = true
                     )
                 )
                 add(
@@ -172,7 +179,8 @@ class MusicsData {
                         Date("25/03/2023"),
                         "ca006",
                         "ar001",
-                        true
+                        true,
+                        isUSA = true
                     )
                 )
                 add(
@@ -185,7 +193,8 @@ class MusicsData {
                         Date("13/04/2023"),
                         "ca006",
                         "ar002",
-                        true
+                        true,
+                        isUSA = true
                     )
                 )
                 add(
@@ -213,7 +222,8 @@ class MusicsData {
                         "ar007",
                         false,
                         "https://cdn.pixabay.com/audio/2023/07/03/audio_80cd47077b.mp3",
-                        "Shaquille O'Neal (@SHAQ) has been retired from basketball for years, but he’s still got his irons in plenty of fires. Here, we’ll discuss everything from superheroes to law enforcement to business to sports to podcasting to — yes — the Flat Earth Theory. What We Discuss with Shaquille O'Neal: The real-world experience Shaq endured preparing for a political race in 2020. How Shaq assembled what he calls The Panel to help manage not only his career but all his important life decisions — and how you can do the same. Why Shaq doesn’t consider himself a celebrity (and why that still isn’t a good reason to bug him in the middle of dinner). How Shaq manages his emotions so he stays non-reactive on and off the court. Does Shaq really believe in the Flat Earth Theory?"
+                        "Shaquille O'Neal (@SHAQ) has been retired from basketball for years, but he’s still got his irons in plenty of fires. Here, we’ll discuss everything from superheroes to law enforcement to business to sports to podcasting to — yes — the Flat Earth Theory. What We Discuss with Shaquille O'Neal: The real-world experience Shaq endured preparing for a political race in 2020. How Shaq assembled what he calls The Panel to help manage not only his career but all his important life decisions — and how you can do the same. Why Shaq doesn’t consider himself a celebrity (and why that still isn’t a good reason to bug him in the middle of dinner). How Shaq manages his emotions so he stays non-reactive on and off the court. Does Shaq really believe in the Flat Earth Theory?",
+                        isUSA = true
                     )
                 )
                 add(
@@ -239,7 +249,8 @@ class MusicsData {
                         calYesterday.time,
                         "ca008",
                         "ar003",
-                        true
+                        true,
+                        isUSA = true
                     )
                 )
                 add(
@@ -291,7 +302,8 @@ class MusicsData {
                         Date("24/03/2023"),
                         "ca010",
                         "ar006",
-                        false
+                        false,
+                        isUSA = true
                     )
                 )
                 add(
@@ -319,7 +331,8 @@ class MusicsData {
                         "ar002",
                         false,
                         "https://cdn.pixabay.com/audio/2023/07/03/audio_80cd47077b.mp3",
-                        "Shaquille O'Neal (@SHAQ) has been retired from basketball for years, but he’s still got his irons in plenty of fires. Here, we’ll discuss everything from superheroes to law enforcement to business to sports to podcasting to — yes — the Flat Earth Theory. What We Discuss with Shaquille O'Neal: The real-world experience Shaq endured preparing for a political race in 2020. How Shaq assembled what he calls The Panel to help manage not only his career but all his important life decisions — and how you can do the same. Why Shaq doesn’t consider himself a celebrity (and why that still isn’t a good reason to bug him in the middle of dinner). How Shaq manages his emotions so he stays non-reactive on and off the court. Does Shaq really believe in the Flat Earth Theory?"
+                        "Shaquille O'Neal (@SHAQ) has been retired from basketball for years, but he’s still got his irons in plenty of fires. Here, we’ll discuss everything from superheroes to law enforcement to business to sports to podcasting to — yes — the Flat Earth Theory. What We Discuss with Shaquille O'Neal: The real-world experience Shaq endured preparing for a political race in 2020. How Shaq assembled what he calls The Panel to help manage not only his career but all his important life decisions — and how you can do the same. Why Shaq doesn’t consider himself a celebrity (and why that still isn’t a good reason to bug him in the middle of dinner). How Shaq manages his emotions so he stays non-reactive on and off the court. Does Shaq really believe in the Flat Earth Theory?",
+                        isUSA = true
                     )
                 )
                 add(
@@ -348,7 +361,8 @@ class MusicsData {
                         "ar008",
                         false,
                         "https://cdn.pixabay.com/audio/2023/07/03/audio_80cd47077b.mp3",
-                        "Shaquille O'Neal (@SHAQ) has been retired from basketball for years, but he’s still got his irons in plenty of fires. Here, we’ll discuss everything from superheroes to law enforcement to business to sports to podcasting to — yes — the Flat Earth Theory. What We Discuss with Shaquille O'Neal: The real-world experience Shaq endured preparing for a political race in 2020. How Shaq assembled what he calls The Panel to help manage not only his career but all his important life decisions — and how you can do the same. Why Shaq doesn’t consider himself a celebrity (and why that still isn’t a good reason to bug him in the middle of dinner). How Shaq manages his emotions so he stays non-reactive on and off the court. Does Shaq really believe in the Flat Earth Theory?"
+                        "Shaquille O'Neal (@SHAQ) has been retired from basketball for years, but he’s still got his irons in plenty of fires. Here, we’ll discuss everything from superheroes to law enforcement to business to sports to podcasting to — yes — the Flat Earth Theory. What We Discuss with Shaquille O'Neal: The real-world experience Shaq endured preparing for a political race in 2020. How Shaq assembled what he calls The Panel to help manage not only his career but all his important life decisions — and how you can do the same. Why Shaq doesn’t consider himself a celebrity (and why that still isn’t a good reason to bug him in the middle of dinner). How Shaq manages his emotions so he stays non-reactive on and off the court. Does Shaq really believe in the Flat Earth Theory?",
+                        isUSA = true
                     )
                 )
                 add(
@@ -362,7 +376,8 @@ class MusicsData {
                         "ca002",
                         "ar007",
                         false,
-                        "https://cdn.pixabay.com/audio/2023/07/03/audio_80cd47077b.mp3"
+                        "https://cdn.pixabay.com/audio/2023/07/03/audio_80cd47077b.mp3",
+                        isUSA = true
                     )
                 )
                 add(
@@ -392,7 +407,8 @@ class MusicsData {
                         "ar009",
                         false,
                         "https://cdn.pixabay.com/audio/2023/07/03/audio_80cd47077b.mp3",
-                        "Shaquille O'Neal (@SHAQ) has been retired from basketball for years, but he’s still got his irons in plenty of fires. Here, we’ll discuss everything from superheroes to law enforcement to business to sports to podcasting to — yes — the Flat Earth Theory. What We Discuss with Shaquille O'Neal: The real-world experience Shaq endured preparing for a political race in 2020. How Shaq assembled what he calls The Panel to help manage not only his career but all his important life decisions — and how you can do the same. Why Shaq doesn’t consider himself a celebrity (and why that still isn’t a good reason to bug him in the middle of dinner). How Shaq manages his emotions so he stays non-reactive on and off the court. Does Shaq really believe in the Flat Earth Theory?"
+                        "Shaquille O'Neal (@SHAQ) has been retired from basketball for years, but he’s still got his irons in plenty of fires. Here, we’ll discuss everything from superheroes to law enforcement to business to sports to podcasting to — yes — the Flat Earth Theory. What We Discuss with Shaquille O'Neal: The real-world experience Shaq endured preparing for a political race in 2020. How Shaq assembled what he calls The Panel to help manage not only his career but all his important life decisions — and how you can do the same. Why Shaq doesn’t consider himself a celebrity (and why that still isn’t a good reason to bug him in the middle of dinner). How Shaq manages his emotions so he stays non-reactive on and off the court. Does Shaq really believe in the Flat Earth Theory?",
+                        isUSA = true
                     )
                 )
             }

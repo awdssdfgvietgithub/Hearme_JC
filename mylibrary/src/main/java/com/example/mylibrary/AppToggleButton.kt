@@ -30,6 +30,8 @@ fun AppToggleButton(
     txtColorTrue: Color,
     borderColorFalse: Color,
     borderColorTrue: Color,
+    textFalse: String,
+    textTrue: String,
     fontFamily: FontFamily,
     isChecked: MutableState<Boolean> = mutableStateOf(false),
 ) {
@@ -46,7 +48,7 @@ fun AppToggleButton(
     ) {
         Text(
             modifier = Modifier,
-            text = if (isChecked.value) "Following" else "Follow",
+            text = if (isChecked.value) textTrue else textFalse,
             style = if (isChecked.value) TextStyle(
                 fontSize = 14.sp,
                 lineHeight = 19.6.sp,
@@ -82,7 +84,9 @@ fun AppToggleButtonPreview() {
             txtColorTrue = Color.Black,
             borderColorFalse = Color.White,
             borderColorTrue = Color.Black,
-            fontFamily = FontFamily.Default
+            fontFamily = FontFamily.Default,
+            textFalse = "Follow",
+            textTrue = "Following"
         )
     }
 }
