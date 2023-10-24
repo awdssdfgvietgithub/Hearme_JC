@@ -384,7 +384,7 @@ class MusicsData {
                     Music(
                         "ms026",
                         "831: Desmond Shum | Wealth, Power, Corruption, and Ven",
-                        292,
+                        3612,
                         "https://s3-alpha-sig.figma.com/img/70a7/4f46/b2666580eb98313b4d05502d23eafc39?Expires=1698624000&Signature=PHE5J9~taJrzpNJtJLzqNMwUX2nUTsRxJ~~HGT7rltZwFBraf-3Ji4mp499gm7ZcJDD1oPkfx~-AgAlR1qr2uhSt~9u6lYNatlQE7-9gXqhB77SI2ICSMk7QFp1GqjvWKwuVtDvD6YTyAIi06W4b0EvFUqXVwaI3nt~A5ztyXpn~7006TfkEGCblU3jfLn-on9dbesLecwONxzXKGCAC5IbC4YI4MxEbWPf7jdGK73uX4HR-KCyrgzkzRPuEqXr94hQivlolLYpsiTenlVEWmHYwYBlPXcA5aAL17T9ImpEO6qLvUfV8YEs8As~dDGx5VqHbY3N6SHGOgbOjx0ZFFg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
                         Time(0, 32, 12),
                         Date("12/08/2023"),

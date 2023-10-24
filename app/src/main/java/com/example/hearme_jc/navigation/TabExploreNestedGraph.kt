@@ -11,8 +11,10 @@ import androidx.navigation.navigation
 import com.example.hearme_jc.data.viewmodel.ArtistViewModel
 import com.example.hearme_jc.data.viewmodel.CategoryViewModel
 import com.example.hearme_jc.data.viewmodel.DetailsCategoryViewModel
+import com.example.hearme_jc.data.viewmodel.EmailViewModel
 import com.example.hearme_jc.data.viewmodel.MusicViewModel
 import com.example.hearme_jc.data.viewmodel.TopicSearchViewModel
+import com.example.hearme_jc.data.viewmodel.UserViewModel
 import com.example.hearme_jc.ui.fragments.searchdetailsplay.screen.DetailsCategory
 import com.example.hearme_jc.ui.fragments.searchdetailsplay.screen.ExploreScreen
 import com.example.hearme_jc.ui.fragments.searchdetailsplay.screen.ListMusicsOfDetailsCategoryScreen
@@ -23,6 +25,8 @@ fun NavGraphBuilder.tabExploreGraph(
     navController: NavController,
     musicViewModel: MusicViewModel,
     artistViewModel: ArtistViewModel,
+    userViewModel: UserViewModel,
+    emailViewModel: EmailViewModel,
 ) {
     navigation(startDestination = Screen.Explore.route, route = Screen.TabExplore.route) {
         composable(Screen.Explore.route) {
@@ -63,9 +67,20 @@ fun NavGraphBuilder.tabExploreGraph(
                 detailsCategoryViewModel = detailsCategoryViewModel
             )
         }
-        composable(route = Screen.ResultSearch.route) {
+        composable(
+            route = "${Screen.ResultSearch.route}/{query}",
+            arguments = listOf(navArgument("query") { type = NavType.StringType })
+        ) {
+            val query = it.arguments?.getString("query").toString()
             val topicSearchViewModel = it.sharedViewModel<TopicSearchViewModel>(navController = navController)
-            ResultSearchScreen(navController = navController, topicSearchViewModel = topicSearchViewModel)
+            ResultSearchScreen(
+                navController = navController,
+                query = query,
+                musicViewModel = musicViewModel,
+                artistViewModel = artistViewModel,
+                userViewModel = userViewModel,
+                emailViewModel = emailViewModel
+            )
         }
     }
 }

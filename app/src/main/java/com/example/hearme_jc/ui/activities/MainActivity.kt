@@ -368,11 +368,11 @@ fun MainScreen(recentSearchViewModel: RecentSearchViewModel) {
             isShowEdit.value = false
         }
 
-        Screen.ResultSearch.route -> {
+        "${Screen.ResultSearch.route}/{query}" -> {
             isShowNavBar.value = false
-            isShowToolbar.value = true
+            isShowToolbar.value = false
             onTitleChange.value = ""
-            navIconChanged.value = R.drawable.ic_music
+            navIconChanged.value = R.drawable.ic_arrow_back
             isShowAvatar.value = false
             isShowSearchBar.value = true
 

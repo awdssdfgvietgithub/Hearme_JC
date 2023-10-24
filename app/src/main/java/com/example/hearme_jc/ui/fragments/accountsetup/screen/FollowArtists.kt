@@ -143,7 +143,7 @@ fun LazyColumnRowItemArtist(modifier: Modifier = Modifier, userViewModel: UserVi
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun RowItemArtist(modifier: Modifier = Modifier, artist: Artist, userViewModel: UserViewModel, email: String) {
+fun RowItemArtist(modifier: Modifier = Modifier, artist: Artist, userViewModel: UserViewModel, email: String, type: Int = 0) {
     val isCheck = rememberSaveable {
         mutableStateOf(false)
     }
@@ -181,33 +181,49 @@ fun RowItemArtist(modifier: Modifier = Modifier, artist: Artist, userViewModel: 
 
         Spacer(modifier = Modifier.width(16.dp))
 
-        Row(
-            modifier
-                .fillMaxWidth()
-                .weight(1f),
-        ) {
-            Text(
-                text = artist.artistName,
-                style = TextStyle(
-                    fontSize = 18.sp,
-                    lineHeight = 21.6.sp,
-                    fontFamily = FontFamily(Font(R.font.urbanist_bold)),
-                    fontWeight = FontWeight(700),
-                    color = MaterialTheme.colorScheme.onBackground,
-                ),
-                modifier = Modifier.weight(1f),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
+        Column(modifier = Modifier.weight(1f)) {
+            Row(
+                modifier
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = artist.artistName,
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        lineHeight = 21.6.sp,
+                        fontFamily = FontFamily(Font(R.font.urbanist_bold)),
+                        fontWeight = FontWeight(700),
+                        color = MaterialTheme.colorScheme.onBackground,
+                    ),
+                    modifier = Modifier.weight(1f),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
 
-            Spacer(modifier = Modifier.width(4.dp))
+                Spacer(modifier = Modifier.width(4.dp))
 
-            Image(
-                painter = painterResource(id = R.drawable.image_vector_verified),
-                contentDescription = null,
-                modifier = Modifier.size(24.dp),
-                alignment = Alignment.TopStart
-            )
+                Image(
+                    painter = painterResource(id = R.drawable.image_vector_verified),
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp),
+                    alignment = Alignment.TopStart
+                )
+            }
+
+            if (type == 1) {
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Text(
+                    text = if (artist.isSinger) "Artists" else "Podcaster",
+                    style = TextStyle(
+                        fontSize = 12.sp,
+                        fontFamily = FontFamily(Font(R.font.urbanist_medium)),
+                        fontWeight = FontWeight(500),
+                        color = MaterialTheme.colorScheme.onSecondary,
+                        letterSpacing = 0.2.sp,
+                    )
+                )
+            }
         }
 
         Spacer(modifier = Modifier.width(16.dp))

@@ -45,7 +45,13 @@ fun NavGraph(
         )
 
         //Tab Explore
-        tabExploreGraph(navController, musicViewModel = musicViewModel, artistViewModel = artistViewModel)
+        tabExploreGraph(
+            navController,
+            musicViewModel = musicViewModel,
+            artistViewModel = artistViewModel,
+            userViewModel = userViewModel,
+            emailViewModel = emailViewModel
+        )
 
         //Tab Library
         tabLibraryGraph(navController)

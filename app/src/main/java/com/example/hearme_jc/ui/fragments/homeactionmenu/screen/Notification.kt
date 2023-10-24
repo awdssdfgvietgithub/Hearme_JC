@@ -143,7 +143,6 @@ fun LazyColumnSongs(
 
 @Composable
 fun SongItemView(modifier: Modifier = Modifier, it: Music, artistViewModel: ArtistViewModel, type: Int = 0) {
-
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -242,6 +241,29 @@ fun SongItemView(modifier: Modifier = Modifier, it: Music, artistViewModel: Arti
 
                     Text(
                         text = if (it.isAlbum == true) "Album" else "Single",
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            fontFamily = FontFamily(Font(R.font.urbanist_medium)),
+                            fontWeight = FontWeight(500),
+                            color = MaterialTheme.colorScheme.onSecondary,
+                            letterSpacing = 0.2.sp,
+                        )
+                    )
+                }
+                if (type == 2) {
+                    Text(
+                        text = "|",
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            fontFamily = FontFamily(Font(R.font.urbanist_medium)),
+                            fontWeight = FontWeight(500),
+                            color = MaterialTheme.colorScheme.onSecondary,
+                            letterSpacing = 0.2.sp,
+                        )
+                    )
+
+                    Text(
+                        text = if (it.isAlbum == false) "Song" else "Album",
                         style = TextStyle(
                             fontSize = 12.sp,
                             fontFamily = FontFamily(Font(R.font.urbanist_medium)),

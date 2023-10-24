@@ -158,7 +158,8 @@ fun AppSearchBar(
             onQueryChange = { query.value = it },
             onSearch = {
                 recentSearchViewModel.UpdateRecentSearch(query.value)
-                navController.navigate(Screen.ResultSearch.route)
+                navController.navigate("${Screen.ResultSearch.route}/${query.value}")
+                active.value = false
             },
             active = active.value,
             onActiveChange = { it.also { active.value = it } },

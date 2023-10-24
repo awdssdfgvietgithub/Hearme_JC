@@ -40,4 +40,16 @@ class ArtistViewModel : ViewModel() {
         Log.v("GetArtist", "artistID is not existed")
         return Artist(artistId = "", artistName = "")
     }
+
+    fun GetTopArtistByQuery(query: String) =
+        artists.value.filter { it.artistName.lowercase().trim().contains(query.lowercase().trim()) }
+            .sortedByDescending { it.totalFollowers }.take(5)
+
+    fun GetArtistsByQuery(query: String) =
+        artists.value.filter { it.artistName.lowercase().trim().contains(query.lowercase().trim()) }
+            .sortedByDescending { it.totalFollowers }
+
+    fun GetPodcasterByQuery(query: String, take: Int) =
+        artists.value.filter { !it.isSinger && it.artistName.lowercase().trim().contains(query.lowercase().trim()) }
+            .sortedByDescending { it.totalFollowers }.take(take)
 }

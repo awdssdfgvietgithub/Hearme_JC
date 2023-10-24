@@ -88,4 +88,24 @@ class MusicViewModel : ViewModel() {
     fun GetAlbumsTopGlobal() =
         musics.value.filter { it.categoryID != "ca002" && it.isAlbum == true }
             .sortedByDescending { it.totalListeners }.take(5)
+
+    fun GetTopMusicsSByQuery(query: String) =
+        musics.value.filter { it.musicName.lowercase().trim().contains(query.lowercase().trim()) && it.categoryID != "ca002" }
+            .sortedByDescending { it.totalListeners }.take(6)
+
+    fun GetSongsByQuery(query: String) =
+        musics.value.filter {
+            it.categoryID != "ca002" && it.musicName.lowercase().trim().contains(query.lowercase().trim()) && it.isAlbum == false
+        }
+            .sortedByDescending { it.totalListeners }
+
+    fun GetAlbumByQuery(query: String) =
+        musics.value.filter {
+            it.categoryID != "ca002" && it.isAlbum == true && it.musicName.lowercase().trim().contains(query.lowercase().trim())
+        }
+            .sortedByDescending { it.totalListeners }
+
+    fun GetEpisodesByQuery(query: String, take: Int) =
+        musics.value.filter { it.categoryID == "ca002" && it.musicName.lowercase().trim().contains(query.lowercase().trim()) }
+            .sortedByDescending { it.totalListeners }.take(take)
 }
