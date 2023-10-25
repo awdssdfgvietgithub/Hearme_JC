@@ -32,8 +32,8 @@ class UsersData {
             data.apply {
                 add(
                     User(
-                        "phuongviet.huit@gmail.com",
-                        "phuongviet123456",
+                        "a",
+                        "a",
                         "awdssdfgviethufi@gmail.com",
                         "https://firebasestorage.googleapis.com/v0/b/hearme-app-16567.appspot.com/o/images%2Fusers%2Fuser_phuongviet.huit%40gmail.com.png?alt=media&token=584ab9c3-4b4b-461d-b7ea-e263e3cd2123&_gl=1*11vbk9i*_ga*MTUyOTk3NDI1NS4xNjkzMzU5NjY4*_ga_CW55HF8NVT*MTY5NTk2MDMwNi4xMS4xLjE2OTU5NjIxMTkuMzIuMC4w",
                         Name("Nguyen Phuong Viet", "Viet Huit"),
@@ -45,7 +45,7 @@ class UsersData {
                         true,
                         false, // true if user the first sign in
                         ArtistsData.dataArtist() //listArtistsFollowing
-                            .filter { it.artistId == " ar001" || it.artistId == "ar002" || it.artistId == "ar004" } as ArrayList<Artist>,
+                            .filter { it.artistId == "ar001" || it.artistId == "ar002" || it.artistId == "ar004" } as ArrayList<Artist>,
                         ArrayList(), //listFollowers
                         MusicsData.dataMusic() //listMusicsLoved
                             .filter { it.musicID == "ms001" || it.musicID == "ms002" || it.musicID == "ms005" || it.musicID == "ms008" } as ArrayList<Music>,
@@ -73,7 +73,7 @@ class UsersData {
                         true,
                         false, // true if user the first sign in
                         ArtistsData.dataArtist()//listArtistsFollowing
-                            .filter { it.artistId == " ar003" || it.artistId == "ar004" } as ArrayList<Artist>,
+                            .filter { it.artistId == "ar003" || it.artistId == "ar004" } as ArrayList<Artist>,
                         ArrayList(),
                         MusicsData.dataMusic() //listMusicsLoved
                             .filter { it.musicID == "ms002" || it.musicID == "ms006" || it.musicID == "ms007" } as ArrayList<Music>,
@@ -101,7 +101,7 @@ class UsersData {
                         false,
                         false, // true if user the first sign in
                         ArtistsData.dataArtist()//listArtistsFollowing
-                            .filter { it.artistId == " ar005" || it.artistId == "ar006" } as ArrayList<Artist>,
+                            .filter { it.artistId == "ar005" || it.artistId == "ar006" } as ArrayList<Artist>,
                         ArrayList(),
                         MusicsData.dataMusic() //listMusicsLoved
                             .filter { it.musicID == "ms009" || it.musicID == "ms010" || it.musicID == "ms011" } as ArrayList<Music>,

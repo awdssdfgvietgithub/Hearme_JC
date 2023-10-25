@@ -6,7 +6,7 @@ data class PlaylistOfSinger(
     val image: String? = null,
     val artistID: String,
     val release: Int? = 2023,
-    val listMusic: ArrayList<String> = ArrayList(),
+    val createdBy: String? = "Theresa Wilona",
 )
 
 class PlaylistOfSingerData {
@@ -17,41 +17,37 @@ class PlaylistOfSingerData {
                 add(
                     PlaylistOfSinger(
                         "pos001",
-                        "Sweetener",
-                        null,
+                        "All Songs",
+                        "https://firebasestorage.googleapis.com/v0/b/hearme-app-16567.appspot.com/o/images%2Fartists%2FRyan_Jones.png?alt=media&token=30821e3f-4d83-4c95-8e37-c7b4e6d9a5c6&_gl=1*1y0plpm*_ga*MTUyOTk3NDI1NS4xNjkzMzU5NjY4*_ga_CW55HF8NVT*MTY5NTg4MTg4Mi42LjEuMTY5NTg4MzExOC4yNC4wLjA.",
                         "ar001",
-                        2018,
-                        arrayListOf("ms019")
+                        2022,
                     )
                 )
                 add(
                     PlaylistOfSinger(
                         "pos002",
-                        "Dangerous Woman",
-                        null,
+                        "Top Greatest Hits",
+                        "https://firebasestorage.googleapis.com/v0/b/hearme-app-16567.appspot.com/o/images%2Fartists%2FRyan_Jones.png?alt=media&token=30821e3f-4d83-4c95-8e37-c7b4e6d9a5c6&_gl=1*1y0plpm*_ga*MTUyOTk3NDI1NS4xNjkzMzU5NjY4*_ga_CW55HF8NVT*MTY5NTg4MTg4Mi42LjEuMTY5NTg4MzExOC4yNC4wLjA.",
                         "ar001",
-                        2016,
-                        arrayListOf("ms018")
+                        2021,
                     )
                 )
                 add(
                     PlaylistOfSinger(
                         "pos003",
-                        "Yours Truly",
-                        null,
+                        "Most Listened Songs",
+                        "https://firebasestorage.googleapis.com/v0/b/hearme-app-16567.appspot.com/o/images%2Fartists%2FRyan_Jones.png?alt=media&token=30821e3f-4d83-4c95-8e37-c7b4e6d9a5c6&_gl=1*1y0plpm*_ga*MTUyOTk3NDI1NS4xNjkzMzU5NjY4*_ga_CW55HF8NVT*MTY5NTg4MTg4Mi42LjEuMTY5NTg4MzExOC4yNC4wLjA.",
                         "ar001",
-                        2013,
-                        arrayListOf("ms011")
+                        2023,
                     )
                 )
                 add(
                     PlaylistOfSinger(
                         "pos004",
-                        "My Everything",
-                        null,
+                        "Complete Albums",
+                        "https://firebasestorage.googleapis.com/v0/b/hearme-app-16567.appspot.com/o/images%2Fartists%2FRyan_Jones.png?alt=media&token=30821e3f-4d83-4c95-8e37-c7b4e6d9a5c6&_gl=1*1y0plpm*_ga*MTUyOTk3NDI1NS4xNjkzMzU5NjY4*_ga_CW55HF8NVT*MTY5NTg4MTg4Mi42LjEuMTY5NTg4MzExOC4yNC4wLjA.",
                         "ar001",
-                        2014,
-                        arrayListOf("ms003")
+                        2020,
                     )
                 )
             }

@@ -101,6 +101,8 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
     //
     implementation("com.google.accompanist:accompanist-insets:0.30.1")
+    // Optional - datastore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
     ///>
 
     testImplementation("junit:junit:4.13.2")

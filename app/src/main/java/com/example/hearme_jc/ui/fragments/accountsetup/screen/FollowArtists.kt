@@ -145,25 +145,9 @@ fun LazyColumnRowItemArtist(modifier: Modifier = Modifier, userViewModel: UserVi
 @Composable
 fun RowItemArtist(modifier: Modifier = Modifier, artist: Artist, userViewModel: UserViewModel, email: String, type: Int = 0) {
     val isCheck = rememberSaveable {
-        mutableStateOf(false)
+        mutableStateOf(userViewModel.IsFollowArtist(email, artist.artistId))
     }
-    when (userViewModel.UpdateArtistsFollowing(email, artist, isCheck.value).toInt()) {
-        0 -> {
-            Log.v("UpdateArtistFollow", "Email rong")
-        }
 
-        2 -> {
-            Log.v("UpdateArtistFollow", "Artist id khong ton tai")
-        }
-
-        1 -> {
-            Log.v("UpdateArtistFollow", "Thanh cong follow ${artist.artistName}")
-        }
-
-        else -> {
-            Log.v("UpdateArtistFollow", "Email khong ton tai")
-        }
-    }
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -236,9 +220,30 @@ fun RowItemArtist(modifier: Modifier = Modifier, artist: Artist, userViewModel: 
             borderColorFalse = White,
             borderColorTrue = Primary500,
             fontFamily = FontFamily(Font(R.font.urbanist_semibold)),
-            isChecked = isCheck,
+            isChecked = isCheck.value,
             textTrue = "Following",
-            textFalse = "Follow"
+            textFalse = "Follow",
+            onClick = {
+                isCheck.value = !isCheck.value
+
+                when (userViewModel.UpdateArtistsFollowing(email, artist, isCheck.value).toInt()) {
+                    0 -> {
+                        Log.v("UpdateArtistFollow", "Email rong")
+                    }
+
+                    2 -> {
+                        Log.v("UpdateArtistFollow", "Artist id khong ton tai")
+                    }
+
+                    1 -> {
+                        Log.v("UpdateArtistFollow", "Thanh cong")
+                    }
+
+                    else -> {
+                        Log.v("UpdateArtistFollow", "Email khong ton tai")
+                    }
+                }
+            }
         )
     }
 }

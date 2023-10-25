@@ -34,6 +34,7 @@ import com.example.hearme_jc.R
 import com.example.hearme_jc.data.viewmodel.ArtistViewModel
 import com.example.hearme_jc.data.viewmodel.EmailViewModel
 import com.example.hearme_jc.data.viewmodel.MusicViewModel
+import com.example.hearme_jc.data.viewmodel.PlaylistOfSingerViewModel
 import com.example.hearme_jc.data.viewmodel.UserViewModel
 import com.example.hearme_jc.ui.fragments.homeactionmenu.screen.childscreen.AlbumsSearchResultsScreen
 import com.example.hearme_jc.ui.fragments.homeactionmenu.screen.childscreen.ArtistsSearchResultsScreen
@@ -63,6 +64,7 @@ fun ResultSearchScreen(
     artistViewModel: ArtistViewModel,
     userViewModel: UserViewModel,
     emailViewModel: EmailViewModel,
+    playlistOfSingerViewModel: PlaylistOfSingerViewModel,
 ) {
     val itemsList: ArrayList<String> = arrayListOf()
     ListChip.values().forEach {
@@ -135,11 +137,24 @@ fun ResultSearchScreen(
                 }
 
                 ListChip.Playlists.title -> {
-                    PlaylistsSearchResultsScreen(navController = navController)
+                    PlaylistsSearchResultsScreen(
+                        navController = navController,
+                        query = query,
+                        musicViewModel = musicViewModel,
+                        artistViewModel = artistViewModel,
+                        userViewModel = userViewModel,
+                        emailViewModel = emailViewModel,
+                        playlistOfSingerViewModel = playlistOfSingerViewModel
+                    )
                 }
 
                 ListChip.Profiles.title -> {
-                    ProfilesSearchResultsScreen(navController = navController)
+                    ProfilesSearchResultsScreen(
+                        navController = navController,
+                        query = query,
+                        userViewModel = userViewModel,
+                        emailViewModel = emailViewModel
+                    )
                 }
             }
         }

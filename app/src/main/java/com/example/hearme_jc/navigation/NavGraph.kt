@@ -25,7 +25,7 @@ fun NavGraph(
     val musicViewModel: MusicViewModel = viewModel()
     val artistViewModel: ArtistViewModel = viewModel()
 
-    NavHost(navController = navController, startDestination = Screen.TabExplore.route) {
+    NavHost(navController = navController, startDestination = Screen.Onboard.route) {
         //Onboard
         onboardGraph(navController)
 

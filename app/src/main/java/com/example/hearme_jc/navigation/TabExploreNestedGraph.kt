@@ -13,7 +13,7 @@ import com.example.hearme_jc.data.viewmodel.CategoryViewModel
 import com.example.hearme_jc.data.viewmodel.DetailsCategoryViewModel
 import com.example.hearme_jc.data.viewmodel.EmailViewModel
 import com.example.hearme_jc.data.viewmodel.MusicViewModel
-import com.example.hearme_jc.data.viewmodel.TopicSearchViewModel
+import com.example.hearme_jc.data.viewmodel.PlaylistOfSingerViewModel
 import com.example.hearme_jc.data.viewmodel.UserViewModel
 import com.example.hearme_jc.ui.fragments.searchdetailsplay.screen.DetailsCategory
 import com.example.hearme_jc.ui.fragments.searchdetailsplay.screen.ExploreScreen
@@ -72,14 +72,15 @@ fun NavGraphBuilder.tabExploreGraph(
             arguments = listOf(navArgument("query") { type = NavType.StringType })
         ) {
             val query = it.arguments?.getString("query").toString()
-            val topicSearchViewModel = it.sharedViewModel<TopicSearchViewModel>(navController = navController)
+            val playlistOfSingerViewModel = it.sharedViewModel<PlaylistOfSingerViewModel>(navController = navController)
             ResultSearchScreen(
                 navController = navController,
                 query = query,
                 musicViewModel = musicViewModel,
                 artistViewModel = artistViewModel,
                 userViewModel = userViewModel,
-                emailViewModel = emailViewModel
+                emailViewModel = emailViewModel,
+                playlistOfSingerViewModel = playlistOfSingerViewModel
             )
         }
     }

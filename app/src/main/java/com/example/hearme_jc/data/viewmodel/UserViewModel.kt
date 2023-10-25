@@ -25,6 +25,7 @@ class UserViewModel : ViewModel() {
     init {
         viewModelScope.launch {
             _users.value = UsersData.data()
+            getListDataUser()
         }
     }
 
@@ -80,7 +81,6 @@ class UserViewModel : ViewModel() {
                     this.pin?.add(it)
                 }
             }
-            Log.v("CreateNewPin", users.value.first { it.email == email }.toString())
             return 1
         }
         return 3
@@ -98,9 +98,105 @@ class UserViewModel : ViewModel() {
                 else
                     this.listArtistsFollowing.remove(artist)
             }
-            Log.v("UpdateArtistsFollowing", users.value.first { it.email == email }.toString())
             return 1
         }
         return 3
+    }
+
+    fun UpdateUserFollowing(email: String, emailFollow: String, isFollow: Boolean): Byte {
+        if (email.isEmpty())
+            return 0
+        if (emailFollow.isEmpty())
+            return 2
+        if (users.value.any { it.email == email }) {
+            _users.value.first { it.email == email }.apply {
+                if (isFollow)
+                    this.listUserFollowing.add(users.value.first { it.email == emailFollow })
+                else
+                    this.listUserFollowing.remove(users.value.first { it.email == emailFollow })
+            }
+
+            _users.value.first { it.email == emailFollow }.apply {
+                if (isFollow)
+                    this.listFollowers.add(users.value.first { it.email == email })
+                else
+                    this.listFollowers.remove(users.value.first { it.email == email })
+            }
+
+            Log.v("UpdateUserFollowing", users.value.first { it.email == email }.listUserFollowing.size.toString())
+            return 1
+        }
+        return 3
+    }
+
+    fun IsFollowUser(email: String, emailFollow: String) =
+        users.value.first { it.email == email }.listUserFollowing.any { it.email == emailFollow }
+
+    fun IsFollowArtist(email: String, artistID: String) =
+        users.value.first { it.email == email }.listArtistsFollowing.any { it.artistId == artistID }
+
+    private fun getListDataUser() {
+        UpdateUserFollowing(users.value[0].email, users.value[1].email, true)
+//        UpdateUserFollowing(users.value[0].email, users.value[4].email, true)
+//        UpdateUserFollowing(users.value[0].email, users.value[6].email, true)
+//        UpdateUserFollowing(users.value[0].email, users.value[8].email, true)
+//        UpdateUserFollowing(users.value[0].email, users.value[14].email, true)
+//        UpdateUserFollowing(users.value[0].email, users.value[15].email, true)
+//        UpdateUserFollowing(users.value[0].email, users.value[16].email, true)
+//
+//        UpdateUserFollowing(users.value[1].email, users.value[0].email, true)
+//        UpdateUserFollowing(users.value[1].email, users.value[12].email, true)
+//        UpdateUserFollowing(users.value[1].email, users.value[13].email, true)
+//        UpdateUserFollowing(users.value[1].email, users.value[5].email, true)
+//        UpdateUserFollowing(users.value[1].email, users.value[6].email, true)
+
+//        UpdateUserFollowing(lst[2].email, lst[1], true)
+//        UpdateUserFollowing(lst[2].email, lst[3], true)
+//        UpdateUserFollowing(lst[2].email, lst[10], true)
+//
+//        UpdateUserFollowing(lst[3].email, lst[1], true)
+//        UpdateUserFollowing(lst[3].email, lst[2], true)
+//        UpdateUserFollowing(lst[3].email, lst[5], true)
+//        UpdateUserFollowing(lst[3].email, lst[6], true)
+//        UpdateUserFollowing(lst[3].email, lst[12], true)
+//
+//        UpdateUserFollowing(lst[4].email, lst[1], true)
+//        UpdateUserFollowing(lst[4].email, lst[6], true)
+//        UpdateUserFollowing(lst[4].email, lst[7], true)
+//        UpdateUserFollowing(lst[4].email, lst[8], true)
+//        UpdateUserFollowing(lst[4].email, lst[9], true)
+//        UpdateUserFollowing(lst[4].email, lst[12], true)
+//        UpdateUserFollowing(lst[4].email, lst[16], true)
+//
+//        UpdateUserFollowing(lst[5].email, lst[3], true)
+//        UpdateUserFollowing(lst[5].email, lst[4], true)
+//        UpdateUserFollowing(lst[5].email, lst[5], true)
+//        UpdateUserFollowing(lst[5].email, lst[9], true)
+//
+//        UpdateUserFollowing(lst[6].email, lst[1], true)
+//        UpdateUserFollowing(lst[6].email, lst[13], true)
+//        UpdateUserFollowing(lst[6].email, lst[14], true)
+//        UpdateUserFollowing(lst[6].email, lst[15], true)
+//        UpdateUserFollowing(lst[6].email, lst[16], true)
+//
+//        UpdateUserFollowing(lst[7].email, lst[2], true)
+//        UpdateUserFollowing(lst[7].email, lst[3], true)
+//        UpdateUserFollowing(lst[7].email, lst[5], true)
+//        UpdateUserFollowing(lst[7].email, lst[7], true)
+//        UpdateUserFollowing(lst[7].email, lst[10], true)
+//        UpdateUserFollowing(lst[7].email, lst[11], true)
+//
+//        UpdateUserFollowing(lst[8].email, lst[12], true)
+//        UpdateUserFollowing(lst[8].email, lst[13], true)
+//        UpdateUserFollowing(lst[8].email, lst[3], true)
+//        UpdateUserFollowing(lst[8].email, lst[15], true)
+//
+//        UpdateUserFollowing(lst[9].email, lst[1], true)
+//        UpdateUserFollowing(lst[9].email, lst[2], true)
+//
+//        UpdateUserFollowing(lst[10].email, lst[3], true)
+//        UpdateUserFollowing(lst[10].email, lst[5], true)
+//        UpdateUserFollowing(lst[10].email, lst[7], true)
+//        UpdateUserFollowing(lst[10].email, lst[12], true)
     }
 }

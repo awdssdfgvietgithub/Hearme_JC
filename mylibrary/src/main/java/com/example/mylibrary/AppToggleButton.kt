@@ -9,8 +9,6 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -33,23 +31,24 @@ fun AppToggleButton(
     textFalse: String,
     textTrue: String,
     fontFamily: FontFamily,
-    isChecked: MutableState<Boolean> = mutableStateOf(false),
+    isChecked: Boolean,
+    onClick: () -> Unit,
 ) {
     OutlinedButton(
-        onClick = { isChecked.value = !isChecked.value },
+        onClick = { onClick() },
         modifier = modifier
             .defaultMinSize(minHeight = 1.dp)
             .padding(top = 2.dp, bottom = 2.dp),
-        colors = if (isChecked.value) ButtonDefaults.buttonColors(bgColorTrue) else ButtonDefaults.buttonColors(bgColorFalse),
-        border = if (isChecked.value) BorderStroke(width = 2.dp, color = borderColorTrue) else BorderStroke(
+        colors = if (isChecked) ButtonDefaults.buttonColors(bgColorTrue) else ButtonDefaults.buttonColors(bgColorFalse),
+        border = if (isChecked) BorderStroke(width = 2.dp, color = borderColorTrue) else BorderStroke(
             width = 0.dp,
             color = borderColorFalse
         )
     ) {
         Text(
             modifier = Modifier,
-            text = if (isChecked.value) textTrue else textFalse,
-            style = if (isChecked.value) TextStyle(
+            text = if (isChecked) textTrue else textFalse,
+            style = if (isChecked) TextStyle(
                 fontSize = 14.sp,
                 lineHeight = 19.6.sp,
                 fontFamily = fontFamily,
@@ -86,7 +85,9 @@ fun AppToggleButtonPreview() {
             borderColorTrue = Color.Black,
             fontFamily = FontFamily.Default,
             textFalse = "Follow",
-            textTrue = "Following"
+            textTrue = "Following",
+            isChecked = false,
+            onClick = {}
         )
     }
 }

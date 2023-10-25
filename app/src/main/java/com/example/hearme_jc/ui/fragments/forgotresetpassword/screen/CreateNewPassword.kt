@@ -48,6 +48,10 @@ fun CreateNewPasswordScreen(
         mutableStateOf(false)
     }
 
+    var isChecked by rememberSaveable {
+        mutableStateOf(false)
+    }
+
     if (showDialog) {
         AppDialogNavigation(
             setShowDialog = { showDialog = it },
@@ -92,7 +96,7 @@ fun CreateNewPasswordScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        ContainerRememberMe()
+        ContainerRememberMe(isCheck = isChecked, onClick = { isChecked = !isChecked })
 
         Spacer(modifier = Modifier.weight(1f))
 
